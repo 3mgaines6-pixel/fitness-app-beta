@@ -1,6 +1,7 @@
 import { Lobby } from "./screens/Lobby.js";
 import { CardioStudio } from "./screens/CardioStudio.js";
 import { StrengthStudio } from "./screens/StrengthStudio.js";
+import { StretchStudio } from "./screens/StretchStudio.js";
 
 export function renderScreen(screenName) {
   const app = document.getElementById("app");
@@ -20,6 +21,9 @@ export function renderScreen(screenName) {
     case "StrengthStudio":
       screen = StrengthStudio();
       break;
+case "StretchStudio":
+  screen = StretchStudio();
+  break;
 
     default:
       screen = Lobby();
