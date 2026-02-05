@@ -1,4 +1,5 @@
 import { Splash } from "./screens/Splash.js";
+import { Lobby } from "./screens/Lobby.js";
 
 import { GymFloor } from "./screens/GymFloor.js";
 import { Machine15 } from "./screens/Machine-15.js";
