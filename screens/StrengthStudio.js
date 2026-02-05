@@ -5,6 +5,8 @@ export function StrengthStudio() {
   container.innerHTML = `
     <h1 class="strength-title">Strength Floor</h1>
 
+    <button class="strength-back-btn" onclick="renderScreen('GymFloor')">Back</button>
+
     <div class="strength-group">
       <h2>Lower Body</h2>
       <div class="strength-buttons">
@@ -47,3 +49,4 @@ export function StrengthStudio() {
 
   return container;
 }
+
