@@ -82,7 +82,7 @@ case "Machine-9":
 default:
   screen = GymFloor();
   break;
-
+} //
   app.innerHTML = "";
   app.appendChild(screen);
 }
