@@ -94,3 +94,30 @@ export function Machine6() {
 
   /* ---------- LOG + CLOSE ---------- */
   const logBtn = document.createElement("button");
+  logBtn.className = "log-btn";
+  logBtn.textContent = "Log Exercise";
+
+  logBtn.onclick = () => {
+    alert("Exercise logged!");
+    window.renderScreen("StrengthStudio");
+  };
+
+  const closeBtn = document.createElement("button");
+  closeBtn.className = "close-btn";
+  closeBtn.textContent = "Close";
+  closeBtn.onclick = () => window.renderScreen("StrengthStudio");
+
+  /* ---------- APPEND EVERYTHING ---------- */
+  container.appendChild(title);
+  container.appendChild(subtitle);
+  container.appendChild(tempoRow);
+  container.appendChild(lastRow);
+  container.appendChild(suggestedRow);
+  container.appendChild(setsContainer);
+  container.appendChild(timerBtn);
+  container.appendChild(timerDisplay);
+  container.appendChild(logBtn);
+  container.appendChild(closeBtn);
+
+  return container;
+}
