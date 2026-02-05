@@ -67,7 +67,7 @@ case "Machine-11":
    case "Machine-7":
   screen = Machine7();
   break;
-cacase "Machine-6":
+case "Machine-6":
   screen = Machine6();
   break;
 
