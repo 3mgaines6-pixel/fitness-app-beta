@@ -1,12 +1,10 @@
 /* =========================================
    ==========  MACHINE  — SEATED ROW
    ========================================= */
-
 export function Machine5() {
-  const container = document.createElement("div");
-  container.className = "machine-screen";
-  `;
-
+const container = document.createElement("div");
+container.className = "machine-screen";
+   
   /* ---------- HEADER ---------- */
   const title = document.createElement("h1");
   title.className = "machine-title";
