@@ -1,19 +1,21 @@
+
+
+
+
+
+
 /* =========================================
-   ==========  MACHINE 8— Lat Pulldown
+   ==========  MACHINE 8— LAT PULLDOWN
    ========================================= */
 
 export function Machine8() {
   const container = document.createElement("div");
   container.className = "machine-screen";
- container.innerHTML = `
-    <h1 class="machine-title">#8 Lat Pulldown</h1>
-    <button class="close-btn" onclick="renderScreen('StrengthStudio')">Close</button>
-  `;
 
   /* ---------- HEADER ---------- */
   const title = document.createElement("h1");
   title.className = "machine-title";
-  title.textContent = "#8 Lat Pulldown";
+  title.textContent = "#8 LAT PULLDOWN";
 
   const subtitle = document.createElement("div");
   subtitle.className = "machine-subtitle";
@@ -125,3 +127,4 @@ export function Machine8() {
 
   return container;
 }
+
