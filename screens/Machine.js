@@ -14,14 +14,16 @@ function saveHistory(id, history) {
 }
 
 function formatLastSession(entry) {
-  if (!entry || !entry.sets || entry.sets.length === 0) return "Last: None";
+  if (!entry || !entry.sets || entry.sets.length === 0) {
+    return "Last: None";
+  }
 
-  const reps = entry.sets.map(s => s.reps || 0);
-  const weights = entry.sets.map(s => s.weight || 0);
-  const lastWeight = weights[weights.length - 1];
+  const reps = entry.sets.map(s => s.reps).join("/");
+  const weights = entry.sets.map(s => s.weight).join("/");
 
-  return `Last: ${reps.join("/")} reps @ ${lastWeight}`;
+  return `Last: ${reps} reps @ ${weights}`;
 }
+
 
 function getSuggestedWeight(meta, lastEntry) {
   if (!lastEntry || !lastEntry.sets || lastEntry.sets.length === 0) {
