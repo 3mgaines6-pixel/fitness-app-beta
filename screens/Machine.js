@@ -33,30 +33,4 @@ function getSuggestedWeight(meta, lastEntry) {
     return meta.base ?? "—";
   }
 
-  const lastWeight = lastEntry.sets[lastEntry.sets.length - 1].weight;
-  return lastWeight;
-}
-
-/* =========================================
-   MAIN MACHINE SCREEN
-========================================= */
-
-export function Machine(id) {
-  const meta = MACHINES[id];
-  const history = loadHistory(id);
-  const lastEntry = history[history.length - 1];
-
-  const container = document.createElement("div");
-  container.className = "machine-screen";
-
-  /* ---------- HEADER ---------- */
-  const title = document.createElement("h1");
-  title.className = "machine-title";
-  title.textContent = `#${id} ${meta.name}`;
-
-  const subtitle = document.createElement("div");
-  subtitle.className = "machine-subtitle";
-  subtitle.textContent = `${meta.muscle} • ${meta.type} • ${meta.reps}`;
-
-  /* ---------- TEMPO ---------- */
-  const tempoRow = document.create
+  const lastWeight = lastEntry.sets[lastEntry.set
