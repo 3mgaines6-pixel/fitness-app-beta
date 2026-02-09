@@ -164,34 +164,43 @@ background: url("https://images.unsplash.com/photo-1517963628607-235ccdd5476c")
   color: white;
   background: rgba(0,0,0,0.85);
   min-height: 100vh;
+  max-width: 420px;
+  margin: 0 auto;
 }
+
+/* ---------- HEADER ---------- */
 
 .machine-title {
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 5px;
+  text-align: center;
 }
 
 .machine-subtitle {
   font-size: 16px;
   margin-bottom: 20px;
   opacity: 0.9;
+  text-align: center;
 }
 
-.tempo-row {
-  font-size: 18px;
+/* ---------- TEMPO + INFO ---------- */
+
+.tempo-row,
+.info-row {
+  background: rgba(255,255,255,0.08);
+  padding: 12px 14px;
+  border-radius: 8px;
   margin-bottom: 10px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .hidden {
   display: none;
 }
 
-.info-row {
-  margin-bottom: 8px;
-  opacity: 0.9;
-}
+/* ---------- SET INPUTS ---------- */
 
 .sets-container {
   margin-top: 20px;
@@ -209,7 +218,12 @@ background: url("https://images.unsplash.com/photo-1517963628607-235ccdd5476c")
   padding: 10px;
   border-radius: 6px;
   border: none;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.2);
 }
+
+/* ---------- TIMER ---------- */
 
 .timer-btn,
 .log-btn,
@@ -228,13 +242,35 @@ background: url("https://images.unsplash.com/photo-1517963628607-235ccdd5476c")
   color: white;
 }
 
+.timer-btn:hover {
+  background: #555;
+}
+
+.timer-display {
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* ---------- LOG BUTTON ---------- */
+
 .log-btn {
   background: #2ecc71;
   color: black;
 }
+
+.log-btn:hover {
+  background: #27ae60;
+}
+
+/* ---------- CLOSE BUTTON ---------- */
 
 .close-btn {
   background: #e74c3c;
   color: white;
 }
 
+.close-btn:hover {
+  background: #c0392b;
+}
