@@ -33,4 +33,158 @@ function getSuggestedWeight(meta, lastEntry) {
     return meta.base ?? "—";
   }
 
-  const lastWeight = lastEntry.sets[lastEntry.set
+  const lastWeight = lastEntry.sets[lastEntry.sets.length - 1].weight;
+  return lastWeight;
+}
+
+/* =========================================
+   MAIN MACHINE SCREEN
+========================================= */
+
+export function Machine(id) {
+  const meta = MACHINES[id];
+  const history = loadHistory(id);
+  const lastEntry = history[history.length - 1];
+
+  const container = document.createElement("div");
+  container.className = "machine-screen";
+
+  /* ---------- HEADER ---------- */
+  const title = document.createElement("h1");
+  title.className = "machine-title";
+  title.textContent = `#${id} ${meta.name}`;
+
+  const subtitle = document.createElement("div");
+  subtitle.className = "machine-subtitle";
+  subtitle.textContent = `${meta.muscle} • ${meta.type} • ${meta.reps}`;
+
+  /* ---------- TEMPO ---------- */
+  const tempoRow = document.createElement("div");
+  tempoRow.className = "tempo-row";
+
+  const tempoLabel = document.createElement("span");
+  tempoLabel.textContent = "Tempo ▸";
+
+  const tempoValue = document.createElement("span");
+  tempoValue.className = "hidden";
+  tempoValue.textContent = meta.tempo;
+
+  tempoRow.appendChild(tempoLabel);
+  tempoRow.appendChild(tempoValue);
+
+  tempoRow.onclick = () => {
+    tempoValue.classList.toggle("hidden");
+    tempoLabel.textContent = tempoValue.classList.contains("hidden")
+      ? "Tempo ▸"
+      : "Tempo ▾";
+  };
+
+  /* ---------- LAST + SUGGESTED ---------- */
+  const lastRow = document.createElement("div");
+  lastRow.className = "info-row";
+  lastRow.textContent = formatLastSession(lastEntry);
+
+  const suggestedRow = document.createElement("div");
+  suggestedRow.className = "info-row";
+  suggestedRow.textContent = `Suggested: ${getSuggestedWeight(meta, lastEntry)}`;
+
+  /* ---------- SET INPUTS ---------- */
+  const setsContainer = document.createElement("div");
+  setsContainer.className = "sets-container";
+
+  for (let i = 1; i <= 3; i++) {
+    const row = document.createElement("div");
+    row.className = "set-row";
+
+    const label = document.createElement("span");
+    label.textContent = `Set ${i}`;
+
+    const reps = document.createElement("input");
+    reps.placeholder = "Reps";
+
+    const weight = document.createElement("input");
+    weight.placeholder = "Weight";
+
+    row.appendChild(label);
+    row.appendChild(reps);
+    row.appendChild(weight);
+
+    setsContainer.appendChild(row);
+  }
+
+  /* ---------- REST TIMER ---------- */
+  const timerBtn = document.createElement("button");
+  timerBtn.className = "timer-btn";
+  timerBtn.textContent = "Start Rest Timer";
+
+  const timerDisplay = document.createElement("div");
+  timerDisplay.className = "timer-display";
+  timerDisplay.textContent = "00:00";
+
+  let timerInterval = null;
+  timerBtn.onclick = () => {
+    let seconds = 0;
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      seconds++;
+      const m = String(Math.floor(seconds / 60)).padStart(2, "0");
+      const s = String(seconds % 60).padStart(2, "0");
+      timerDisplay.textContent = `${m}:${s}`;
+    }, 1000);
+  };
+
+  /* ---------- LOG EXERCISE ---------- */
+  const logBtn = document.createElement("button");
+  logBtn.className = "log-btn";
+  logBtn.textContent = "Log Exercise";
+
+  logBtn.onclick = () => {
+    const rows = setsContainer.querySelectorAll(".set-row");
+    const newSets = [];
+
+    rows.forEach((row, index) => {
+      const reps = row.children[1].value;
+      const weight = row.children[2].value;
+
+      if (reps && weight) {
+        newSets.push({
+          set: index + 1,
+          reps,
+          weight,
+          date: new Date().toISOString()
+        });
+      }
+    });
+
+    if (newSets.length === 0) {
+      alert("Enter reps + weight before logging.");
+      return;
+    }
+
+    history.push({ sets: newSets });
+    saveHistory(id, history);
+
+    alert("Exercise logged!");
+    window.renderScreen("StrengthStudio");
+  };
+
+  /* ---------- CLOSE BUTTON ---------- */
+  const closeBtn = document.createElement("button");
+  closeBtn.className = "close-btn";
+  closeBtn.textContent = "Close";
+  closeBtn.onclick = () => window.renderScreen("StrengthStudio");
+
+  /* ---------- APPEND EVERYTHING ---------- */
+  container.appendChild(title);
+  container.appendChild(subtitle);
+  container.appendChild(tempoRow);
+  container.appendChild(lastRow);
+  container.appendChild(suggestedRow);
+  container.appendChild(setsContainer);
+  container.appendChild(timerBtn);
+  container.appendChild(timerDisplay);
+  container.appendChild(logBtn);
+  container.appendChild(closeBtn);
+
+  return container;
+}
