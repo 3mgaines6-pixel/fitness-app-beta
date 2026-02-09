@@ -1,21 +1,6 @@
 import { Splash } from "./screens/Splash.js";
 
-import { GymFloor } from "./screens/GymFloor.js";
-import { Machine15 } from "./screens/machines/Machine-15.js";
-import { Machine12 } from "./screens/machines/Machine-12.js";
-import { Machine13 } from "./screens/machines/Machine-13.js";
-import { Machine14 } from "./screens/machines/Machine-14.js";
-import { Machine3 } from "./screens/machines/Machine-3.js";
-import { Machine10 } from "./screens/machines/Machine-10.js";
-import { Machine11 } from "./screens/machines/Machine-11.js";
-import { Machine7 } from "./screens/machines/Machine-7.js";
-import { Machine6 } from "./screens/machines/Machine-6.js";
-import { Machine2 } from "./screens/machines/Machine-2.js";
-import { Machine9 } from "./screens/machines/Machine-9.js";
-import { Machine8 } from "./screens/machines/Machine-8.js";
-import { Machine5 } from "./screens/machines/Machine-5.js";
-import { Machine4 } from "./screens/machines/Machine-4.js";
-import { Machine1 } from "./screens/machines/Machine-1.js";
+import { Machine } from "./screens/Machine.js";
 
 
 import { CardioStudio } from "./screens/CardioStudio.js";
