@@ -290,3 +290,9 @@ background: url("https://images.unsplash.com/photo-1517963628607-235ccdd5476c")
 .close-btn:hover {
   background: #c0392b;
 }
+@media (max-width: 480px) {
+  .machine-screen > * {
+    max-width: 95%; /* fills the phone nicely */
+  }
+}
+Fset
