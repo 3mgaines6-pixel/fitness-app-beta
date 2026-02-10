@@ -297,3 +297,7 @@ background: url("https://images.unsplash.com/photo-1517963628607-235ccdd5476c")
   }
 }
 
+input.danger {
+  border: 2px solid red;
+  background-color: #ffdddd;
+}
