@@ -91,13 +91,6 @@ function getSuggestedWeight(meta, lastEntry) {
   return round25(topWeight);
 }
 
-  if (!lastEntry || !lastEntry.sets || lastEntry.sets.length === 0) {
-    return meta.base ?? "—";
-  }
-
-  const lastWeight = lastEntry.sets[lastEntry.sets.length - 1].weight;
-  return lastWeight;
-}
 
 /* =========================================
    MAIN MACHINE SCREEN
