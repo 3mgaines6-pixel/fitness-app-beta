@@ -169,40 +169,44 @@ export function Machine(id) {
   setsContainer.className = "sets-container";
 
   for (let i = 1; i <= 3; i++) {
-    const row = document.createElement("div");
-    row.className = "set-row";
+  const row = document.createElement("div");
+  row.className = "set-row";
 
-    const label = document.createElement("span");
-    label.textContent = `Set ${i}`;
+  const label = document.createElement("span");
+  label.textContent = `Set ${i}`;
 
-    const reps = document.createElement("input");
-    reps.placeholder = "Reps";
-    reps.type = "text";
-    reps.inputMode = "numeric";
-    reps.pattern = "[0-9]*";
+  const reps = document.createElement("input");
+  reps.placeholder = "Reps";
+  reps.type = "text";
+  reps.inputMode = "numeric";
+  reps.pattern = "[0-9]*";
 
-    const weight = document.createElement("input");
-    weight.placeholder = "Weight";
-    weight.type = "text";
-    weight.inputMode = "decimal";
-    weight.pattern = "[0-9]*[.,]?[0-9]*";
+  const weight = document.createElement("input");
+  weight.placeholder = "Weight";
+  weight.type = "text";
+  weight.inputMode = "decimal";
+  weight.pattern = "[0-9]*[.,]?[0-9]*";
 
-    // RED WARNING FOR TOO-HEAVY JUMPS
-    weight.addEventListener("input", () => {
-      const entered = Number(weight.value);
-      if (entered > suggestion.safeMax) {
-        weight.classList.add("danger");
-      } else {
-        weight.classList.remove("danger");
-      }
-    });
+  // ⭐ AUTO-FILL SUGGESTED WEIGHT ⭐
+  weight.value = suggestion.weight;
 
-    row.appendChild(label);
-    row.appendChild(reps);
-    row.appendChild(weight);
+  // ⭐ RED WARNING FOR TOO-HEAVY JUMPS ⭐
+  weight.addEventListener("input", () => {
+    const entered = Number(weight.value);
+    if (entered > suggestion.safeMax) {
+      weight.classList.add("danger");
+    } else {
+      weight.classList.remove("danger");
+    }
+  });
 
-    setsContainer.appendChild(row);
-  }
+  row.appendChild(label);
+  row.appendChild(reps);
+  row.appendChild(weight);
+
+  setsContainer.appendChild(row);
+}
+
 
   /* ---------- REST TIMER ---------- */
   const timerBtn = document.createElement("button");
