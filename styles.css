@@ -236,9 +236,10 @@ background: url("https://images.unsplash.com/photo-1517963628607-235ccdd5476c")
   border-radius: 6px;
   border: none;
   background: rgba(255,255,255,0.1);
-  color: white;
+  color: #000; /* ← FIX */
   border: 1px solid rgba(255,255,255,0.2);
 }
+
 
 /* ---------- TIMER ---------- */
 
