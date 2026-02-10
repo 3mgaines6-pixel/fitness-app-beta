@@ -33,6 +33,68 @@ function getSuggestedWeight(meta, lastEntry) {
     return meta.base ?? "—";
   }
 
+  const type = meta.type; // HEAVY, LIGHT, CORE
+  const reps = lastEntry.sets.map(s => Number(s.reps) || 0);
+  const weights = lastEntry.sets.map(s => Number(s.weight) || 0);
+
+  // Heaviest weight attempted last session
+  const topWeight = Math.max(...weights);
+
+  // Average reps across sets (useful for LIGHT)
+  const avgReps = reps.reduce((a, b) => a + b, 0) / reps.length;
+
+  // Helper: round to nearest 2.5 (Matrix machines)
+  const round25 = (n) => Math.round(n / 2.5) * 2.5;
+
+  // -------------------------
+  // HEAVY LOGIC (6–8 reps)
+  // -------------------------
+  if (type === "HEAVY") {
+    const minReps = Math.min(...reps);
+    const maxReps = Math.max(...reps);
+
+    // If all sets hit 8 → increase +5
+    if (minReps >= 8) {
+      return round25(topWeight + 5);
+    }
+
+    // If reps are in range (6–8) → keep weight
+    if (minReps >= 6) {
+      return round25(topWeight);
+    }
+
+    // If reps are extremely low (<3) → deload 1 step
+    if (maxReps < 3) {
+      return round25(topWeight - 2.5);
+    }
+
+    // Otherwise → keep weight
+    return round25(topWeight);
+  }
+
+  // -------------------------
+  // LIGHT LOGIC (12–15 reps)
+  // -------------------------
+  if (type === "LIGHT") {
+    if (avgReps >= 15) return round25(topWeight + 2.5);
+    if (avgReps >= 12) return round25(topWeight);
+    return round25(topWeight - 2.5);
+  }
+
+  // -------------------------
+  // CORE LOGIC (always same)
+  // -------------------------
+  if (type === "CORE") {
+    return round25(topWeight);
+  }
+
+  return round25(topWeight);
+}
+
+  if (!lastEntry || !lastEntry.sets || lastEntry.sets.length === 0) {
+    return meta.base ?? "—";
+  }
+
   const lastWeight = lastEntry.sets[lastEntry.sets.length - 1].weight;
   return lastWeight;
 }
