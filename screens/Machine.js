@@ -28,6 +28,10 @@ function formatLastSession(entry) {
   return `Last: ${reps} reps @ ${weights}`;
 }
 
+/* =========================================
+   SMART SUGGESTED WEIGHT ENGINE
+========================================= */
+
 function getSuggestedWeight(meta, lastEntry) {
   if (!lastEntry || !lastEntry.sets || lastEntry.sets.length === 0) {
     return { weight: meta.base ?? 0, safeMax: (meta.base ?? 0) + 5 };
@@ -64,7 +68,7 @@ function getSuggestedWeight(meta, lastEntry) {
 
     return {
       weight: suggested,
-      safeMax: suggested + 5 // heavy jumps allowed up to +5
+      safeMax: suggested + 5
     };
   }
 
@@ -80,12 +84,11 @@ function getSuggestedWeight(meta, lastEntry) {
       suggested = round25(topWeight - 2.5);
     }
 
-    // enforce minimum weight
     suggested = Math.max(suggested, minWeight);
 
     return {
       weight: suggested,
-      safeMax: suggested + 2.5 // LIGHT should only jump 1 step
+      safeMax: suggested + 2.5
     };
   }
 
@@ -102,14 +105,11 @@ function getSuggestedWeight(meta, lastEntry) {
     };
   }
 
-  // fallback
   return {
     weight: round25(topWeight),
     safeMax: round25(topWeight) + 5
   };
 }
-
-
 
 /* =========================================
    MAIN MACHINE SCREEN
@@ -119,6 +119,8 @@ export function Machine(id) {
   const meta = MACHINES[id];
   const history = loadHistory(id);
   const lastEntry = history[history.length - 1];
+
+  const suggestion = getSuggestedWeight(meta, lastEntry);
 
   const container = document.createElement("div");
   container.className = "machine-screen";
@@ -160,39 +162,47 @@ export function Machine(id) {
 
   const suggestedRow = document.createElement("div");
   suggestedRow.className = "info-row";
-  suggestedRow.textContent = `Suggested: ${getSuggestedWeight(meta, lastEntry)}`;
+  suggestedRow.textContent = `Suggested: ${suggestion.weight}`;
 
-/* ---------- SET INPUTS ---------- */
-const setsContainer = document.createElement("div");
-setsContainer.className = "sets-container";
+  /* ---------- SET INPUTS ---------- */
+  const setsContainer = document.createElement("div");
+  setsContainer.className = "sets-container";
 
-for (let i = 1; i <= 3; i++) {
-  const row = document.createElement("div");
-  row.className = "set-row";
+  for (let i = 1; i <= 3; i++) {
+    const row = document.createElement("div");
+    row.className = "set-row";
 
-  const label = document.createElement("span");
-  label.textContent = `Set ${i}`;
+    const label = document.createElement("span");
+    label.textContent = `Set ${i}`;
 
-  // REPS INPUT — numeric keypad (no decimal)
-  const reps = document.createElement("input");
-  reps.placeholder = "Reps";
-  reps.type = "text";
-  reps.inputMode = "numeric";     // number pad only
-  reps.pattern = "[0-9]*";        // whole numbers only
+    const reps = document.createElement("input");
+    reps.placeholder = "Reps";
+    reps.type = "text";
+    reps.inputMode = "numeric";
+    reps.pattern = "[0-9]*";
 
-  // WEIGHT INPUT — decimal keypad (Matrix half-weights)
-  const weight = document.createElement("input");
-  weight.placeholder = "Weight";
-  weight.type = "text";
-  weight.inputMode = "decimal";   // number pad with decimal
-  weight.pattern = "[0-9]*[.,]?[0-9]*"; // allows 2.5, 7.5, etc.
+    const weight = document.createElement("input");
+    weight.placeholder = "Weight";
+    weight.type = "text";
+    weight.inputMode = "decimal";
+    weight.pattern = "[0-9]*[.,]?[0-9]*";
 
-  row.appendChild(label);
-  row.appendChild(reps);
-  row.appendChild(weight);
+    // RED WARNING FOR TOO-HEAVY JUMPS
+    weight.addEventListener("input", () => {
+      const entered = Number(weight.value);
+      if (entered > suggestion.safeMax) {
+        weight.classList.add("danger");
+      } else {
+        weight.classList.remove("danger");
+      }
+    });
 
-  setsContainer.appendChild(row);
-}
+    row.appendChild(label);
+    row.appendChild(reps);
+    row.appendChild(weight);
+
+    setsContainer.appendChild(row);
+  }
 
   /* ---------- REST TIMER ---------- */
   const timerBtn = document.createElement("button");
