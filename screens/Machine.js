@@ -195,6 +195,9 @@ export function Machine(id) {
   const suggestedRow = document.createElement("div");
   suggestedRow.className = "info-row";
   suggestedRow.textContent = `Suggested: ${suggestion.weight}`;
+const messageRow = document.createElement("div");
+messageRow.className = "info-row";
+messageRow.textContent = getProgressionMessage(meta, lastEntry);
 
   /* ---------- SET INPUTS ---------- */
   const setsContainer = document.createElement("div");
@@ -313,6 +316,10 @@ export function Machine(id) {
   container.appendChild(timerDisplay);
   container.appendChild(logBtn);
   container.appendChild(closeBtn);
+container.appendChild(lastRow);
+container.appendChild(suggestedRow);
+container.appendChild(messageRow);   // ⭐ ADD THIS
+container.appendChild(setsContainer);
 
   return container;
 }
