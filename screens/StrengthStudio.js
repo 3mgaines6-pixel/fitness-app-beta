@@ -1,58 +1,73 @@
+import { WEEKLY_SCHEDULE } from "../data/weeklySchedule.js";
+import { MACHINES } from "../data/machines.js";
+
 export function StrengthStudio() {
   const container = document.createElement("div");
   container.className = "strength-screen";
-const weeklyBtn = document.createElement("button");
-weeklyBtn.className = "strength-btn";
-weeklyBtn.textContent = "Weekly Schedule";
-weeklyBtn.onclick = () => window.renderScreen("WeeklySchedule");
 
-container.appendChild(weeklyBtn);
+  const title = document.createElement("h1");
+  title.className = "strength-title";
+  title.textContent = "Strength Studio";
 
-  container.innerHTML = `
-    <h1 class="strength-title">Strength Floor</h1>
+  // Determine today's day
+  const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
+  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
-    <button class="strength-back-btn" onclick="renderScreen('Lobby')">Return to Gym floor</button>
+  // Selected day (auto-select today)
+  let selectedDay = days.includes(today) ? today : "Monday";
 
-    <div class="strength-group">
-      <h2>Lower Body</h2>
-      <div class="strength-buttons">
-        <button class="strength-btn" onclick="renderScreen('Machine-15')">#15 Leg Press</button>
-        <button class="strength-btn" onclick="renderScreen('Machine-12')">#12 Seated Leg Curl</button>
-        <button class="strength-btn" onclick="renderScreen('Machine-10')">#10 Prone Leg Curl</button>
-        <button class="strength-btn" onclick="renderScreen('Machine-11')">#11 Leg Extension</button>
-        <button class="strength-btn" onclick="renderScreen('Machine-13')">#13 Hip Adductor</button>
-        <button class="strength-btn" onclick="renderScreen('Machine-14')">#14 Hip Abductor</button>
-      </div>
-    </div>
+  // Day buttons container
+  const dayButtons = document.createElement("div");
+  dayButtons.className = "strength-buttons";
 
-    <div class="strength-group">
-      <h2>Upper Body — Push</h2>
-      <div class="strength-buttons">
-        <button class="strength-btn" onclick="renderScreen('Machine-7')">#7 Chest Press</button>
-        <button class="strength-btn" onclick="renderScreen('Machine-6')">#6 Shoulder Press</button>
-        <button class="strength-btn" onclick="renderScreen('Machine-2')">#2 Triceps Press</button>
-        <button class="strength-btn" onclick="renderScreen('Machine-9')">#9 Pec Fly / Rear Delt</button>
-      </div>
-    </div>
+  function renderDayButtons() {
+    dayButtons.innerHTML = "";
 
-    <div class="strength-group">
-      <h2>Upper Body — Pull</h2>
-      <div class="strength-buttons">
-        <button class="strength-btn" onclick="renderScreen('Machine-8')">#8 Lat Pulldown</button>
-        <button class="strength-btn" onclick="renderScreen('Machine-5')">#5 Seated Row</button>
-        <button class="strength-btn" onclick="renderScreen('Machine-4')">#4 Back Extension</button>
-      </div>
-    </div>
+    days.forEach(day => {
+      const btn = document.createElement("button");
+      btn.className = "strength-btn";
+      btn.textContent = day;
 
-    <div class="strength-group">
-      <h2>Arms & Core</h2>
-      <div class="strength-buttons">
-        <button class="strength-btn" onclick="renderScreen('Machine-1')">#1 Dependent Curl</button>
-        <button class="strength-btn" onclick="renderScreen('Machine-3')">#3 Ab Crunch</button>
-      </div>
-    </div>
-  `;
+      if (day === selectedDay) {
+        btn.style.background = "rgba(0,150,255,0.4)";
+        btn.style.border = "2px solid #4da3ff";
+      }
+
+      btn.onclick = () => {
+        selectedDay = day;
+        renderDayButtons();
+        renderMachineList();
+      };
+
+      dayButtons.appendChild(btn);
+    });
+  }
+
+  // Machine list container
+  const machineList = document.createElement("div");
+  machineList.className = "strength-buttons";
+
+  function renderMachineList() {
+    machineList.innerHTML = "";
+
+    const ids = WEEKLY_SCHEDULE[selectedDay];
+
+    ids.forEach(id => {
+      const btn = document.createElement("button");
+      btn.className = "strength-btn";
+      btn.textContent = `#${id} ${MACHINES[id].name}`;
+      btn.onclick = () => window.renderScreen("Machine", id);
+      machineList.appendChild(btn);
+    });
+  }
+
+  // Initial render
+  renderDayButtons();
+  renderMachineList();
+
+  container.appendChild(title);
+  container.appendChild(dayButtons);
+  container.appendChild(machineList);
 
   return container;
 }
-
