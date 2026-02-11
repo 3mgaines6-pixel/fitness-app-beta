@@ -3,7 +3,8 @@
 ========================================= */
 import { Splash } from "./screens/Splash.js";
 import { GymFloor } from "./screens/GymFloor.js";
-import { StrengthStudio } from "./screens/StrengthStudio.js";   // ⭐ moved up
+import { StrengthStudio } from "./screens/StrengthStudio.js?v=2";
+  // ⭐ moved up
 import { Machine } from "./screens/Machine.js";
 import { CardioStudio } from "./screens/CardioStudio.js";
 import { StretchStudio } from "./screens/StretchStudio.js";
