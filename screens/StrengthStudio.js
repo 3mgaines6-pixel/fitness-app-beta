@@ -2,7 +2,7 @@ console.log("StrengthStudio VERSION 7");
 
 
 import { WEEKLY_SCHEDULE } from "../data/weeklySchedule.js";
-import { MACHINES } from "../data/machines.js";
+import { MACHINES } from "../data/machines.js"
 
 export function StrengthStudio() {
   const container = document.createElement("div");
@@ -21,7 +21,7 @@ export function StrengthStudio() {
 
   // Day buttons container
   const dayButtons = document.createElement("div");
-  dayButtons.className = "strength-buttons";
+  dayButtons.className = "strength-day-buttons";
 
   function renderDayButtons() {
     dayButtons.innerHTML = "";
@@ -48,7 +48,8 @@ export function StrengthStudio() {
 
   // Machine list container
   const machineList = document.createElement("div");
-  machineList.className = "strength-buttons";
+ dayButtons.className = "strength-day-buttons";
+machineList.className = "strength-machine-buttons";
 
   function renderMachineList() {
     machineList.innerHTML = "";
