@@ -1,19 +1,30 @@
+/* =========================================
+   IMPORT SCREENS (ORDER MATTERS)
+========================================= */
+
 import { Splash } from "./screens/Splash.js";
 import { GymFloor } from "./screens/GymFloor.js";
+import { StrengthStudio } from "./screens/StrengthStudio.js";   // ⭐ moved up
 import { Machine } from "./screens/Machine.js";
-import { WeeklySchedule } from "./screens/WeeklySchedule.js";
-import { DayView } from "./screens/DayView.js";
+import { CardioStudio } from "./screens/CardioStudio.js";
+import { StretchStudio } from "./screens/StretchStudio.js";
+
+/* =========================================
+   SCREEN REGISTRY
+========================================= */
 
 window.SCREENS = {
+  Splash,
+  GymFloor,
   StrengthStudio,
   Machine,
-  WeeklySchedule,
-  DayView,
+  CardioStudio,
+  StretchStudio,
 };
 
-import { CardioStudio } from "./screens/CardioStudio.js";
-import { StrengthStudio } from "./screens/StrengthStudio.js";
-import { StretchStudio } from "./screens/StretchStudio.js";
+/* =========================================
+   RENDER FUNCTION
+========================================= */
 
 export function renderScreen(screenName, data) {
   const app = document.getElementById("app");
@@ -30,12 +41,12 @@ export function renderScreen(screenName, data) {
       screen = GymFloor();
       break;
 
-    case "CardioStudio":
-      screen = CardioStudio();
-      break;
-
     case "StrengthStudio":
       screen = StrengthStudio();
+      break;
+
+    case "CardioStudio":
+      screen = CardioStudio();
       break;
 
     case "StretchStudio":
@@ -62,6 +73,11 @@ export function renderScreen(screenName, data) {
 
 window.renderScreen = renderScreen;
 
+/* =========================================
+   INITIAL LOAD
+========================================= */
+
 document.addEventListener("DOMContentLoaded", () => {
   renderScreen("Splash");
 });
+
