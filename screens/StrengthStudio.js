@@ -1,3 +1,6 @@
+console.log("StrengthStudio VERSION 7");
+
+
 import { WEEKLY_SCHEDULE } from "../data/weeklySchedule.js";
 import { MACHINES } from "../data/machines.js";
 
