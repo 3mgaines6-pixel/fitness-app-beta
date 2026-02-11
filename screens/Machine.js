@@ -25,8 +25,9 @@ function formatLastSession(entry) {
   const reps = entry.sets.map(s => s.reps).join("/");
   const weights = entry.sets.map(s => s.weight).join("/");
 
-  return `Last: ${reps} reps @ ${weights}`;
-}
+  const handle = entry.handle ? ` (${entry.handle})` : "";
+return `Last: ${reps} reps @ ${weights}${handle}`;
+
 
 /* =========================================
    SMART SUGGESTED WEIGHT ENGINE
@@ -198,6 +199,51 @@ export function Machine(id) {
 const messageRow = document.createElement("div");
 messageRow.className = "info-row";
 messageRow.textContent = getProgressionMessage(meta, lastEntry);
+/* ---------- HANDLE TOGGLE (ONLY FOR MACHINES 2 & 6) ---------- */
+let handleChoice = "inner"; // default
+
+let handleRow = null;
+if (id === 2 || id === 6) {
+  handleRow = document.createElement("div");
+  handleRow.className = "info-row";
+  handleRow.style.display = "flex";
+  handleRow.style.justifyContent = "space-between";
+  handleRow.style.alignItems = "center";
+
+  const label = document.createElement("span");
+  label.textContent = "Handle Position";
+
+  const toggle = document.createElement("select");
+  toggle.style.padding = "6px";
+  toggle.style.borderRadius = "6px";
+  toggle.style.background = "rgba(255,255,255,0.1)";
+  toggle.style.color = "white";
+  toggle.style.border = "1px solid rgba(255,255,255,0.2)";
+
+  const optInner = document.createElement("option");
+  optInner.value = "inner";
+  optInner.textContent = "Inner";
+
+  const optOuter = document.createElement("option");
+  optOuter.value = "outer";
+  optOuter.textContent = "Outer";
+
+  toggle.appendChild(optInner);
+  toggle.appendChild(optOuter);
+
+  // Load last handle choice if available
+  if (lastEntry && lastEntry.handle) {
+    toggle.value = lastEntry.handle;
+    handleChoice = lastEntry.handle;
+  }
+
+  toggle.onchange = () => {
+    handleChoice = toggle.value;
+  };
+
+  handleRow.appendChild(label);
+  handleRow.appendChild(toggle);
+}
 
   /* ---------- SET INPUTS ---------- */
   const setsContainer = document.createElement("div");
@@ -292,7 +338,11 @@ messageRow.textContent = getProgressionMessage(meta, lastEntry);
       return;
     }
 
-    history.push({ sets: newSets });
+    history.push({
+  sets: newSets,
+  handle: handleChoice
+});
+
     saveHistory(id, history);
 
     alert("Exercise logged!");
@@ -319,7 +369,9 @@ messageRow.textContent = getProgressionMessage(meta, lastEntry);
 container.appendChild(lastRow);
 container.appendChild(suggestedRow);
 container.appendChild(messageRow);   // ⭐ ADD THIS
-container.appendChild(setsContainer);
+if (handleRow) container.appendChild(handleRow);
+
+   container.appendChild(setsContainer);
 
   return container;
 }
