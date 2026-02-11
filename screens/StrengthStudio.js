@@ -54,6 +54,8 @@ export function StrengthStudio() {
     machineList.innerHTML = "";
 
     const ids = WEEKLY_SCHEDULE[selectedDay];
+console.log("Selected day:", selectedDay);
+console.log("IDs for this day:", ids);
 
     ids.forEach(id => {
       const btn = document.createElement("button");
