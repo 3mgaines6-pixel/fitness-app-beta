@@ -36,7 +36,7 @@ export function getRotationInfo() {
   };
 }
 
-exporte function getRotatedMachine(id) {
+export function getRotatedMachine(id) {
   const isEvenBlock = rotationBlock % 2 === 0;
 
   // If this machine has a rotation partner
