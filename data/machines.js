@@ -92,9 +92,9 @@ export const MACHINES = {
     id: 6,
     name: "Shoulder Press",
     muscle: "Shoulders",
-    type: "HEAVY",
-    reps: "6-8",
-    tempo: "3-1-2",
+    type: "light",
+    reps: "10-12",
+    tempo: "2-1-2",
     base: 20
   },
 
