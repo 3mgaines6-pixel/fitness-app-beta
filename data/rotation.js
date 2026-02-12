@@ -25,8 +25,18 @@ export const ROTATION_MAP = {
 /* ============================================================
    ROTATION ENGINE — returns correct machine ID
 ============================================================ */
+export function getRotationInfo() {
+  const block = rotationBlock;
+  const isEven = block % 2 === 0;
 
-export function getRotatedMachine(id) {
+  return {
+    block,
+    mode: isEven ? "SWAP MACHINES" : "PRIMARY MACHINES",
+    range: `Weeks ${(block - 1) * 4 + 1}–${block * 4}`
+  };
+}
+
+exporte function getRotatedMachine(id) {
   const isEvenBlock = rotationBlock % 2 === 0;
 
   // If this machine has a rotation partner
