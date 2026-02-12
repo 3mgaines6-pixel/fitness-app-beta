@@ -59,6 +59,19 @@ export function StrengthStudio() {
 
   /* ---------- APPEND STRUCTURE INTO WRAPPER ---------- */
   wrapper.appendChild(title);
+   wrapper.appendChild(title);
+
+const rot = getRotationInfo();
+
+const rotationLabel = document.createElement("div");
+rotationLabel.style.textAlign = "center";
+rotationLabel.style.opacity = "0.7";
+rotationLabel.style.marginBottom = "10px";
+rotationLabel.style.fontSize = "14px";
+rotationLabel.textContent = `Rotation Block ${rot.block} • ${rot.mode} • ${rot.range}`;
+
+wrapper.appendChild(rotationLabel);
+
   wrapper.appendChild(backBtn);
   wrapper.appendChild(dayButtons);
   wrapper.appendChild(machineList);
