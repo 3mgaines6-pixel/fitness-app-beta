@@ -1,6 +1,5 @@
 /* ============================================================
    ROTATION V1 — 4-WEEK AUTO SWAP SYSTEM
-   Clean, stable, predictable
 ============================================================ */
 
 // Every 4 weeks, flip rotation block
@@ -25,16 +24,6 @@ export const ROTATION_MAP = {
 /* ============================================================
    ROTATION ENGINE — returns correct machine ID
 ============================================================ */
-export function getRotationInfo() {
-  const block = rotationBlock;
-  const isEven = block % 2 === 0;
-
-  return {
-    block,
-    mode: isEven ? "SWAP MACHINES" : "PRIMARY MACHINES",
-    range: `Weeks ${(block - 1) * 4 + 1}–${block * 4}`
-  };
-}
 
 export function getRotatedMachine(id) {
   const isEvenBlock = rotationBlock % 2 === 0;
@@ -56,3 +45,19 @@ export function getRotatedMachine(id) {
   // No rotation for this machine
   return id;
 }
+
+/* ============================================================
+   ROTATION INFO — for UI display
+============================================================ */
+
+export function getRotationInfo() {
+  const block = rotationBlock;
+  const isEven = block % 2 === 0;
+
+  return {
+    block,
+    mode: isEven ? "SWAP MACHINES" : "PRIMARY MACHINES",
+    range: `Weeks ${(block - 1) * 4 + 1}–${block * 4}`
+  };
+}
+
