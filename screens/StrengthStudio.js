@@ -7,8 +7,14 @@ import { MACHINES } from "../data/machines.js";
 let manualDaySelection = localStorage.getItem("selectedDay") || null;
 
 export function StrengthStudio() {
+  /* ---------- OUTER FULLSCREEN CONTAINER ---------- */
   const container = document.createElement("div");
   container.className = "strength-screen";
+
+  /* ---------- INNER WIDTH-CONTROLLED WRAPPER ---------- */
+  const wrapper = document.createElement("div");
+  wrapper.className = "strength-wrapper";
+  container.appendChild(wrapper);
 
   /* ---------- TITLE ---------- */
   const title = document.createElement("h1");
@@ -51,16 +57,16 @@ export function StrengthStudio() {
   const machineList = document.createElement("div");
   machineList.className = "strength-machine-buttons";
 
-  /* ---------- APPEND STRUCTURE ---------- */
-  container.appendChild(title);
-  container.appendChild(backBtn);
-  container.appendChild(dayButtons);
-  container.appendChild(machineList);
+  /* ---------- APPEND STRUCTURE INTO WRAPPER ---------- */
+  wrapper.appendChild(title);
+  wrapper.appendChild(backBtn);
+  wrapper.appendChild(dayButtons);
+  wrapper.appendChild(machineList);
 
   /* ---------- INITIAL LOAD ---------- */
   const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
-
   const startingDay = manualDaySelection || today;
+
   renderMachineList(startingDay);
   highlightSelectedDay(dayButtons, startingDay);
 
