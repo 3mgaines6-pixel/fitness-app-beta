@@ -14,10 +14,12 @@ export function GymFloor() {
   buttons.className = "gymfloor-buttons";
 
   const zones = [
-    { label: "Cardio Studio", screen: "CardioStudio" },
-    { label: "Strength Studio", screen: "StrengthStudio" },
-    { label: "Stretch Studio", screen: "StretchStudio" }
-  ];
+  { label: "Cardio Studio", screen: "CardioStudio" },
+  { label: "Strength Studio", screen: "StrengthStudio" },
+  { label: "Stretch Studio", screen: "StretchStudio" },
+  { label: "Summary", screen: "Summary" }
+];
+
 
   zones.forEach(z => {
     const btn = document.createElement("button");
