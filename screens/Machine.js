@@ -117,7 +117,6 @@ timerBtn.onclick = () => {
 
 
   /* ---------- LOG BUTTON ---------- */
-  /* ---------- LOG BUTTON ---------- */
 const logBtn = document.createElement("button");
 logBtn.className = "log-btn";
 logBtn.textContent = "Log Set";
@@ -130,6 +129,7 @@ logBtn.onclick = () => {
 
   window.renderScreen("StrengthStudio");
 };
+
 
   /* ---------- CLOSE BUTTON ---------- */
   const closeBtn = document.createElement("button");
