@@ -49,4 +49,3 @@ export function GymFloor() {
   return container;
 }
 
-    
