@@ -263,6 +263,68 @@ background: url("https://images.unsplash.com/photo-1517963628607-235ccdd5476c")
   font-size: 1rem;
 }
 
+.weekly-screen {
+  padding: 20px;
+  margin: 20px;
+  background: rgba(0,0,0,0.65);
+  border-radius: 12px;
+  color: white;
+  backdrop-filter: blur(4px);
+}
+
+.weekly-title {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #ff4d4d;
+}
+
+.weekly-card {
+  background: rgba(0,0,0,0.45);
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.weekly-totals {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2rem;
+}
+
+.weekly-subtitle {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #ff4d4d;
+}
+
+.weekly-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.weekly-row {
+  background: rgba(0,0,0,0.35);
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.weekly-machine-name {
+  font-weight: bold;
+}
+
+.weekly-back-btn {
+  margin-top: 25px;
+  padding: 12px;
+  width: 100%;
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+}
 
 /* ---------- HEADER ---------- */
 
