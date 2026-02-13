@@ -191,8 +191,6 @@ function saveHistory(id, reps, weight, handle = null) {
   localStorage.setItem(key, JSON.stringify(history));
 }
 
-
-
 /* ============================================================
    SUGGESTED WEIGHT ENGINE (CLEAN + FINAL)
 ============================================================ */
