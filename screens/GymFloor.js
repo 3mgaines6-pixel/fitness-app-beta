@@ -38,25 +38,25 @@ export function GymFloor() {
   /* ============================
      ANALYTICS SECTION
   ============================ */
-  const analyticsHeader = document.createElement("h2");
-  analyticsHeader.textContent = "Training Analytics";
-  analyticsHeader.className = "analytics-header";
-  container.appendChild(analyticsHeader);
+  /* ============================
+   ANALYTICS SECTION
+============================ */
+const analyticsHeader = document.createElement("h2");
+analyticsHeader.textContent = "Training Analytics";
+analyticsHeader.className = "analytics-header";
+container.appendChild(analyticsHeader);
+
+const analyticsButtons = document.createElement("div");
+analyticsButtons.className = "analytics-buttons";
+
 const weeklyBtn = document.createElement("button");
 weeklyBtn.className = "gymfloor-btn analytics-btn";
 weeklyBtn.textContent = "Weekly Overview";
 weeklyBtn.onclick = () => window.renderScreen("WeeklyOverview");
+
 analyticsButtons.appendChild(weeklyBtn);
+container.appendChild(analyticsButtons);
 
-  const analyticsButtons = document.createElement("div");
-  analyticsButtons.className = "gymfloor-buttons"; // same grouping style
-  const summaryBtn = document.createElement("button");
-  summaryBtn.className = "gymfloor-btn analytics-btn"; // styled like the others
-  summaryBtn.textContent = "Workout Summary";
-  summaryBtn.onclick = () => window.renderScreen("Summary");
-  analyticsButtons.appendChild(summaryBtn);
-
-  container.appendChild(analyticsButtons);
 
   return container;
 }
