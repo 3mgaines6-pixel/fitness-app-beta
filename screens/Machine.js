@@ -197,8 +197,15 @@ function saveHistory(id, reps, weight, handle = null) {
     date: Date.now()
   });
 
-  localStorage.setItem(key, JSON.stringify(history));
-}
+  logBtn.onclick = () => {
+  const reps = setInputs.map(s => Number(s.reps.value || 0));
+  const weight = setInputs.map(s => Number(s.weight.value || suggested.weight));
+
+  saveHistory(rotatedId, reps, weight, handlePosition);
+
+  window.renderScreen("StrengthStudio");
+};
+
 
 
 /* ============================================================
