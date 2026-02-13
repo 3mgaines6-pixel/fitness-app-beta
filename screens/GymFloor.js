@@ -42,6 +42,11 @@ export function GymFloor() {
   analyticsHeader.textContent = "Training Analytics";
   analyticsHeader.className = "analytics-header";
   container.appendChild(analyticsHeader);
+const weeklyBtn = document.createElement("button");
+weeklyBtn.className = "gymfloor-btn analytics-btn";
+weeklyBtn.textContent = "Weekly Overview";
+weeklyBtn.onclick = () => window.renderScreen("WeeklyOverview");
+analyticsButtons.appendChild(weeklyBtn);
 
   const analyticsButtons = document.createElement("div");
   analyticsButtons.className = "gymfloor-buttons"; // same grouping style
