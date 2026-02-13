@@ -16,10 +16,11 @@ export function GymFloor() {
   const zones = [
   { label: "Cardio Studio", screen: "CardioStudio" },
   { label: "Strength Studio", screen: "StrengthStudio" },
-  { label: "Stretch Studio", screen: "StretchStudio" }
+  { label: "Stretch Studio", screen: "StretchStudio" },
+  { label: "Summary", screen: "Summary" }
 ];
 
-// Create the main container
+   // Create the main container
 const container = document.createElement("div");
 container.className = "gymfloor-screen";
 
