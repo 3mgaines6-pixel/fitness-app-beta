@@ -28,8 +28,8 @@ export function Machine(id) {
   const lastRow = document.createElement("div");
   lastRow.className = "info-row";
   lastRow.textContent = last
-    ? `Last: ${last.reps.join("/")} reps @ ${last.weight.join("/")}`
-    : "Last: —";
+  ? `Last: ${last.reps.join("/")} @ ${last.weight.join("/")} ${last.handle ? "(" + last.handle + ")" : ""}`
+  : "Last: —";
 
   /* ---------- SUGGESTED WEIGHT ---------- */
   const suggested = computeSuggested(meta, last);
