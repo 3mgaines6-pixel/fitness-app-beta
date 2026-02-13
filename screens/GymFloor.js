@@ -24,13 +24,16 @@ export function GymFloor() {
   zoneHeader.textContent = "Training Zones";
   container.appendChild(zoneHeader);
 
+  const zoneButtons = document.createElement("div");
+  zoneButtons.className = "gymfloor-buttons"; // restores grouped styling
   zones.forEach(z => {
     const btn = document.createElement("button");
-    btn.className = "gym-btn";
+    btn.className = "gymfloor-btn"; // use your original button class
     btn.textContent = z.label;
     btn.onclick = () => window.renderScreen(z.screen);
-    container.appendChild(btn);
+    zoneButtons.appendChild(btn);
   });
+  container.appendChild(zoneButtons);
 
   /* ============================
      ANALYTICS SECTION
@@ -40,12 +43,15 @@ export function GymFloor() {
   analyticsHeader.className = "analytics-header";
   container.appendChild(analyticsHeader);
 
+  const analyticsButtons = document.createElement("div");
+  analyticsButtons.className = "gymfloor-buttons"; // same grouping style
   const summaryBtn = document.createElement("button");
-  summaryBtn.className = "gym-btn analytics-btn";
+  summaryBtn.className = "gymfloor-btn analytics-btn"; // styled like the others
   summaryBtn.textContent = "Workout Summary";
   summaryBtn.onclick = () => window.renderScreen("Summary");
-  container.appendChild(summaryBtn);
+  analyticsButtons.appendChild(summaryBtn);
+
+  container.appendChild(analyticsButtons);
 
   return container;
 }
-
