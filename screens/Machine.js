@@ -69,25 +69,50 @@ export function Machine(id) {
   }
 
   /* ---------- TIMER ---------- */
-  const timerBtn = document.createElement("button");
-  timerBtn.className = "timer-btn";
-  timerBtn.textContent = "Start Rest Timer";
+ /* ---------- REST TIMER (COUNTDOWN) ---------- */
+const timerBtn = document.createElement("button");
+timerBtn.className = "timer-btn";
 
-  const timerDisplay = document.createElement("div");
-  timerDisplay.className = "timer-display";
-  timerDisplay.textContent = "00:00";
+let restSeconds = 90; // default LIGHT
 
-  let timer = null;
-  timerBtn.onclick = () => {
-    if (timer) return;
-    let sec = 0;
-    timer = setInterval(() => {
-      sec++;
-      const m = String(Math.floor(sec / 60)).padStart(2, "0");
-      const s = String(sec % 60).padStart(2, "0");
-      timerDisplay.textContent = `${m}:${s}`;
-    }, 1000);
-  };
+if (meta.type === "HEAVY") restSeconds = 120;
+if (meta.type === "LIGHT") restSeconds = 90;
+if (meta.type === "CORE") restSeconds = 60;
+
+const formatTime = (sec) => {
+  const m = String(Math.floor(sec / 60)).padStart(1, "0");
+  const s = String(sec % 60).padStart(2, "0");
+  return `${m}:${s}`;
+};
+
+timerBtn.textContent = `Start ${formatTime(restSeconds)} Rest`;
+
+const timerDisplay = document.createElement("div");
+timerDisplay.className = "timer-display";
+timerDisplay.textContent = formatTime(restSeconds);
+
+let timerInterval = null;
+
+timerBtn.onclick = () => {
+  clearInterval(timerInterval);
+  let remaining = restSeconds;
+
+  timerDisplay.textContent = formatTime(remaining);
+
+  timerInterval = setInterval(() => {
+    remaining--;
+
+    if (remaining <= 0) {
+      clearInterval(timerInterval);
+      timerDisplay.textContent = "00:00";
+      timerBtn.textContent = "Rest Complete";
+      return;
+    }
+
+    timerDisplay.textContent = formatTime(remaining);
+  }, 1000);
+};
+
 
   /* ---------- LOG BUTTON ---------- */
   const logBtn = document.createElement("button");
