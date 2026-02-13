@@ -58,6 +58,11 @@ export function renderScreen(screenName, data) {
       screen = Machine(data);
       break;
 
+case "Summary":
+  root.appendChild(Summary());
+  break;
+
+        
     default:
       // Unified machine routing: "Machine-15", "Machine-3", etc.
       if (screenName.startsWith("Machine-")) {
