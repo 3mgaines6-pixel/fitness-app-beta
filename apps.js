@@ -10,6 +10,9 @@ import { CardioStudio } from "./screens/CardioStudio.js";
 import { StretchStudio } from "./screens/StretchStudio.js";
 import { Summary } from "./screens/Summary.js";
 import { WeeklyOverview } from "./screens/WeeklyOverview.js";
+import { MatrixTreadmill } from "./screens/MatrixTreadmill.js";
+import { MatrixCycle } from "./screens/MatrixCycle.js";
+import { MatrixElliptical } from "./screens/MatrixElliptical.js";
 
 /* =========================================
    SCREEN REGISTRY
@@ -58,6 +61,18 @@ export function renderScreen(screenName, data) {
     case "Machine":
       screen = Machine(data);
       break;
+
+     case "MatrixTreadmill":
+  screen = MatrixTreadmill();
+  break;
+
+case "MatrixCycle":
+  screen = MatrixCycle();
+  break;
+
+case "MatrixElliptical":
+  screen = MatrixElliptical();
+  break;
 
 case "Summary":
   screen = Summary();
