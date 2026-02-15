@@ -35,10 +35,7 @@ export function GymFloor() {
   });
   container.appendChild(zoneButtons);
 
-  /* ============================
-     ANALYTICS SECTION
-  ============================ */
-  /* ============================
+ /* ============================
    ANALYTICS SECTION
 ============================ */
 const analyticsHeader = document.createElement("h2");
@@ -49,12 +46,20 @@ container.appendChild(analyticsHeader);
 const analyticsButtons = document.createElement("div");
 analyticsButtons.className = "analytics-buttons";
 
+/* ----- Weekly Overview ----- */
 const weeklyBtn = document.createElement("button");
 weeklyBtn.className = "gymfloor-btn analytics-btn";
 weeklyBtn.textContent = "Weekly Overview";
 weeklyBtn.onclick = () => window.renderScreen("WeeklyOverview");
-
 analyticsButtons.appendChild(weeklyBtn);
+
+/* ----- Nutrition Guide ----- */
+const nutritionBtn = document.createElement("button");
+nutritionBtn.className = "gymfloor-btn analytics-btn";
+nutritionBtn.textContent = "Nutrition Guide";
+nutritionBtn.onclick = () => window.renderScreen("NutritionGuide");
+analyticsButtons.appendChild(nutritionBtn);
+
 container.appendChild(analyticsButtons);
 
 
