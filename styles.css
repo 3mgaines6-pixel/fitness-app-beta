@@ -473,3 +473,33 @@ input.danger {
 .analytics-btn {
   background-color: #2a2a2a; /* subtle difference if you want */
 }
+
+.nutrition-screen {
+  padding: 20px;
+  color: #cce4ff; /* soft blue */
+  text-align: left;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.nutrition-tips h2,
+.nutrition-screen h2 {
+  color: #66aaff;
+  margin-top: 20px;
+}
+
+.nutrition-input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 6px;
+  border: 1px solid #66aaff;
+  background: #0d1b2a;
+  color: white;
+}
+
+.nutrition-result {
+  margin: 10px 0;
+  font-size: 1.1em;
+  color: #88c0ff;
+}
