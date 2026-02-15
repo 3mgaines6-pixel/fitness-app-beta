@@ -13,6 +13,9 @@ import { WeeklyOverview } from "./screens/WeeklyOverview.js";
 import { MatrixTreadmill } from "./screens/MatrixTreadmill.js";
 import { MatrixCycle } from "./screens/MatrixCycle.js";
 import { MatrixElliptical } from "./screens/MatrixElliptical.js";
+import { NutritionGuide } from "./screens/NutritionGuide.js";
+
+
 
 /* =========================================
    SCREEN REGISTRY
@@ -82,6 +85,9 @@ case "WeeklyOverview":
   screen = WeeklyOverview();
   break;
 
+case "NutritionGuide":
+  screen = NutritionGuide();
+  break;
         
     default:
       // Unified machine routing: "Machine-15", "Machine-3", etc.
