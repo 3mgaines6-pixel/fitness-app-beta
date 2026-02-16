@@ -22,6 +22,24 @@ export function Machine(id) {
   tempoRow.className = "tempo-row";
   tempoRow.textContent = `Tempo ▸`;
 
+/* ---------- TEMPO DETAILS (HIDDEN BY DEFAULT) ---------- */
+const tempoDetails = document.createElement("div");
+tempoDetails.className = "info-row hidden";
+
+if (meta.type === "HEAVY") tempoDetails.textContent = "3-1-2";
+if (meta.type === "LIGHT") tempoDetails.textContent = "2-1-2";
+if (meta.type === "CORE")  tempoDetails.textContent = "2-2-2";
+
+/* Toggle open/close */
+tempoRow.onclick = () => {
+  tempoDetails.classList.toggle("hidden");
+};
+container.appendChild(tempoRow);
+container.appendChild(tempoDetails);
+
+
+
+  
   /* ---------- LAST SESSION ---------- */
   const history = loadHistory(rotatedId);
 const last = history.length > 0 ? history[history.length - 1] : null;
@@ -152,21 +170,21 @@ logBtn.onclick = () => {
   closeBtn.onclick = () => window.renderScreen("StrengthStudio");
 
   /* ---------- APPEND ---------- */
-  container.appendChild(title);
-  container.appendChild(subtitle);
+container.appendChild(title);
+container.appendChild(subtitle);
 
-  
+container.appendChild(tempoRow);
+container.appendChild(tempoDetails);
 
+container.appendChild(lastRow);
+container.appendChild(suggestedRow);
+container.appendChild(msg);
+container.appendChild(setsContainer);
+container.appendChild(timerBtn);
+container.appendChild(timerDisplay);
+container.appendChild(logBtn);
+container.appendChild(closeBtn);
 
-  container.appendChild(tempoRow);
-  container.appendChild(lastRow);
-  container.appendChild(suggestedRow);
-  container.appendChild(msg);
-  container.appendChild(setsContainer);
-  container.appendChild(timerBtn);
-  container.appendChild(timerDisplay);
-  container.appendChild(logBtn);
-  container.appendChild(closeBtn);
 
   return container;
 }
