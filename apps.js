@@ -27,8 +27,20 @@ window.SCREENS = {
   CardioStudio,
   StretchStudio,
   GymFloor,
-  Splash
+  Splash,
+
+  // Cardio Machines
+  MatrixTreadmill,
+  MatrixCycle,
+  MatrixElliptical,
+
+  // Coming soon (safe placeholders)
+  SpinClass: null,
+  CoreClass: null,
+  Rowing: null,
+  OutdoorWalk: null
 };
+
 
 /* =========================================
    RENDER FUNCTION
