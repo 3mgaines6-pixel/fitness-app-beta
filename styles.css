@@ -671,3 +671,6 @@ input.danger {
   cursor: pointer;
 }
 
+.log-btn {
+  margin-bottom: 12px; /* adds space below the Log button */
+}
