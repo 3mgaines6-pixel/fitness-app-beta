@@ -674,3 +674,8 @@ input.danger {
 .log-btn {
   margin-bottom: 12px; /* adds space below the Log button */
 }
+/* FORCE treadmill labels to be readable */
+.cardio-machine-screen .input-row label {
+  color: #000 !important;
+  font-weight: 700;
+}
