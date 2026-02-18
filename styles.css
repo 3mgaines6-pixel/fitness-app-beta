@@ -679,3 +679,29 @@ input.danger {
   color: #000 !important;
   font-weight: 700;
 }
+/* =========================================
+   MATRIX TREADMILL — NUTRITION GUIDE COLORS
+========================================= */
+
+/* Label text (Minutes, Miles, MPH, Incline) */
+.cardio-machine-screen .input-row label {
+  color: #f0f6ff !important;   /* soft white like Nutrition Guide */
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Input boxes */
+.cardio-machine-screen .input-row input {
+  background: #1e1e1e !important;  /* same dark panel style */
+  color: #f0f6ff !important;       /* readable white text */
+  border: 1px solid #88c0ff;       /* blue accent border */
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+/* Last session text */
+.cardio-machine-screen .last-session {
+  color: #88c0ff !important;       /* blue accent like Nutrition Guide */
+  font-weight: 500;
+}
