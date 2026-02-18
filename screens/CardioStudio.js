@@ -25,6 +25,12 @@ export function CardioStudio() {
   container.appendChild(makeBtn("🏃‍♀️", "Matrix Elliptical", "Elliptical"));
   container.appendChild(makeBtn("🚣", "Rowing Machine", "Rowing"));
   container.appendChild(makeBtn("🌤️", "Outdoor Walk", "OutdoorWalk"));
+/* ---------- RETURN TO GYM FLOOR ---------- */
+const backBtn = document.createElement("button");
+backBtn.className = "cardio-btn";
+backBtn.textContent = "← Return to Gym Floor";
+backBtn.onclick = () => window.renderScreen("GymFloor");
+container.appendChild(backBtn);
 
   return container;
 }
