@@ -1,4 +1,5 @@
-export function Treadmill() {
+export function MatrixTreadmill() {
+
   const container = document.createElement("div");
   container.className = "cardio-machine-screen";
 
