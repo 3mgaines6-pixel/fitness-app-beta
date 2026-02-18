@@ -647,16 +647,16 @@ input.danger {
   display: block;
   font-size: 1rem;
   margin-bottom: 4px;
-  color: #333;
+  color: #222; /* darker and more readable */
+  font-weight: 600; /* makes it pop */
 }
 
+
 .input-row input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
+  color: #000; /* ensures text is visible */
+  background: #fff; /* clean white input box */
 }
+
 
 /* Log button */
 .log-btn {
