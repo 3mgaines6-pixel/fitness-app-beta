@@ -100,6 +100,15 @@ export function MatrixTreadmill() {
   };
 
   container.appendChild(logBtn);
+/* ---------- RETURN BUTTON ---------- */
+const backBtn = document.createElement("button");
+backBtn.className = "log-btn"; // reuse your blue button style
+backBtn.textContent = "← Back to Cardio Studio";
+backBtn.style.marginTop = "10px";
+
+backBtn.onclick = () => window.renderScreen("CardioStudio");
+
+container.appendChild(backBtn);
 
   return container;
 }
