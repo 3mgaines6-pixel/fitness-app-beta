@@ -11,11 +11,21 @@ export function StrengthHistory() {
   /* ---------- LOAD HISTORY ---------- */
   const history = JSON.parse(localStorage.getItem("strength_history")) || [];
 
+  /* ---------- EMPTY STATE ---------- */
   if (history.length === 0) {
     const empty = document.createElement("p");
     empty.className = "empty-history";
     empty.textContent = "No strength sessions logged yet.";
     container.appendChild(empty);
+
+    // Return button even when empty
+    const backBtn = document.createElement("button");
+    backBtn.className = "cardio-btn";
+    backBtn.textContent = "← Back to Strength Studio";
+    backBtn.style.marginTop = "20px";
+    backBtn.onclick = () => window.renderScreen("StrengthStudio");
+    container.appendChild(backBtn);
+
     return container;
   }
 
@@ -45,16 +55,20 @@ export function StrengthHistory() {
       const row = document.createElement("div");
       row.className = "history-row";
 
-      const text = `${entry.machineName} — ${entry.sets}×${entry.reps} @ ${entry.weight} lb`;
+      // Fallbacks in case some fields are missing
+      const machine = entry.machineName || `Machine #${entry.id}`;
+      const sets = entry.sets || 1;
+      const reps = entry.reps || "?";
+      const weight = entry.weight || "?";
 
-      row.textContent = text;
+      row.textContent = `${machine} — ${sets}×${reps} @ ${weight} lb`;
       container.appendChild(row);
     });
   });
 
   /* ---------- RETURN BUTTON ---------- */
   const backBtn = document.createElement("button");
-  backBtn.className = "log-btn";
+  backBtn.className = "cardio-btn";
   backBtn.textContent = "← Back to Strength Studio";
   backBtn.style.marginTop = "20px";
   backBtn.onclick = () => window.renderScreen("StrengthStudio");
