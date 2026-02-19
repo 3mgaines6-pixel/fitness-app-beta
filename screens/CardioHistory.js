@@ -2,6 +2,15 @@ export function CardioHistory() {
   const container = document.createElement("div");
   container.className = "history-screen";
 
+  /* ---------- ICON MAP ---------- */
+  const CARDIO_ICONS = {
+    "Treadmill": "🏃‍♂️",
+    "Cycle": "🚴‍♂️",
+    "Elliptical": "🏃‍♀️",
+    "Rowing": "🚣‍♂️",
+    "Outdoor Walk": "🚶‍♂️"
+  };
+
   /* ---------- TITLE ---------- */
   const title = document.createElement("h1");
   title.className = "history-title";
@@ -18,7 +27,6 @@ export function CardioHistory() {
     empty.textContent = "No cardio sessions logged yet.";
     container.appendChild(empty);
 
-    // Return button even when empty
     const backBtn = document.createElement("button");
     backBtn.className = "cardio-btn";
     backBtn.textContent = "← Back to Cardio Studio";
@@ -56,10 +64,11 @@ export function CardioHistory() {
       row.className = "history-row";
 
       const machine = entry.machine || "Cardio";
+      const icon = CARDIO_ICONS[machine] || "🏋️";
       const minutes = entry.minutes || "?";
       const miles = entry.miles ? `${entry.miles} mi` : "";
 
-      row.textContent = `${machine} — ${minutes} min ${miles}`;
+      row.textContent = `${icon}  ${machine} — ${minutes} min ${miles}`;
       container.appendChild(row);
     });
   });
