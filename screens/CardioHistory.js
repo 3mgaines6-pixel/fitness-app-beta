@@ -54,8 +54,11 @@ export function CardioHistory() {
         }
 
         if (entry.type === "core") {
-          text = `Core Class — ${entry.minutes} min • Intensity ${entry.intensity}`;
-        }
+  text = `Core Class — ${entry.minutes} min • Intensity ${entry.intensity}`;
+
+  if (entry.hr) text += ` • HR ${entry.hr}`;
+  if (entry.calories) text += ` • ${entry.calories} cal`;
+}
 
         row.textContent = "• " + text;
         container.appendChild(row);
