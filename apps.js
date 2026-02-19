@@ -1,22 +1,22 @@
 /* =========================================
    IMPORT SCREENS (ORDER MATTERS)
 ========================================= */
-import { Splash } from "./screens/Splash.js";
-import { GymFloor } from "./screens/GymFloor.js";
-import { StrengthStudio } from "./screens/StrengthStudio.js?v=2";
-import { StrengthHistory } from "./screens/StrengthHistory.js";
-import { Machine } from "./screens/Machine.js";
-import { CardioStudio } from "./screens/CardioStudio.js";
-import { StretchStudio } from "./screens/StretchStudio.js";
-import { Summary } from "./screens/Summary.js";
-import { WeeklyOverview } from "./screens/WeeklyOverview.js";
-import { MatrixTreadmill } from "./screens/MatrixTreadmill.js";
-import { MatrixCycle } from "./screens/MatrixCycle.js";
-import { MatrixElliptical } from "./screens/MatrixElliptical.js";
-import { NutritionGuide } from "./screens/NutritionGuide.js";
-import { SpinClass } from "./screens/SpinClass.js";
-import { CoreClass } from "./screens/CoreClass.js";
-import { CardioHistory } from "./screens/CardioHistory.js";
+import { Splash } from "./screens/Splash.js?v=3";
+import { GymFloor } from "./screens/GymFloor.js?v=3";
+import { StrengthStudio } from "./screens/StrengthStudio.js?v=3";
+import { StrengthHistory } from "./screens/StrengthHistory.js?v=3";
+import { Machine } from "./screens/Machine.js?v=3";
+import { CardioStudio } from "./screens/CardioStudio.js?v=3";
+import { StretchStudio } from "./screens/StretchStudio.js?v=3";
+import { Summary } from "./screens/Summary.js?v=3";
+import { WeeklyOverview } from "./screens/WeeklyOverview.js?v=3";
+import { MatrixTreadmill } from "./screens/MatrixTreadmill.js?v=3";
+import { MatrixCycle } from "./screens/MatrixCycle.js?v=3";
+import { MatrixElliptical } from "./screens/MatrixElliptical.js?v=3";
+import { NutritionGuide } from "./screens/NutritionGuide.js?v=3";
+import { SpinClass } from "./screens/SpinClass.js?v=3";
+import { CoreClass } from "./screens/CoreClass.js?v=3";
+import { CardioHistory } from "./screens/CardioHistory.js?v=3";
 
 
 
