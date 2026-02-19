@@ -64,6 +64,12 @@ export function StrengthStudio() {
   wrapper.appendChild(backBtn);
   wrapper.appendChild(dayButtons);
   wrapper.appendChild(machineList);
+/* Strength History Button */
+const historyBtn = document.createElement("button");
+historyBtn.className = "strength-btn"; // or cardio-btn if you reuse that style
+historyBtn.textContent = "📅 Strength History";
+historyBtn.onclick = () => window.renderScreen("StrengthHistory");
+wrapper.appendChild(historyBtn);
 
   const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
   const startingDay = manualDaySelection || today;
