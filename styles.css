@@ -739,3 +739,52 @@ input.danger {
 }
 
 }
+
+/* =========================================
+   CARDIO HISTORY — WEEKLY OVERVIEW STYLE
+========================================= */
+
+.history-screen {
+  padding: 20px;
+  color: #f0f6ff;
+}
+
+.history-title {
+  text-align: center;
+  color: #88c0ff;
+  margin-bottom: 20px;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+/* Blue date header (same as Weekly Overview) */
+.history-date {
+  background: #1e3a5f;        /* deep blue panel */
+  color: #88c0ff;             /* bright blue text */
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Each cardio entry (dark panel like Weekly Overview rows) */
+.history-row {
+  background: #0f172a;        /* dark panel */
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  color: #f0f6ff;
+  font-size: 1rem;
+  line-height: 1.4;
+  border-left: 3px solid #88c0ff; /* blue accent stripe */
+}
+
+/* Empty state */
+.empty-history {
+  text-align: center;
+  color: #88c0ff;
+  margin-top: 20px;
+  font-size: 1.1rem;
+}
