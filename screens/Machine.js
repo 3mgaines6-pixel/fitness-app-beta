@@ -215,10 +215,16 @@ function saveHistory(id, reps, weight, handle = null) {
   /* -----------------------------------------
      GLOBAL STRENGTH HISTORY (for Strength HX)
   ----------------------------------------- */
+
+  // Lookup machine name from your MACHINES metadata
+  const machineName = MACHINES[id]?.name || `Machine #${id}`;
+
+  // Build a summary entry
   const strengthHistory = JSON.parse(localStorage.getItem("strength_history")) || [];
 
   strengthHistory.unshift({
-    id,
+    machineName,
+    sets: 1,            // one set per saveHistory call
     reps,
     weight,
     handle,
@@ -227,6 +233,8 @@ function saveHistory(id, reps, weight, handle = null) {
 
   localStorage.setItem("strength_history", JSON.stringify(strengthHistory));
 }
+
+
 
 
 /* ============================================================
