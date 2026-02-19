@@ -95,6 +95,10 @@ case "SpinClass":
 case "CoreClass":
   screen = CoreClass();
   break;
+        
+case "CardioHistory":
+  screen = CardioHistory();
+  break;
 
 case "Summary":
   screen = Summary();
