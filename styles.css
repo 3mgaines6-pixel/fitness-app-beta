@@ -788,3 +788,51 @@ input.danger {
   margin-top: 20px;
   font-size: 1.1rem;
 }
+
+/* =========================================
+   STRENGTH HISTORY — WEEKLY OVERVIEW STYLE
+========================================= */
+
+.history-screen {
+  padding: 20px;
+  color: #f0f6ff;
+}
+
+.history-title {
+  text-align: center;
+  color: #88c0ff;
+  margin-bottom: 20px;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+/* Blue date header */
+.history-date {
+  background: #1e3a5f;
+  color: #88c0ff;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Strength entry row */
+.history-row {
+  background: #0f172a;
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  color: #f0f6ff;
+  font-size: 1rem;
+  line-height: 1.4;
+  border-left: 3px solid #88c0ff;
+}
+
+.empty-history {
+  text-align: center;
+  color: #88c0ff;
+  margin-top: 20px;
+  font-size: 1.1rem;
+}
