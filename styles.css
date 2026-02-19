@@ -704,4 +704,38 @@ input.danger {
 .cardio-machine-screen .last-session {
   color: #88c0ff !important;       /* blue accent like Nutrition Guide */
   font-weight: 500;
+
+   .history-screen {
+  padding: 20px;
+  color: #f0f6ff;
+}
+
+.history-title {
+  text-align: center;
+  color: #88c0ff;
+  margin-bottom: 20px;
+}
+
+.history-date {
+  color: #88c0ff;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+  border-bottom: 1px solid #88c0ff;
+  padding-bottom: 4px;
+}
+
+.history-row {
+  margin-left: 10px;
+  margin-bottom: 6px;
+  color: #f0f6ff;
+  font-size: 1rem;
+}
+
+.empty-history {
+  text-align: center;
+  color: #ccc;
+  margin-top: 20px;
+}
+
 }
