@@ -14,6 +14,9 @@ import { MatrixTreadmill } from "./screens/MatrixTreadmill.js";
 import { MatrixCycle } from "./screens/MatrixCycle.js";
 import { MatrixElliptical } from "./screens/MatrixElliptical.js";
 import { NutritionGuide } from "./screens/NutritionGuide.js";
+import { SpinClass } from "./screens/SpinClass.js";
+import { CoreClass } from "./screens/CoreClass.js";
+import { CardioHistory } from "./screens/CardioHistory.js";
 
 
 
