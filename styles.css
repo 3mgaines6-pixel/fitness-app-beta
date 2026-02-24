@@ -850,3 +850,135 @@ input.danger {
   border: 1px solid #ccc;
   background: white;
 }
+/* --- Modern Machine Screen Layout --- */
+.machine-screen.modern {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: #f7faff;
+}
+
+/* --- Title + Subtitle --- */
+.machine-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0a4cff;
+  text-align: center;
+}
+
+.machine-subtitle {
+  text-align: center;
+  color: #555;
+  font-size: 15px;
+}
+
+/* --- Card Sections --- */
+.card-section,
+.suggested-box,
+.timer-card,
+.mode-toggle {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+/* --- Accordion (Tempo) --- */
+.accordion-header {
+  font-weight: 600;
+  color: #0a4cff;
+  cursor: pointer;
+}
+
+.accordion-body {
+  margin-top: 8px;
+  color: #333;
+}
+
+/* --- Info Rows --- */
+.info-row {
+  font-size: 15px;
+  color: #333;
+}
+
+.info-row.strong {
+  font-weight: 700;
+  color: #0a4cff;
+}
+
+/* --- Set Inputs (Modern + Nutrition Guide Style) --- */
+.sets-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.set-row-modern {
+  display: flex;
+  gap: 12px;
+}
+
+.set-row-modern input {
+  flex: 1;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid #cdd7ff;
+  background: #ffffff;
+  color: #333;
+}
+
+/* --- Timer --- */
+.timer-display-modern {
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  color: #0a4cff;
+  margin-bottom: 10px;
+}
+
+.timer-btn-modern {
+  width: 100%;
+  padding: 14px;
+  background: #0a4cff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* --- Toggles --- */
+.pill-toggle,
+.mode-select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #cdd7ff;
+  background: white;
+  font-size: 16px;
+}
+
+/* --- Buttons --- */
+.log-btn-modern,
+.close-btn-modern {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.log-btn-modern {
+  background: #0a4cff;
+  color: white;
+  border: none;
+}
+
+.close-btn-modern {
+  background: #e6ecff;
+  color: #0a4cff;
+  border: none;
+}
+
