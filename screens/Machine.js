@@ -245,27 +245,25 @@ function saveHistory(id, reps, weight, handle = null) {
 
   localStorage.setItem(key, JSON.stringify(history));
 
-  /* -----------------------------------------
-     GLOBAL STRENGTH HISTORY (for Strength HX)
-  ----------------------------------------- */
+ /* ---------- GLOBAL STRENGTH HISTORY ---------- */
+const strengthHistory = JSON.parse(localStorage.getItem("strength_history")) || [];
 
-  // Lookup machine name from your MACHINES metadata
-  const machineName = MACHINES[id]?.name || `Machine #${id}`;
-
-  // Build a summary entry
-  const strengthHistory = JSON.parse(localStorage.getItem("strength_history")) || [];
-
-  strengthHistory.unshift({
-    machineName,
-    sets: 1,            // one set per saveHistory call
-    reps,
-    weight,
-    handle,
-    date: Date.now()
-  });
-
-  localStorage.setItem("strength_history", JSON.stringify(strengthHistory));
+let mode = null;
+if (id === 9) {
+  mode = localStorage.getItem("machine-9-mode") || "Pec Fly";
 }
+
+strengthHistory.unshift({
+  id,
+  machineName: mode ? `${mode}` : MACHINES[id]?.name || `Machine #${id}`,
+  sets: 1,
+  reps,
+  weight,
+  date: Date.now()
+});
+
+localStorage.setItem("strength_history", JSON.stringify(strengthHistory));
+
 
 
 
