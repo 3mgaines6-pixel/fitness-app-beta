@@ -4,6 +4,8 @@
 import { Splash } from "./screens/Splash.js?v=3";
 import { GymFloor } from "./screens/GymFloor.js?v=3";
 import { StrengthStudio } from "./screens/StrengthStudio.js?v=3";
+import { StrengthFloor } from "./screens/StrengthFloor.js";
+
 import { StrengthHistory } from "./screens/StrengthHistory.js?v=3";
 import { Machine } from "./screens/Machine.js?v=3";
 import { CardioStudio } from "./screens/CardioStudio.js?v=3";
@@ -26,6 +28,7 @@ import { CardioHistory } from "./screens/CardioHistory.js?v=3";
 
 window.SCREENS = {
   StrengthStudio,
+   StrengthFloor,
   Machine,
   StrengthHistory,
   CardioStudio,
@@ -77,6 +80,12 @@ case "StrengthHistory":
       screen = CardioStudio();
       break;
 
+    // ADD THIS:
+    case "StrengthFloor":
+       screen = StrengthFloor();
+  break;
+
+        
     case "StretchStudio":
       screen = StretchStudio();
       break;
