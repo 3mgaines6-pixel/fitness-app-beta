@@ -1,25 +1,6 @@
 /* =========================================
    ==========  SPLASH SCREEN CSS ===========
    ========================================= */
-/* =========================================
-   ==========  STRENGTH STUDIO FIX =========
-   ========================================= */
-
-/* Day buttons row */
-.strength-day-buttons {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-/* Machine list column */
-.strength-machine-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
 
 body {
   background: rgba(0,0,0,0.85);
@@ -30,7 +11,7 @@ body {
 .splash-screen {
   width: 100%;
   height: 100vh;
-  background: #f2f2f2; /* light neutral background */
+  background: #f2f2f2;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,13 +21,12 @@ body {
 .splash-door {
   width: 180px;
   height: 300px;
-  background: #d9d9d9; /* neutral gray door */
-  border: 8px solid #333; /* thick outline */
+  background: #d9d9d9;
+  border: 8px solid #333;
   border-radius: 6px;
   position: relative;
 }
 
-/* Door handle */
 .splash-door::after {
   content: "";
   width: 22px;
@@ -59,11 +39,11 @@ body {
   transform: translateY(-50%);
 }
 
-/* Fade-in animation */
 @keyframes fadeIn {
   from { opacity: 0 }
   to { opacity: 1 }
 }
+
 /* =========================================
    ==========  GYM FLOOR SCREEN  ===========
    ========================================= */
@@ -71,9 +51,8 @@ body {
 .gymfloor-screen {
   width: 100%;
   height: 100vh;
-background: url("https://images.unsplash.com/photo-1517963628607-235ccdd5476c")
+  background: url("https://images.unsplash.com/photo-1517963628607-235ccdd5476c")
             center/cover no-repeat;
-
   backdrop-filter: blur(3px);
   display: flex;
   flex-direction: column;
@@ -108,58 +87,48 @@ background: url("https://images.unsplash.com/photo-1517963628607-235ccdd5476c")
   backdrop-filter: blur(4px);
   box-shadow: 0 4px 10px rgba(0,0,0,0.4);
 }
-/* =========================================
-   ==========  STRENGTH FLOOR CSS ==========
-   ========================================= */
+
 /* =========================================
    ==========  STRENGTH FLOOR CSS ==========
    ========================================= */
 
-/* Full-screen background container */
 .strength-screen {
   width: 100%;
   min-height: 100vh;
   background: rgba(0,0,0,0.85);
-  padding: 20px 0; /* remove side padding so wrapper controls width */
+  padding: 20px 0;
   color: white;
-
   display: flex;
-  justify-content: center; /* center wrapper horizontally */
+  justify-content: center;
 }
 
-/* Width-controlled inner wrapper (same idea as machine-screen > *) */
 .strength-wrapper {
   width: 100%;
-  max-width: 480px;   /* matches machine-card feel */
+  max-width: 480px;
   margin: 0 auto;
+  padding: 0 16px;
   box-sizing: border-box;
-  padding: 0 16px;    /* consistent side padding */
 }
 
-/* Title */
 .strength-title {
   text-align: center;
   font-size: 32px;
   margin-bottom: 20px;
 }
 
-/* Day buttons row */
 .strength-day-buttons {
   display: flex;
-  flex-direction: row;
   justify-content: center;
   gap: 12px;
   margin-bottom: 20px;
 }
 
-/* Machine list column */
 .strength-machine-buttons {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-/* Buttons */
 .strength-btn {
   padding: 14px;
   font-size: 18px;
@@ -172,9 +141,7 @@ background: url("https://images.unsplash.com/photo-1517963628607-235ccdd5476c")
   box-shadow: 0 4px 10px rgba(0,0,0,0.4);
 }
 
-/* Back button */
 .strength-back-btn {
-  display: block;
   width: 100%;
   margin: 10px 0 20px 0;
   padding: 12px 20px;
@@ -184,300 +151,280 @@ background: url("https://images.unsplash.com/photo-1517963628607-235ccdd5476c")
   border-radius: 8px;
   font-size: 1.1rem;
   font-weight: bold;
-  cursor: pointer;
   text-align: center;
   transition: all 0.2s ease;
 }
 
-.strength-back-btn:hover {
-  background-color: #444;
-  border-color: #888;
-}
-
-.strength-back-btn:active {
-  background-color: #111;
-  border-color: #666;
-  transform: scale(0.98);
-}
+.strength-back-btn:hover { background-color: #444; border-color: #888; }
+.strength-back-btn:active { background-color: #111; border-color: #666; transform: scale(0.98); }
 
 /* =========================================
    ==========  MACHINE SCREEN CSS ==========
    ========================================= */
 
-.machine-screen {
+.machine-screen.modern {
   padding: 20px;
-  color: white;
-
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: #f7faff;
   min-height: 100vh;
   max-width: 420px;
   margin: 0 auto;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; /* change to center if you want */
-  padding-top: 40px; /* pushes content down slightly */
 }
-.machine-screen > * {
-  width: 100%;
-  max-width: 500px; /* wider for phones + tablets */
-  margin: 0 auto;
-}
-
-.summary-screen {
-  padding: 20px;
-  color: white; /* makes all text white */
-  background: rgba(0, 0, 0, 0.6); /* dark overlay */
-  border-radius: 12px;
-  margin: 20px;
-  backdrop-filter: blur(4px); /* optional: gives a frosted look */
-}
-
-.summary-title {
-  font-size: 1.8rem;
-  margin-bottom: 15px;
-  color: #ff4d4d; /* red accent title */
-}
-
-.summary-list, .summary-totals, .summary-row {
-  background: rgba(0, 0, 0, 0.4);
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  color: white;
-}
-
-.analytics-header,
-.summary-totals,
-.summary-row {
-  color: white;
-}
-
-.summary-back-btn {
-  margin-top: 20px;
-  padding: 12px;
-  width: 100%;
-  background: #ff4d4d; /* red button */
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-
-.weekly-screen {
-  padding: 20px;
-  margin: 20px;
-  background: rgba(0,0,0,0.65);
-  border-radius: 12px;
-  color: white;
-  backdrop-filter: blur(4px);
-}
-
-.weekly-title {
-  font-size: 1.8rem;
-  margin-bottom: 20px;
-  color: #ff4d4d;
-}
-
-.weekly-card {
-  background: rgba(0,0,0,0.45);
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-
-.weekly-totals {
-  display: flex;
-  justify-content: space-between;
-  font-size: 1.2rem;
-}
-
-.weekly-subtitle {
-  margin-top: 20px;
-  margin-bottom: 10px;
-  color: #ff4d4d;
-}
-
-.weekly-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.weekly-row {
-  background: rgba(0,0,0,0.35);
-  padding: 12px;
-  border-radius: 8px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.weekly-machine-name {
-  font-weight: bold;
-}
-
-.weekly-back-btn {
-  margin-top: 25px;
-  padding: 12px;
-  width: 100%;
-  background: #ff4d4d;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-
-/* ---------- HEADER ---------- */
 
 .machine-title {
   font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 5px;
+  font-weight: 700;
+  color: #0a4cff;
   text-align: center;
 }
 
 .machine-subtitle {
-  font-size: 16px;
-  margin-bottom: 20px;
-  opacity: 0.9;
   text-align: center;
+  color: #555;
+  font-size: 15px;
 }
 
-.tempo-row {
-  color: #88c0ff;
-  text-align: center;
-  font-weight: 500;
+/* Cards */
+.card-section,
+.suggested-box,
+.timer-card,
+.mode-toggle {
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
-.hidden {
-  display: none;
-}
-
-
-/* ---------- SET INPUTS ---------- */
-
-.sets-container {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.set-row {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-
-.set-row input {
-  flex: 1;
-  padding: 10px;
-  border-radius: 6px;
-  border: none;
-  background: rgba(255,255,255,0.1);
-  color: #4da3ff; /* bright readable blue */
-  border: 1px solid rgba(255,255,255,0.2);
-}
-
-/* Keep placeholder text white */
-.set-row input::placeholder {
-  color: rgba(255,255,255,0.7);
-}
-
-
-/* ---------- TIMER ---------- */
-
-.timer-btn,
-.log-btn,
-.close-btn {
-  width: 100%;
-  padding: 14px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 8px;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.timer-btn {
-  background: #444;
-  color: white;
-}
-
-.timer-btn:hover {
-  background: #555;
-}
-
-.timer-display {
-  text-align: center;
-  font-size: 26px;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-/* ---------- LOG BUTTON ---------- */
-
-.log-btn {
-  background: #2ecc71;
-  color: black;
-}
-
-.log-btn:hover {
-  background: #27ae60;
-}
-
-/* ---------- CLOSE BUTTON ---------- */
-
-.close-btn {
-  background: #e74c3c;
-  color: white;
-}
-
-.close-btn:hover {
-  background: #c0392b;
-}
-@media (max-width: 480px) {
-  .machine-screen > * {
-    max-width: 95%; /* fills the phone nicely */
-  }
-}
-
-input.danger {
-  border: 2px solid red;
-  background-color: #ffdddd;
-}
-
-.gymfloor-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.gymfloor-btn {
-  padding: 12px;
-  font-size: 1rem;
-  border-radius: 6px;
-  background-color: #333;
-  color: #fff;
-  border: none;
+/* Tempo accordion */
+.accordion-header {
+  font-weight: 600;
+  color: #0a4cff;
   cursor: pointer;
 }
 
-.gymfloor-btn:hover {
-  background-color: #444;
+.accordion-body {
+  margin-top: 8px;
+  color: #333;
 }
 
-.analytics-btn {
-  background-color: #2a2a2a; /* subtle difference if you want */
+/* Info rows */
+.info-row { font-size: 15px; color: #333; }
+.info-row.strong { font-weight: 700; color: #0a4cff; }
+
+/* Set inputs */
+.sets-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
+
+.set-row-modern {
+  display: flex;
+  gap: 12px;
+}
+
+.set-row-modern input {
+  flex: 1;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid #cdd7ff;
+  background: #ffffff;
+  color: #333;
+}
+
+/* Timer */
+.timer-display-modern {
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  color: #0a4cff;
+  margin-bottom: 10px;
+}
+
+.timer-btn-modern {
+  width: 100%;
+  padding: 14px;
+  background: #0a4cff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Toggles */
+.pill-toggle,
+.mode-select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #cdd7ff;
+  background: white;
+  font-size: 16px;
+}
+
+/* Buttons */
+.log-btn-modern,
+.close-btn-modern {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.log-btn-modern {
+  background: #0a4cff;
+  color: white;
+  border: none;
+}
+
+.close-btn-modern {
+  background: #e6ecff;
+  color: #0a4cff;
+  border: none;
+}
+
+/* =========================================
+   ==========  HISTORY SCREENS  ============
+   ========================================= */
+
+.history-screen {
+  padding: 20px;
+  color: #f0f6ff;
+}
+
+.history-title {
+  text-align: center;
+  color: #88c0ff;
+  margin-bottom: 20px;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.history-date {
+  background: #1e3a5f;
+  color: #88c0ff;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.history-row {
+  background: #0f172a;
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  color: #f0f6ff;
+  font-size: 1rem;
+  line-height: 1.4;
+  border-left: 3px solid #88c0ff;
+}
+
+.empty-history {
+  text-align: center;
+  color: #88c0ff;
+  margin-top: 20px;
+  font-size: 1.1rem;
+}
+
+/* =========================================
+   ==========  CARDIO STUDIO CSS ===========
+   ========================================= */
+
+.cardio-screen {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  color: #cce4ff;
+}
+
+.cardio-title {
+  font-size: 2rem;
+  margin-bottom: 25px;
+  color: #88c0ff;
+}
+
+.cardio-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px 0 20px 0;
+}
+
+.cardio-btn {
+  width: 90%;
+  margin: 10px auto;
+  padding: 14px;
+  background: #88c0ff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.cardio-btn .icon {
+  font-size: 1.4rem;
+}
+
+/* Cardio machine input rows */
+.input-row {
+  width: 90%;
+  margin: 10px auto;
+  text-align: left;
+}
+
+.input-row label {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 4px;
+  color: #f0f6ff;
+  font-weight: 600;
+}
+
+.input-row input {
+  background: #1e1e1e;
+  color: #f0f6ff;
+  border: 1px solid #88c0ff;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.cardio-save-btn,
+.log-btn {
+  width: 90%;
+  padding: 14px;
+  margin-top: 15px;
+  background: #1a2e4a;
+  color: #cce4ff;
+  border: 1px solid #88c0ff;
+  border-radius: 10px;
+  font-size: 1.2rem;
+}
+
+/* =========================================
+   ==========  NUTRITION GUIDE CSS =========
+   ========================================= */
 
 .nutrition-screen {
   padding: 20px;
-  color: #cce4ff; /* soft blue */
-  text-align: left;
+  color: #cce4ff;
   max-width: 400px;
   margin: 0 auto;
 }
 
-.nutrition-tips h2,
 .nutrition-screen h2 {
   color: #66aaff;
   margin-top: 20px;
@@ -497,619 +444,4 @@ input.danger {
   margin: 10px 0;
   font-size: 1.1em;
   color: #88c0ff;
-}
-
-.cardio-screen {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  text-align: center;
-  color: #cce4ff; /* soft blue like Nutrition Guide */
-}
-
-.cardio-header {
-  color: #66aaff;
-  margin-top: 20px;
-}
-
-.cardio-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin: 10px 0 20px 0;
-}
-
-.cardio-btn {
-  padding: 12px;
-  border-radius: 6px;
-  border: 1px solid #66aaff;
-  background: #0d1b2a;
-  color: white;
-  font-size: 1em;
-}
-
-.cardio-back-btn {
-  margin-top: 30px;
-  padding: 12px 20px;
-  border-radius: 6px;
-  background: #1a2e4a;
-  color: #cce4ff;
-  border: 1px solid #66aaff;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.cardio-machine-screen {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  text-align: center;
-  color: #cce4ff; /* soft blue */
-}
-
-.cardio-machine-screen h1 {
-  color: #66aaff;
-  margin-bottom: 20px;
-}
-
-.cardio-input {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 6px;
-  border: 1px solid #66aaff;
-  background: #0d1b2a;
-  color: white;
-  font-size: 1em;
-}
-
-.cardio-save-btn {
-  width: 100%;
-  padding: 12px;
-  margin-top: 15px;
-  border-radius: 6px;
-  background: #1a2e4a;
-  color: #cce4ff;
-  border: 1px solid #66aaff;
-}
-
-.cardio-back-btn {
-  margin-top: 30px;
-  padding: 12px 20px;
-  border-radius: 6px;
-  background: #1a2e4a;
-  color: #cce4ff;
-  border: 1px solid #66aaff;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.cardio-screen {
-  text-align: center;
-  padding: 20px;
-}
-
-.cardio-title {
-  font-size: 2rem;
-  margin-bottom: 25px;
-  color: #88c0ff;
-}
-
-/* Full-width blue buttons */
-.cardio-btn {
-  width: 90%;
-  margin: 10px auto;
-  padding: 14px;
-  background: #88c0ff;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 1.2rem;
-  display: flex;
-  justify-content: center;   /* center icon + text as a group */
-  align-items: center;
-  gap: 10px;                 /* space between emoji + text */
-  cursor: pointer;
-}
-
-.cardio-btn .icon {
-  font-size: 1.4rem;
-}
-
-/* ---------- TREADMILL SCREEN ---------- */
-.cardio-machine-screen {
-  text-align: center;
-  padding: 20px;
-}
-
-.cardio-machine-title {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  color: #88c0ff;
-}
-
-.last-session {
-  font-size: 1rem;
-  margin-bottom: 20px;
-  color: #555;
-}
-
-/* Input rows */
-.input-row {
-  width: 90%;
-  margin: 10px auto;
-  text-align: left;
-}
-
-.input-row label {
-  display: block;
-  font-size: 1rem;
-  margin-bottom: 4px;
-  color: #222; /* darker and more readable */
-  font-weight: 600; /* makes it pop */
-}
-
-
-.input-row input {
-  color: #000; /* ensures text is visible */
-  background: #fff; /* clean white input box */
-}
-
-
-/* Log button */
-.log-btn {
-  width: 90%;
-  margin-top: 20px;
-  padding: 14px;
-  background: #88c0ff;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-
-.log-btn {
-  margin-bottom: 12px; /* adds space below the Log button */
-}
-/* FORCE treadmill labels to be readable */
-.cardio-machine-screen .input-row label {
-  color: #000 !important;
-  font-weight: 700;
-}
-/* =========================================
-   MATRIX TREADMILL — NUTRITION GUIDE COLORS
-========================================= */
-
-/* Label text (Minutes, Miles, MPH, Incline) */
-.cardio-machine-screen .input-row label {
-  color: #f0f6ff !important;   /* soft white like Nutrition Guide */
-  font-weight: 600;
-  font-size: 1rem;
-}
-
-/* Input boxes */
-.cardio-machine-screen .input-row input {
-  background: #1e1e1e !important;  /* same dark panel style */
-  color: #f0f6ff !important;       /* readable white text */
-  border: 1px solid #88c0ff;       /* blue accent border */
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-
-/* Last session text */
-.cardio-machine-screen .last-session {
-  color: #88c0ff !important;       /* blue accent like Nutrition Guide */
-  font-weight: 500;
-
-   .history-screen {
-  padding: 20px;
-  color: #f0f6ff;
-}
-
-.history-title {
-  text-align: center;
-  color: #88c0ff;
-  margin-bottom: 20px;
-}
-
-.history-date {
-  color: #88c0ff;
-  margin-top: 20px;
-  margin-bottom: 8px;
-  font-size: 1.2rem;
-  border-bottom: 1px solid #88c0ff;
-  padding-bottom: 4px;
-}
-
-.history-row {
-  margin-left: 10px;
-  margin-bottom: 6px;
-  color: #f0f6ff;
-  font-size: 1rem;
-}
-
-.empty-history {
-  text-align: center;
-  color: #ccc;
-  margin-top: 20px;
-}
-
-}
-
-/* =========================================
-   CARDIO HISTORY — WEEKLY OVERVIEW STYLE
-========================================= */
-
-.history-screen {
-  padding: 20px;
-  color: #f0f6ff;
-}
-
-.history-title {
-  text-align: center;
-  color: #88c0ff;
-  margin-bottom: 20px;
-  font-size: 1.6rem;
-  font-weight: 700;
-}
-
-/* Blue date header (same as Weekly Overview) */
-.history-date {
-  background: #1e3a5f;        /* deep blue panel */
-  color: #88c0ff;             /* bright blue text */
-  padding: 10px 12px;
-  border-radius: 8px;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
-/* Each cardio entry (dark panel like Weekly Overview rows) */
-.history-row {
-  background: #0f172a;        /* dark panel */
-  padding: 12px 14px;
-  border-radius: 8px;
-  margin-bottom: 8px;
-  color: #f0f6ff;
-  font-size: 1rem;
-  line-height: 1.4;
-  border-left: 3px solid #88c0ff; /* blue accent stripe */
-}
-
-/* Empty state */
-.empty-history {
-  text-align: center;
-  color: #88c0ff;
-  margin-top: 20px;
-  font-size: 1.1rem;
-}
-
-/* =========================================
-   STRENGTH HISTORY — WEEKLY OVERVIEW STYLE
-========================================= */
-
-.history-screen {
-  padding: 20px;
-  color: #f0f6ff;
-}
-
-.history-title {
-  text-align: center;
-  color: #88c0ff;
-  margin-bottom: 20px;
-  font-size: 1.6rem;
-  font-weight: 700;
-}
-
-/* Blue date header */
-.history-date {
-  background: #1e3a5f;
-  color: #88c0ff;
-  padding: 10px 12px;
-  border-radius: 8px;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
-/* Strength entry row */
-.history-row {
-  background: #0f172a;
-  padding: 12px 14px;
-  border-radius: 8px;
-  margin-bottom: 8px;
-  color: #f0f6ff;
-  font-size: 1rem;
-  line-height: 1.4;
-  border-left: 3px solid #88c0ff;
-}
-
-.empty-history {
-  text-align: center;
-  color: #88c0ff;
-  margin-top: 20px;
-  font-size: 1.1rem;
-}
-.set-row-modern {
-  display: flex;
-  gap: 12px;
-  margin: 10px 0;
-}
-
-.set-row-modern input {
-  flex: 1;
-  padding: 12px;
-  font-size: 1rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  background: white;
-}
-/* --- Modern Machine Screen Layout --- */
-.machine-screen.modern {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  background: #f7faff;
-}
-
-/* --- Title + Subtitle --- */
-.machine-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: #0a4cff;
-  text-align: center;
-}
-
-.machine-subtitle {
-  text-align: center;
-  color: #555;
-  font-size: 15px;
-}
-
-/* --- Card Sections --- */
-.card-section,
-.suggested-box,
-.timer-card,
-.mode-toggle {
-  background: white;
-  padding: 16px;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-}
-
-/* --- Accordion (Tempo) --- */
-.accordion-header {
-  font-weight: 600;
-  color: #0a4cff;
-  cursor: pointer;
-}
-
-.accordion-body {
-  margin-top: 8px;
-  color: #333;
-}
-
-/* --- Info Rows --- */
-.info-row {
-  font-size: 15px;
-  color: #333;
-}
-
-.info-row.strong {
-  font-weight: 700;
-  color: #0a4cff;
-}
-
-/* --- Set Inputs (Modern + Nutrition Guide Style) --- */
-.sets-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.set-row-modern {
-  display: flex;
-  gap: 12px;
-}
-
-.set-row-modern input {
-  flex: 1;
-  padding: 14px;
-  font-size: 16px;
-  border-radius: 10px;
-  border: 1px solid #cdd7ff;
-  background: #ffffff;
-  color: #333;
-}
-
-/* --- Timer --- */
-.timer-display-modern {
-  font-size: 32px;
-  font-weight: 700;
-  text-align: center;
-  color: #0a4cff;
-  margin-bottom: 10px;
-}
-
-.timer-btn-modern {
-  width: 100%;
-  padding: 14px;
-  background: #0a4cff;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-/* --- Toggles --- */
-.pill-toggle,
-.mode-select {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #cdd7ff;
-  background: white;
-  font-size: 16px;
-}
-
-/* --- Buttons --- */
-.log-btn-modern,
-.close-btn-modern {
-  width: 100%;
-  padding: 14px;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.log-btn-modern {
-  background: #0a4cff;
-  color: white;
-  border: none;
-}
-
-.close-btn-modern {
-  background: #e6ecff;
-  color: #0a4cff;
-  border: none;
-}
-
-/* --- Modern Machine Screen Layout --- */
-.machine-screen.modern {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  background: #f7faff;
-}
-
-/* --- Title + Subtitle --- */
-.machine-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: #0a4cff;
-  text-align: center;
-}
-
-.machine-subtitle {
-  text-align: center;
-  color: #555;
-  font-size: 15px;
-}
-
-/* --- Card Sections --- */
-.card-section,
-.suggested-box,
-.timer-card,
-.mode-toggle {
-  background: white;
-  padding: 16px;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-}
-
-/* --- Accordion (Tempo) --- */
-.accordion-header {
-  font-weight: 600;
-  color: #0a4cff;
-  cursor: pointer;
-}
-
-.accordion-body {
-  margin-top: 8px;
-  color: #333;
-}
-
-/* --- Info Rows --- */
-.info-row {
-  font-size: 15px;
-  color: #333;
-}
-
-.info-row.strong {
-  font-weight: 700;
-  color: #0a4cff;
-}
-
-/* --- Set Inputs (Modern + Nutrition Guide Style) --- */
-.sets-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.set-row-modern {
-  display: flex;
-  gap: 12px;
-}
-
-.set-row-modern input {
-  flex: 1;
-  padding: 14px;
-  font-size: 16px;
-  border-radius: 10px;
-  border: 1px solid #cdd7ff;
-  background: #ffffff;
-  color: #333;
-}
-
-/* --- Timer --- */
-.timer-display-modern {
-  font-size: 32px;
-  font-weight: 700;
-  text-align: center;
-  color: #0a4cff;
-  margin-bottom: 10px;
-}
-
-.timer-btn-modern {
-  width: 100%;
-  padding: 14px;
-  background: #0a4cff;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-/* --- Toggles --- */
-.pill-toggle,
-.mode-select {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #cdd7ff;
-  background: white;
-  font-size: 16px;
-}
-
-/* --- Buttons --- */
-.log-btn-modern,
-.close-btn-modern {
-  width: 100%;
-  padding: 14px;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.log-btn-modern {
-  background: #0a4cff;
-  color: white;
-  border: none;
-}
-
-.close-btn-modern {
-  background: #e6ecff;
-  color: #0a4cff;
-  border: none;
 }
