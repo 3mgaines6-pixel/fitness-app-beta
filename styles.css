@@ -513,3 +513,6 @@ body {
 .reset-button-modern:active {
   background: #002fb8;
 }
+.card {
+  background: red !important;
+}
