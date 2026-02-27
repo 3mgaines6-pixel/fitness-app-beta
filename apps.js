@@ -158,6 +158,7 @@ function runResetMotion(card) {
   }, 110);
 }
 
+window.runResetMotion = runResetMotion;
 
 /* =========================================
    INITIAL LOAD
