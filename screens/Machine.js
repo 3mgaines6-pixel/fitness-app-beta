@@ -17,27 +17,49 @@ export function Machine(id) {
   const suggested = computeSuggested(meta, last);
 
   /* Build UI */
-  const setWrapper = renderSetInputs(suggested); // FIXED: capture wrapper
+  const setWrapper = renderSetInputs(suggested);
 
-  container.append(
+  /* -------------------------------
+     CARD WRAPPER FOR RESET MOTION
+  -------------------------------- */
+  const card = document.createElement("div");
+  card.className = "machine-card card";   // ⭐ card class added for animation
+
+  card.append(
     renderTitle(meta, rotatedId),
     renderSubtitle(meta),
     renderTempo(meta),
     renderLastSession(last),
     renderSuggested(suggested),
-    setWrapper, // FIXED: inputs now appear
+    setWrapper,
     renderTimer(meta),
     renderHandleToggle(rotatedId),
     renderModeToggle(rotatedId),
-    renderLogButton(rotatedId, suggested, setWrapper), // FIXED: pass wrapper
-    renderCloseButton()
+    renderLogButton(rotatedId, suggested, setWrapper)
   );
 
+  /* -------------------------------
+     RESET BUTTON
+  -------------------------------- */
+  const resetBtn = document.createElement("button");
+  resetBtn.className = "reset-button-modern";
+  resetBtn.textContent = "Reset";
+
+  resetBtn.onclick = () => {
+    runResetMotion(card);   // ⭐ calls global animation
+  };
+
+  /* -------------------------------
+     CLOSE BUTTON
+  -------------------------------- */
+  const closeBtn = renderCloseButton();
+
+  container.append(card, resetBtn, closeBtn);
   return container;
 }
 
 /* ============================================================
-   COMPONENTS
+   COMPONENTS (unchanged)
 ============================================================ */
 
 function renderTitle(meta, id) {
@@ -126,7 +148,7 @@ function renderSetInputs(suggested) {
     weight.placeholder = suggested.weight;
 
     row.append(reps, weight);
-    wrapper.append(row);   // ⭐ FIXED — rows now appear
+    wrapper.append(row);
     inputs.push({ reps, weight });
   }
 
