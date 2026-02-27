@@ -133,12 +133,9 @@ export function renderScreen(screenName, data) {
 window.renderScreen = renderScreen;
 
 /* =========================================
-   CALMING RESET MOTION (PLACE IT HERE)
+   CALMING RESET MOTION (GLOBAL FUNCTION)
 ========================================= */
-
-function runResetMotion() {
-  const card = document.querySelector('.card');
-
+function runResetMotion(card) {
   // LIFT
   card.classList.add('lift');
 
@@ -160,6 +157,7 @@ function runResetMotion() {
 
   }, 110);
 }
+
 
 /* =========================================
    INITIAL LOAD
