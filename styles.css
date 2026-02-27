@@ -187,7 +187,8 @@ body {
 ========================================= */
 .machine-card {
   position: relative;
-  isolation: isolate; /* ⭐ REQUIRED FOR ANIMATION */
+  isolation: isolate;        /* ⭐ REQUIRED */
+  transform: translateZ(0);  /* ⭐ REQUIRED */
   display: block;
   background: #ffffff;
   border-radius: 18px;
