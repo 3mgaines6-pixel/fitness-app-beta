@@ -3,7 +3,7 @@
 ========================================= */
 import { Splash } from "./screens/Splash.js?v=3";
 import { GymFloor } from "./screens/GymFloor.js?v=3";
-import { StrengthFloor } from "./screens/StrengthFloor.js";   // ⭐ NEW
+import { StrengthFloor } from "./screens/StrengthFloor.js";
 import { StrengthHistory } from "./screens/StrengthHistory.js?v=3";
 import { Machine } from "./screens/Machine.js?v=3";
 import { CardioStudio } from "./screens/CardioStudio.js?v=3";
@@ -23,7 +23,7 @@ import { CardioHistory } from "./screens/CardioHistory.js?v=3";
 ========================================= */
 
 window.SCREENS = {
-  StrengthFloor,     // ⭐ NEW
+  StrengthFloor,
   Machine,
   StrengthHistory,
   CardioStudio,
@@ -31,16 +31,13 @@ window.SCREENS = {
   GymFloor,
   Splash,
 
-  // Cardio Machines
   MatrixTreadmill,
   MatrixCycle,
   MatrixElliptical,
 
-  // Group Fitness
   SpinClass,
   CoreClass,
 
-  // Coming soon
   Rowing: null,
   OutdoorWalk: null
 };
@@ -64,7 +61,7 @@ export function renderScreen(screenName, data) {
       screen = GymFloor();
       break;
 
-    case "StrengthFloor":      // ⭐ NEW
+    case "StrengthFloor":
       screen = StrengthFloor();
       break;
 
@@ -121,7 +118,6 @@ export function renderScreen(screenName, data) {
       break;
 
     default:
-      // Unified machine routing: "Machine-15", "Machine-3", etc.
       if (screenName.startsWith("Machine-")) {
         const id = Number(screenName.split("-")[1]);
         screen = Machine(id);
@@ -135,6 +131,35 @@ export function renderScreen(screenName, data) {
 }
 
 window.renderScreen = renderScreen;
+
+/* =========================================
+   CALMING RESET MOTION (PLACE IT HERE)
+========================================= */
+
+function runResetMotion() {
+  const card = document.querySelector('.card');
+
+  // LIFT
+  card.classList.add('lift');
+
+  // QUICK-BEAT PEAK PAUSE
+  setTimeout(() => {
+    card.classList.remove('lift');
+    card.classList.add('returning');
+
+    // SHADOW SOFTEN DELAY
+    setTimeout(() => {
+      card.classList.add('shadow-soften');
+
+      // CLEANUP
+      setTimeout(() => {
+        card.classList.remove('returning', 'shadow-soften');
+      }, 260);
+
+    }, 90);
+
+  }, 110);
+}
 
 /* =========================================
    INITIAL LOAD
