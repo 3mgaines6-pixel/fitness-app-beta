@@ -46,8 +46,9 @@ export function Machine(id) {
   resetBtn.textContent = "Reset";
 
   resetBtn.onclick = () => {
-    runResetMotion(card);   // ⭐ calls global animation
-  };
+  window.runResetMotion(card);   // ⭐ call through window
+};
+
 
   /* -------------------------------
      CLOSE BUTTON
