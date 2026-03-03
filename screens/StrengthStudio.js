@@ -113,7 +113,8 @@ export function StrengthStudio() {
       btn.className = "machine-btn";
       btn.textContent = `${emoji} #${rotatedId} ${meta.name}`;
 
-      btn.onclick = () => window.renderScreen("Machine", { id: rotatedId });
+      /* ⭐ FIXED LINE — pass the ID directly, not an object */
+      btn.onclick = () => window.renderScreen("Machine", rotatedId);
 
       machineList.appendChild(btn);
     });
