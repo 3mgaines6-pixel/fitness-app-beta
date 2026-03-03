@@ -54,7 +54,9 @@ html, body {
 /* =========================================
    HEADER — UNIFIED BLUE THEME
 ========================================= */
-.header-blue {
+.header-blue,
+.strength-header,
+.gym-header {
   width: 100%;
   padding: 22px 0;
   text-align: center;
@@ -130,10 +132,6 @@ html, body {
   width: 100%;
   max-width: 500px;
   padding-bottom: 40px;
-}
-
-.strength-header {
-  composes: header-blue;
 }
 
 .rotation-label {
