@@ -82,8 +82,8 @@ export function StrengthStudio() {
   machineList.className = "machine-list";
   wrapper.appendChild(machineList);
 
-  const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
-  const startingDay = manualDaySelection || today;
+  const today = new Date().toLocaleDateString("en-US", { weekday: "short" }).replace(".", "");
+const startingDay = manualDaySelection || today;
 
   renderMachineList(startingDay);
   highlightSelectedDay(dayButtons, startingDay);
