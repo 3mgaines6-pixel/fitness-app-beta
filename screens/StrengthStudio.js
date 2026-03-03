@@ -8,7 +8,7 @@ import { getRotationInfo, getRotatedMachine } from "../data/rotation.js";
 let manualDaySelection = localStorage.getItem("selectedDay") || null;
 
 /* =========================================
-   EMOJIS (YOU HAD THIS BEFORE)
+   EMOJIS
 ========================================= */
 const MACHINE_EMOJIS = {
   15: "🦵",
@@ -54,7 +54,7 @@ export function StrengthStudio() {
   const dayButtons = document.createElement("div");
   dayButtons.className = "day-selector";
 
-  const days = Object.keys(WEEKLY_SCHEDULE);
+  const days = Object.keys(WEEKLY_SCHEDULE); // ["Mon","Tue","Wed","Thur","Fri"]
 
   days.forEach(day => {
     const btn = document.createElement("button");
@@ -82,8 +82,21 @@ export function StrengthStudio() {
   machineList.className = "machine-list";
   wrapper.appendChild(machineList);
 
-  const today = new Date().toLocaleDateString("en-US", { weekday: "short" }).replace(".", "");
-const startingDay = manualDaySelection || today;
+  /* =========================================
+     FIXED DAY DETECTION
+     Converts "Mon." → "Mon", "Thu" → "Thur"
+  ========================================= */
+  let today = new Date().toLocaleDateString("en-US", { weekday: "short" }).replace(".", "");
+
+  if (today === "Thu") today = "Thur"; // match your schedule key
+
+  // If saved day is invalid, clear it
+  if (!WEEKLY_SCHEDULE[manualDaySelection]) {
+    manualDaySelection = null;
+    localStorage.removeItem("selectedDay");
+  }
+
+  const startingDay = manualDaySelection || today;
 
   renderMachineList(startingDay);
   highlightSelectedDay(dayButtons, startingDay);
@@ -92,7 +105,10 @@ const startingDay = manualDaySelection || today;
     machineList.innerHTML = "";
 
     const ids = WEEKLY_SCHEDULE[day];
-    if (!ids) return;
+    if (!ids) {
+      machineList.innerHTML = `<div style="text-align:center; opacity:0.6; margin-top:20px;">No machines for ${day}</div>`;
+      return;
+    }
 
     ids.forEach(id => {
       const rotatedId = getRotatedMachine(id);
@@ -105,7 +121,7 @@ const startingDay = manualDaySelection || today;
       btn.className = "machine-btn";
       btn.textContent = `${emoji} #${rotatedId} ${meta.name}`;
 
-      /* FIXED NAVIGATION */
+      /* CORRECT NAVIGATION */
       btn.onclick = () => window.renderScreen("Machine", rotatedId);
 
       machineList.appendChild(btn);
