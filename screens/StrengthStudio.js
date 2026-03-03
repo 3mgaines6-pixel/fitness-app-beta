@@ -7,6 +7,28 @@ import { getRotationInfo, getRotatedMachine } from "../data/rotation.js";
 ========================================= */
 let manualDaySelection = localStorage.getItem("selectedDay") || null;
 
+/* =========================================
+   EMOJIS (YOU HAD THIS BEFORE)
+========================================= */
+const MACHINE_EMOJIS = {
+  15: "🦵",
+  115: "🦵",
+  22: "🦿",
+  122: "🦿",
+  6: "💪",
+  106: "💪",
+  9: "🏋️",
+  109: "🏋️",
+  3: "🫀",
+  103: "🫀",
+  12: "🦾",
+  112: "🦾",
+  18: "🦵",
+  118: "🦵",
+  30: "🦴",
+  130: "🦴"
+};
+
 export function StrengthStudio() {
   const container = document.createElement("div");
   container.className = "strength-screen";
@@ -77,11 +99,13 @@ export function StrengthStudio() {
       const meta = MACHINES[rotatedId];
       if (!meta) return;
 
+      const emoji = MACHINE_EMOJIS[rotatedId] || "🏋️";
+
       const btn = document.createElement("button");
       btn.className = "machine-btn";
-      btn.textContent = `#${rotatedId} ${meta.name}`;
+      btn.textContent = `${emoji} #${rotatedId} ${meta.name}`;
 
-      /* FIXED NAVIGATION — THIS IS THE IMPORTANT PART */
+      /* FIXED NAVIGATION */
       btn.onclick = () => window.renderScreen("Machine", rotatedId);
 
       machineList.appendChild(btn);
