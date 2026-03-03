@@ -7,6 +7,8 @@
 import { Splash } from "./screens/Splash.js?v=3";
 import { GymFloor } from "./screens/GymFloor.js?v=3";
 import { StrengthFloor } from "./screens/StrengthFloor.js";
+import { StrengthStudio } from "./screens/StrengthStudio.js?v=3";
+
 import { StrengthHistory } from "./screens/StrengthHistory.js?v=3";
 import { Machine } from "./screens/Machine.js?v=3";
 import { CardioStudio } from "./screens/CardioStudio.js?v=3";
@@ -28,6 +30,8 @@ import { CardioHistory } from "./screens/CardioHistory.js?v=3";
 window.SCREENS = {
   StrengthFloor,
   Machine,
+   StrengthStudio,
+
   StrengthHistory,
   CardioStudio,
   StretchStudio,
@@ -59,7 +63,8 @@ export function renderScreen(screenName, data) {
     case "Splash": screen = Splash(); break;
     case "GymFloor": screen = GymFloor(); break;
     case "StrengthFloor": screen = StrengthFloor(); break;
-    case "StrengthHistory": screen = StrengthHistory(); break;
+  case "StrengthStudio": screen = StrengthStudio(); break;
+     case "StrengthHistory": screen = StrengthHistory(); break;
     case "CardioStudio": screen = CardioStudio(); break;
     case "StretchStudio": screen = StretchStudio(); break;
     case "Machine": screen = Machine(data); break;
