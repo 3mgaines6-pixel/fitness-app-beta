@@ -433,3 +433,20 @@ html, body {
   font-weight: 700;
   text-align: center;
 }
+.machine-input {
+  width: 80%;
+  margin: 6px auto;
+  padding: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: #1e3a8a; /* deep navy blue */
+  border: 1px solid #3b82f6; /* soft blue outline */
+  border-radius: 10px;
+  text-align: center;
+}
+
+.machine-input::placeholder {
+  color: #bfdbfe; /* light blue */
+  opacity: 1;
+}
