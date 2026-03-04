@@ -49,7 +49,7 @@ export function StrengthHistory() {
         wrapper.appendChild(row);
       });
     });
-  });
+
 
   /* RETURN BUTTON */
   const returnBtn = document.createElement("button");
