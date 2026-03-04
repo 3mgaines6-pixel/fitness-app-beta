@@ -43,11 +43,11 @@ export function StrengthStudio() {
   header.textContent = "Strength Studio";
   wrapper.appendChild(header);
 
-  /* ROTATION LABEL — NOW SHOWS WEEK */
+  /* ROTATION LABEL — SAFE VERSION */
   const rot = getRotationInfo();
   const rotationLabel = document.createElement("div");
   rotationLabel.className = "rotation-label";
-  rotationLabel.textContent = `Block ${rot.block} • Week ${rot.week} of ${rot.range} • ${rot.mode}`;
+  rotationLabel.textContent = `Block ${rot.block} • Week ${rot.week} • ${rot.range} • ${rot.mode}`;
   wrapper.appendChild(rotationLabel);
 
   /* DAY SELECTOR */
@@ -113,7 +113,6 @@ export function StrengthStudio() {
       btn.className = "machine-btn";
       btn.textContent = `${emoji} #${rotatedId} ${meta.name}`;
 
-      /* FIXED: PASS ROTATED ID FOR MACHINE SCREEN */
       btn.onclick = () => window.renderScreen("Machine", rotatedId);
 
       machineList.appendChild(btn);
