@@ -1,5 +1,4 @@
 import { MACHINES } from "../data/machines.js";
-import { getRotatedMachine } from "../data/rotation.js";
 
 export function Machine(id) {
   const meta = MACHINES[id];
@@ -22,16 +21,14 @@ export function Machine(id) {
   subtitle.textContent = `${meta.muscles} • ${meta.type.toUpperCase()} • ${meta.reps}`;
   wrapper.appendChild(subtitle);
 
-  /* TEMPO SECTION */
+  /* TEMPO */
   const tempoSection = document.createElement("div");
   tempoSection.className = "tempo-section";
 
   const tempoToggle = document.createElement("button");
   tempoToggle.className = "tempo-toggle";
   tempoToggle.textContent = "Tempo ▾";
-  tempoToggle.onclick = () => {
-    tempoContent.classList.toggle("hidden");
-  };
+  tempoToggle.onclick = () => tempoContent.classList.toggle("hidden");
   tempoSection.appendChild(tempoToggle);
 
   const tempoContent = document.createElement("div");
@@ -68,10 +65,14 @@ export function Machine(id) {
     const reps = document.createElement("input");
     reps.className = "machine-input";
     reps.placeholder = "Reps";
+    reps.inputMode = "numeric";
+    reps.pattern = "[0-9]*";
 
     const weight = document.createElement("input");
     weight.className = "machine-input";
     weight.placeholder = meta.base;
+    weight.inputMode = "numeric";
+    weight.pattern = "[0-9]*";
 
     row.appendChild(reps);
     row.appendChild(weight);
@@ -81,7 +82,6 @@ export function Machine(id) {
   inputs.appendChild(createInputRow());
   inputs.appendChild(createInputRow());
   inputs.appendChild(createInputRow());
-
   wrapper.appendChild(inputs);
 
   /* TIMER */
@@ -108,9 +108,7 @@ export function Machine(id) {
   closeBtn.onclick = () => window.renderScreen("StrengthStudio");
   wrapper.appendChild(closeBtn);
 
-  /* ============================================================
-     TIMER ENGINE
-  ============================================================ */
+  /* TIMER ENGINE */
   let timerInterval = null;
   let timeLeft = 120;
 
@@ -128,15 +126,11 @@ export function Machine(id) {
     timerInterval = setInterval(() => {
       timeLeft--;
       updateTimer();
-      if (timeLeft <= 0) {
-        clearInterval(timerInterval);
-      }
+      if (timeLeft <= 0) clearInterval(timerInterval);
     }, 1000);
   };
 
-  /* ============================================================
-     LOGGING ENGINE
-  ============================================================ */
+  /* LOGGING ENGINE */
   logBtn.onclick = () => {
     const rows = wrapper.querySelectorAll(".machine-row");
     const historyKey = `machine-${id}-history`;
@@ -147,9 +141,7 @@ export function Machine(id) {
       const inputs = row.querySelectorAll("input");
       const reps = inputs[0].value.trim();
       const weight = inputs[1].value.trim();
-      if (reps && weight) {
-        entry.push({ reps, weight });
-      }
+      if (reps && weight) entry.push({ reps, weight });
     });
 
     if (entry.length === 0) return;
@@ -162,11 +154,13 @@ export function Machine(id) {
 
     localStorage.setItem(historyKey, JSON.stringify(history));
 
-    const lastSet = entry[entry.length - 1];
-    last.textContent = `Last: ${lastSet.reps} reps @ ${lastSet.weight}`;
+    /* SHOW ALL SETS */
+    const repsList = entry.map(s => s.reps).join("/");
+    const weightList = entry.map(s => s.weight).join("/");
+    last.textContent = `Last: ${repsList} reps @ ${weightList}`;
 
-    // SAVE LAST SET PERSISTENTLY
-    meta.last = `${lastSet.reps} reps @ ${lastSet.weight}`;
+    /* SAVE LAST PERSISTENTLY */
+    meta.last = `${repsList} reps @ ${weightList}`;
     localStorage.setItem("machines", JSON.stringify(MACHINES));
   };
 
