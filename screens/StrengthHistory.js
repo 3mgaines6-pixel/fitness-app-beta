@@ -2,77 +2,62 @@ export function StrengthHistory() {
   const container = document.createElement("div");
   container.className = "history-screen";
 
-  /* ---------- TITLE ---------- */
-  const title = document.createElement("h1");
-  title.className = "history-title";
-  title.textContent = "Strength History";
-  container.appendChild(title);
+  const wrapper = document.createElement("div");
+  wrapper.className = "history-wrapper";
+  container.appendChild(wrapper);
 
-  /* ---------- LOAD HISTORY ---------- */
-  const history = JSON.parse(localStorage.getItem("strength_history")) || [];
+  /* HEADER */
+  const header = document.createElement("div");
+  header.className = "history-header";
+  header.textContent = "Strength History";
+  wrapper.appendChild(header);
 
-  /* ---------- EMPTY STATE ---------- */
-  if (history.length === 0) {
-    const empty = document.createElement("p");
-    empty.className = "empty-history";
-    empty.textContent = "No strength sessions logged yet.";
-    container.appendChild(empty);
+  /* LOAD ALL MACHINE KEYS */
+  const keys = Object.keys(localStorage).filter(k =>
+    k.startsWith("machine-") && k.endsWith("-history")
+  );
 
-    // Return button even when empty
-    const backBtn = document.createElement("button");
-    backBtn.className = "cardio-btn";
-    backBtn.textContent = "← Back to Strength Studio";
-    backBtn.style.marginTop = "20px";
-    backBtn.onclick = () => window.renderScreen("StrengthStudio");
-    container.appendChild(backBtn);
-
-    return container;
+  if (keys.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "history-empty";
+    empty.textContent = "No history logged yet.";
+    wrapper.appendChild(empty);
   }
 
-  /* ---------- GROUP BY DATE ---------- */
-  const groups = {};
+  /* DISPLAY HISTORY FOR EACH MACHINE */
+  keys.forEach(key => {
+    const machineId = key.replace("machine-", "").replace("-history", "");
+    const history = JSON.parse(localStorage.getItem(key)) || [];
 
-  history.forEach(entry => {
-    const date = new Date(entry.date);
-    const dateKey = date.toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric"
-    });
+    if (history.length === 0) return;
 
-    if (!groups[dateKey]) groups[dateKey] = [];
-    groups[dateKey].push(entry);
-  });
+    const machineLabel = document.createElement("div");
+    machineLabel.className = "history-machine-label";
+    machineLabel.textContent = `Machine #${machineId}`;
+    wrapper.appendChild(machineLabel);
 
-  /* ---------- RENDER GROUPS ---------- */
-  Object.keys(groups).forEach(dateKey => {
-    const dateHeader = document.createElement("h2");
-    dateHeader.className = "history-date";
-    dateHeader.textContent = dateKey;
-    container.appendChild(dateHeader);
+    history.forEach(entry => {
+      const dateLabel = document.createElement("div");
+      dateLabel.className = "history-date";
+      dateLabel.textContent = entry.date;
+      wrapper.appendChild(dateLabel);
 
-    groups[dateKey].forEach(entry => {
-      const row = document.createElement("div");
-      row.className = "history-row";
-
-      // Fallbacks in case some fields are missing
-      const machine = entry.machineName || `Machine #${entry.id}`;
-      const sets = entry.sets || 1;
-      const reps = entry.reps || "?";
-      const weight = entry.weight || "?";
-
-      row.textContent = `${machine} — ${sets}×${reps} @ ${weight} lb`;
-      container.appendChild(row);
+      entry.sets.forEach((set, index) => {
+        const row = document.createElement("div");
+        row.className = "history-row";
+        row.textContent = `Set ${index + 1}: ${set.reps} reps @ ${set.weight}`;
+        wrapper.appendChild(row);
+      });
     });
   });
 
-  /* ---------- RETURN BUTTON ---------- */
-  const backBtn = document.createElement("button");
-  backBtn.className = "cardio-btn";
-  backBtn.textContent = "← Back to Strength Studio";
-  backBtn.style.marginTop = "20px";
-  backBtn.onclick = () => window.renderScreen("StrengthStudio");
-  container.appendChild(backBtn);
+  /* RETURN BUTTON */
+  const returnBtn = document.createElement("button");
+  returnBtn.className = "history-return-btn";
+  returnBtn.textContent = "← Back to Strength Studio";
+  returnBtn.onclick = () => window.renderScreen("StrengthStudio");
+  wrapper.appendChild(returnBtn);
 
   return container;
 }
+
