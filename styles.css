@@ -450,3 +450,73 @@ html, body {
   color: #bfdbfe; /* light blue */
   opacity: 1;
 }
+
+.history-screen {
+  width: 100%;
+  padding: 20px 0;
+}
+
+.history-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.history-header {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e88e5;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.history-machine-label {
+  width: 90%;
+  margin-top: 20px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  text-align: left;
+}
+
+.history-date {
+  width: 90%;
+  margin-top: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #3b82f6;
+  text-align: left;
+}
+
+.history-row {
+  width: 90%;
+  padding: 10px;
+  margin: 4px 0;
+  background: #1e3a8a;
+  color: white;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.history-empty {
+  font-size: 1.2rem;
+  color: #1e3a8a;
+  margin-top: 20px;
+}
+
+.history-return-btn {
+  width: 90%;
+  margin: 25px 0 10px 0;
+  padding: 16px;
+  background: #0d47a1;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
