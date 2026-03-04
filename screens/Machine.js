@@ -1,329 +1,112 @@
 import { MACHINES } from "../data/machines.js";
 import { getRotatedMachine } from "../data/rotation.js";
 
-/* ============================================================
-   MAIN MACHINE SCREEN (MODERNIZED UI)
-============================================================ */
-
 export function Machine(id) {
-  const rotatedId = getRotatedMachine(id);
-  const meta = MACHINES[rotatedId];
-
+  const meta = MACHINES[id];
   const container = document.createElement("div");
-  container.className = "machine-screen modern";
+  container.className = "machine-screen";
 
-  const history = loadHistory(rotatedId);
-  const last = history.length ? history[history.length - 1] : null;
-  const suggested = computeSuggested(meta, last);
-
-  /* Build UI */
-  const setWrapper = renderSetInputs(suggested);
-
-  /* -------------------------------
-     CARD WRAPPER FOR RESET MOTION
-  -------------------------------- */
-  const card = document.createElement("div");
-  card.className = "machine-card card";   // ⭐ card class added for animation
-
-  card.append(
-    renderTitle(meta, rotatedId),
-    renderSubtitle(meta),
-    renderTempo(meta),
-    renderLastSession(last),
-    renderSuggested(suggested),
-    setWrapper,
-    renderTimer(meta),
-    renderHandleToggle(rotatedId),
-    renderModeToggle(rotatedId),
-    renderLogButton(rotatedId, suggested, setWrapper)
-  );
-
-  
-
-
-
-  /* -------------------------------
-     CLOSE BUTTON
-  -------------------------------- */
-  const closeBtn = renderCloseButton();
-
-  container.append(card,  closeBtn);
-  return container;
-}
-
-/* ============================================================
-   COMPONENTS (unchanged)
-============================================================ */
-
-function renderTitle(meta, id) {
-  const el = document.createElement("h1");
-  el.className = "machine-title";
-  el.textContent = `#${id} ${meta.name}`;
-  return el;
-}
-
-function renderSubtitle(meta) {
-  const el = document.createElement("div");
-  el.className = "machine-subtitle";
-  el.textContent = `${meta.muscles} • ${meta.type} • ${meta.reps}`;
-  return el;
-}
-
-function renderTempo(meta) {
   const wrapper = document.createElement("div");
-  wrapper.className = "card-section";
+  wrapper.className = "machine-wrapper";
+  container.appendChild(wrapper);
 
-  const row = document.createElement("div");
-  row.className = "accordion-header";
-  row.textContent = "Tempo ▸";
+  /* HEADER */
+  const header = document.createElement("div");
+  header.className = "machine-header";
+  header.textContent = `#${id} ${meta.name}`;
+  wrapper.appendChild(header);
 
-  const details = document.createElement("div");
-  details.className = "accordion-body hidden";
+  /* SUBTITLE */
+  const subtitle = document.createElement("div");
+  subtitle.className = "machine-subtitle";
+  subtitle.textContent = `${meta.muscles} • ${meta.type.toUpperCase()} • ${meta.reps}`;
+  wrapper.appendChild(subtitle);
 
-  if (meta.type === "HEAVY") details.textContent = "3-1-2";
-  if (meta.type === "LIGHT") details.textContent = "2-1-2";
-  if (meta.type === "CORE")  details.textContent = "2-2-2";
+  /* TEMPO SECTION (HIDEABLE) */
+  const tempoSection = document.createElement("div");
+  tempoSection.className = "tempo-section";
 
-  row.onclick = () => details.classList.toggle("hidden");
+  const tempoToggle = document.createElement("button");
+  tempoToggle.className = "tempo-toggle";
+  tempoToggle.textContent = "Tempo ▾";
+  tempoToggle.onclick = () => {
+    tempoContent.classList.toggle("hidden");
+  };
+  tempoSection.appendChild(tempoToggle);
 
-  wrapper.append(row, details);
-  return wrapper;
-}
+  const tempoContent = document.createElement("div");
+  tempoContent.className = "tempo-content";
+  tempoContent.textContent = meta.tempo || "3-1-2";
+  tempoSection.appendChild(tempoContent);
 
-function renderLastSession(last) {
-  const el = document.createElement("div");
-  el.className = "info-row";
+  wrapper.appendChild(tempoSection);
 
-  if (!last) {
-    el.textContent = "Last: —";
-    return el;
-  }
+  /* LAST + SUGGESTED */
+  const last = document.createElement("div");
+  last.className = "machine-last";
+  last.textContent = `Last: ${meta.last || "—"}`;
+  wrapper.appendChild(last);
 
-  el.textContent = `Last: ${last.reps.join("/")} @ ${last.weight.join("/")} ${
-    last.handle ? "(" + last.handle + ")" : ""
-  }`;
+  const suggested = document.createElement("div");
+  suggested.className = "machine-suggested";
+  suggested.textContent = `Suggested: ${meta.base}`;
+  wrapper.appendChild(suggested);
 
-  return el;
-}
+  const note = document.createElement("div");
+  note.className = "machine-note";
+  note.textContent = "First session — use base weight.";
+  wrapper.appendChild(note);
 
-function renderSuggested(s) {
-  const wrapper = document.createElement("div");
-  wrapper.className = "suggested-box";
+  /* INPUTS */
+  const inputs = document.createElement("div");
+  inputs.className = "machine-inputs";
 
-  const w = document.createElement("div");
-  w.className = "info-row strong";
-  w.textContent = `Suggested: ${s.weight}`;
-
-  const msg = document.createElement("div");
-  msg.className = "info-row";
-  msg.textContent = s.message;
-
-  wrapper.append(w, msg);
-  return wrapper;
-}
-
-function renderSetInputs(suggested) {
-  const wrapper = document.createElement("div");
-  wrapper.className = "sets-grid";
-
-  const inputs = [];
-
-  for (let i = 1; i <= 3; i++) {
+  function createInputRow() {
     const row = document.createElement("div");
-    row.className = "set-row-modern";
+    row.className = "machine-row";
 
     const reps = document.createElement("input");
-    reps.type = "number";
+    reps.className = "machine-input";
     reps.placeholder = "Reps";
 
     const weight = document.createElement("input");
-    weight.type = "number";
-    weight.placeholder = suggested.weight;
+    weight.className = "machine-input";
+    weight.placeholder = meta.base;
 
-    row.append(reps, weight);
-    wrapper.append(row);
-    inputs.push({ reps, weight });
+    row.appendChild(reps);
+    row.appendChild(weight);
+    return row;
   }
 
-  wrapper.inputs = inputs;
-  return wrapper;
-}
+  inputs.appendChild(createInputRow());
+  inputs.appendChild(createInputRow());
+  inputs.appendChild(createInputRow());
 
-function renderTimer(meta) {
-  const wrapper = document.createElement("div");
-  wrapper.className = "timer-card";
+  wrapper.appendChild(inputs);
 
-  let rest = meta.type === "HEAVY" ? 120 : meta.type === "CORE" ? 60 : 90;
+  /* TIMER */
+  const timer = document.createElement("div");
+  timer.className = "machine-timer";
+  timer.textContent = "2:00";
+  wrapper.appendChild(timer);
 
-  const display = document.createElement("div");
-  display.className = "timer-display-modern";
-  display.textContent = formatTime(rest);
+  const startBtn = document.createElement("button");
+  startBtn.className = "machine-start-btn";
+  startBtn.textContent = "Start 2:00 Rest";
+  wrapper.appendChild(startBtn);
 
-  const btn = document.createElement("button");
-  btn.className = "timer-btn-modern";
-  btn.textContent = `Start ${formatTime(rest)}`;
+  /* LOG SET */
+  const logBtn = document.createElement("button");
+  logBtn.className = "machine-log-btn";
+  logBtn.textContent = "Log Set";
+  wrapper.appendChild(logBtn);
 
-  let interval = null;
+  /* CLOSE */
+  const closeBtn = document.createElement("button");
+  closeBtn.className = "machine-close-btn";
+  closeBtn.textContent = "Close";
+  closeBtn.onclick = () => window.renderScreen("StrengthStudio");
+  wrapper.appendChild(closeBtn);
 
-  btn.onclick = () => {
-    clearInterval(interval);
-    let remaining = rest;
-
-    interval = setInterval(() => {
-      remaining--;
-      display.textContent = formatTime(remaining);
-
-      if (remaining <= 0) {
-        clearInterval(interval);
-        display.textContent = "00:00";
-        btn.textContent = "Rest Complete";
-      }
-    }, 1000);
-  };
-
-  wrapper.append(display, btn);
-  return wrapper;
-}
-
-function renderHandleToggle(id) {
-  if (id !== 2 && id !== 6) return document.createComment("no handle toggle");
-
-  const pos = localStorage.getItem(`handle-${id}`) || "inner";
-
-  const btn = document.createElement("button");
-  btn.className = "pill-toggle";
-  btn.textContent = `Handle: ${pos}`;
-
-  btn.onclick = () => {
-    const next = btn.textContent.includes("inner") ? "outer" : "inner";
-    btn.textContent = `Handle: ${next}`;
-    localStorage.setItem(`handle-${id}`, next);
-  };
-
-  return btn;
-}
-
-function renderModeToggle(id) {
-  if (id !== 9) return document.createComment("no mode toggle");
-
-  const wrapper = document.createElement("div");
-  wrapper.className = "mode-toggle";
-
-  const select = document.createElement("select");
-  select.className = "mode-select";
-
-  ["Pec Fly", "Rear Delt"].forEach((m) => {
-    const opt = document.createElement("option");
-    opt.value = m;
-    opt.textContent = m;
-    select.appendChild(opt);
-  });
-
-  select.value = localStorage.getItem("machine-9-mode") || "Pec Fly";
-
-  select.onchange = () => {
-    localStorage.setItem("machine-9-mode", select.value);
-  };
-
-  wrapper.append(select);
-  return wrapper;
-}
-
-function renderLogButton(id, suggested, setWrapper) {
-  const btn = document.createElement("button");
-  btn.className = "log-btn-modern";
-  btn.textContent = "Log Set";
-
-  btn.onclick = () => {
-    const inputs = setWrapper.inputs;
-
-    const reps = inputs.map((s) => Number(s.reps.value || 0));
-    const weight = inputs.map((s) => Number(s.weight.value || suggested.weight));
-
-    const handle = localStorage.getItem(`handle-${id}`) || null;
-
-    saveHistory(id, reps, weight, handle);
-    window.renderScreen("StrengthStudio");
-  };
-
-  return btn;
-}
-
-function renderCloseButton() {
-  const btn = document.createElement("button");
-  btn.className = "close-btn-modern";
-  btn.textContent = "Close";
-  btn.onclick = () => window.renderScreen("StrengthStudio");
-  return btn;
-}
-
-/* ============================================================
-   HELPERS
-============================================================ */
-
-function formatTime(sec) {
-  const m = String(Math.floor(sec / 60));
-  const s = String(sec % 60).padStart(2, "0");
-  return `${m}:${s}`;
-}
-
-/* ============================================================
-   HISTORY + SUGGESTED WEIGHT
-============================================================ */
-
-function loadHistory(id) {
-  const raw = localStorage.getItem(`machine-${id}-history`);
-  return raw ? JSON.parse(raw) : [];
-}
-
-function saveHistory(id, reps, weight, handle = null) {
-  const key = `machine-${id}-history`;
-  const history = JSON.parse(localStorage.getItem(key)) || [];
-
-  history.push({ reps, weight, handle, date: Date.now() });
-  localStorage.setItem(key, JSON.stringify(history));
-
-  const strengthHistory = JSON.parse(localStorage.getItem("strength_history")) || [];
-
-  let mode = null;
-  if (id === 9) mode = localStorage.getItem("machine-9-mode") || "Pec Fly";
-
-  strengthHistory.unshift({
-    id,
-    machineName: mode || MACHINES[id]?.name || `Machine #${id}`,
-    sets: 1,
-    reps,
-    weight,
-    date: Date.now()
-  });
-
-  localStorage.setItem("strength_history", JSON.stringify(strengthHistory));
-}
-
-function computeSuggested(meta, last) {
-  const min = meta.min || 20;
-  const type = meta.type;
-
-  if (!last) return { weight: meta.base, message: "First session — use base weight." };
-
-  const avgReps = last.reps.reduce((a, b) => a + b, 0) / last.reps.length;
-  const topWeight = last.weight[last.weight.length - 1];
-
-  if (type === "HEAVY") {
-    if (avgReps >= 8) return { weight: topWeight + 5, message: "Strong session — increase 5 lbs." };
-    if (avgReps < 6) return { weight: Math.max(min, topWeight - 5), message: "Below range — deload 5 lbs." };
-    return { weight: topWeight, message: "Perfect range — keep the same weight." };
-  }
-
-  if (type === "LIGHT") {
-    if (avgReps >= 10 && avgReps <= 12) return { weight: topWeight, message: "Perfect range — keep the same weight." };
-    if (avgReps < 10) return { weight: Math.max(min, topWeight - 2.5), message: "Below range — reduce 2.5 lbs." };
-    return { weight: topWeight, message: "Stay consistent — no increase for LIGHT." };
-  }
-
-  if (type === "CORE") {
-    return { weight: topWeight, message: "Core movement — keep consistent." };
-  }
-
-  return { weight: meta.base, message: "Default logic." };
+  return container;
 }
