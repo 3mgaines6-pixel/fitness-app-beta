@@ -312,3 +312,21 @@ html, body {
   text-align: center;
   display: block;
 }
+
+.machine-input {
+  width: 90%;
+  margin: 8px auto;
+  padding: 14px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: #1e3a8a; /* deep blue */
+  border: 2px solid #60a5fa; /* soft blue outline */
+  border-radius: 12px;
+  text-align: center;
+}
+
+.machine-input::placeholder {
+  color: #dbeafe; /* light blue placeholder */
+  opacity: 1;
+}
