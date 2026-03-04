@@ -113,7 +113,7 @@ export function StrengthStudio() {
       btn.className = "machine-btn";
       btn.textContent = `${emoji} #${rotatedId} ${meta.name}`;
 
-      /* ⭐ FIXED LINE — pass the ID directly, not an object */
+      /* FIXED: pass ID directly */
       btn.onclick = () => window.renderScreen("Machine", rotatedId);
 
       machineList.appendChild(btn);
@@ -131,12 +131,29 @@ export function StrengthStudio() {
     });
   }
 
-  /* RETURN BUTTON */
+  /* ============================================================
+     ADDED BUTTONS (Option 1 clean layout)
+  ============================================================ */
+
+  /* HISTORY BUTTON */
+  const historyBtn = document.createElement("button");
+  historyBtn.className = "strength-sub-btn";
+  historyBtn.textContent = "Strength History";
+  historyBtn.onclick = () => window.renderScreen("StrengthHistory");
+  wrapper.appendChild(historyBtn);
+
+  /* WEEKLY OVERVIEW BUTTON */
+  const weeklyBtn = document.createElement("button");
+  weeklyBtn.className = "strength-sub-btn";
+  weeklyBtn.textContent = "Weekly Overview";
+  weeklyBtn.onclick = () => window.renderScreen("WeeklyOverview");
+  wrapper.appendChild(weeklyBtn);
+
+  /* RETURN BUTTON (kept at bottom) */
   const returnBtn = document.createElement("button");
   returnBtn.className = "return-btn";
   returnBtn.textContent = "Back to Gym Floor";
   returnBtn.onclick = () => window.renderScreen("GymFloor");
-
   wrapper.appendChild(returnBtn);
 
   return container;
