@@ -108,5 +108,63 @@ export function Machine(id) {
   closeBtn.onclick = () => window.renderScreen("StrengthStudio");
   wrapper.appendChild(closeBtn);
 
-  return container;
+/* ============================================================
+   TIMER ENGINE
+============================================================ */
+let timerInterval = null;
+let timeLeft = 120;
+
+function updateTimer() {
+  const mins = Math.floor(timeLeft / 60);
+  const secs = timeLeft % 60;
+  timer.textContent = `${mins}:${secs.toString().padStart(2, "0")}`;
 }
+
+startBtn.onclick = () => {
+  clearInterval(timerInterval);
+  timeLeft = 120;
+  updateTimer();
+
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    updateTimer();
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+    }
+  }, 1000);
+};
+
+/* ============================================================
+   LOGGING ENGINE
+============================================================ */
+logBtn.onclick = () => {
+  const rows = wrapper.querySelectorAll(".machine-row");
+  const historyKey = `machine-${id}-history`;
+
+  const entry = [];
+
+  rows.forEach(row => {
+    const inputs = row.querySelectorAll("input");
+    const reps = inputs[0].value.trim();
+    const weight = inputs[1].value.trim();
+    if (reps && weight) {
+      entry.push({ reps, weight });
+    }
+  });
+
+  if (entry.length === 0) return;
+
+  const history = JSON.parse(localStorage.getItem(historyKey)) || [];
+  history.push({
+    date: new Date().toLocaleDateString(),
+    sets: entry
+  });
+
+  localStorage.setItem(historyKey, JSON.stringify(history));
+
+  last.textContent = `Last: ${entry[entry.length - 1].weight}`;
+};
+
+return container;
+}
+
