@@ -49,7 +49,7 @@ export function StrengthHistory() {
         wrapper.appendChild(row);
       });
     });
-
+  }); // ← THIS was the missing brace that caused the white screen
 
   /* RETURN BUTTON */
   const returnBtn = document.createElement("button");
@@ -60,4 +60,3 @@ export function StrengthHistory() {
 
   return container;
 }
-
