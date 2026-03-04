@@ -2,37 +2,41 @@ export function CardioStudio() {
   const container = document.createElement("div");
   container.className = "cardio-screen";
 
-  /* ---------- TITLE ---------- */
-  const title = document.createElement("h1");
-  title.className = "cardio-title";
-  title.textContent = "Cardio Studio";
-  container.appendChild(title);
+  const wrapper = document.createElement("div");
+  wrapper.className = "cardio-wrapper";
+  container.appendChild(wrapper);
 
-  /* Helper to create buttons */
-  function makeBtn(icon, label, screen) {
+  /* HEADER */
+  const header = document.createElement("div");
+  header.className = "cardio-header";
+  header.textContent = "Cardio Studio";
+  wrapper.appendChild(header);
+
+  /* BUTTON CREATOR */
+  function makeBtn(label, screen) {
     const btn = document.createElement("button");
     btn.className = "cardio-btn";
-    btn.innerHTML = `<span class="icon">${icon}</span> ${label}`;
+    btn.textContent = label;
     btn.onclick = () => window.renderScreen(screen);
     return btn;
   }
 
-container.appendChild(makeBtn("🏃‍♂️", "Matrix Treadmill", "MatrixTreadmill"));
-container.appendChild(makeBtn("🚴", "Spin Class", "SpinClass"));
-container.appendChild(makeBtn("💪", "Core Class", "CoreClass"));
-container.appendChild(makeBtn("🚲", "Matrix Cycle", "MatrixCycle"));
-container.appendChild(makeBtn("🏃‍♀️", "Matrix Elliptical", "MatrixElliptical"));
-container.appendChild(makeBtn("🚣", "Rowing Machine", "Rowing"));
-container.appendChild(makeBtn("🌤️", "Outdoor Walk", "OutdoorWalk"));
-container.appendChild(makeBtn("📅", "Cardio History", "CardioHistory"));  // ⭐ NEW
+  /* CARDIO OPTIONS */
+  wrapper.appendChild(makeBtn("🏃‍♂️ Matrix Treadmill", "MatrixTreadmill"));
+  wrapper.appendChild(makeBtn("🚴 Spin Class", "SpinClass"));
+  wrapper.appendChild(makeBtn("💪 Core Class", "CoreClass"));
+  wrapper.appendChild(makeBtn("🚲 Matrix Cycle", "MatrixCycle"));
+  wrapper.appendChild(makeBtn("🏃‍♂️ Matrix Elliptical", "MatrixElliptical"));
+  wrapper.appendChild(makeBtn("🚣 Rowing Machine", "RowingMachine"));
+  wrapper.appendChild(makeBtn("🌤 Outdoor Walk", "OutdoorWalk"));
+  wrapper.appendChild(makeBtn("📅 Cardio History", "CardioHistory"));
 
-/* Return to Gym Floor */
-const backBtn = document.createElement("button");
-backBtn.className = "cardio-btn";
-backBtn.textContent = "← Return to Gym Floor";
-backBtn.onclick = () => window.renderScreen("GymFloor");
-container.appendChild(backBtn);
-
+  /* RETURN BUTTON */
+  const returnBtn = document.createElement("button");
+  returnBtn.className = "cardio-return-btn";
+  returnBtn.textContent = "← Return to Gym Floor";
+  returnBtn.onclick = () => window.renderScreen("GymFloor");
+  wrapper.appendChild(returnBtn);
 
   return container;
 }
