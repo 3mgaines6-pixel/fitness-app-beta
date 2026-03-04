@@ -162,8 +162,9 @@ logBtn.onclick = () => {
 
   localStorage.setItem(historyKey, JSON.stringify(history));
 
-  last.textContent = `Last: ${entry[entry.length - 1].weight}`;
-};
+const lastSet = entry[entry.length - 1];
+last.textContent = `Last: ${lastSet.reps} reps @ ${lastSet.weight}`;
+
 
 return container;
 }
