@@ -1,4 +1,5 @@
-import "../styles.css";
+<link rel="stylesheet" href="./styles.css?v=1001">
+
 
 
 export function GymFloor() {
