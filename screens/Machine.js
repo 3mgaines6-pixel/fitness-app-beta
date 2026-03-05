@@ -2,6 +2,15 @@ import { MACHINES } from "../data/machines.js";
 
 export function Machine(id) {
   const meta = MACHINES[id];
+
+  // SAFETY GUARD — prevents white screen if id is undefined or invalid
+  if (!meta) {
+    const div = document.createElement("div");
+    div.className = "machine-screen";
+    div.textContent = `Machine ${id} not found`;
+    return div;
+  }
+
   const container = document.createElement("div");
   container.className = "machine-screen";
 
