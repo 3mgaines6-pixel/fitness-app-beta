@@ -1,7 +1,3 @@
-<link rel="stylesheet" href="./styles.css?v=1001">
-
-
-
 export function GymFloor() {
   const div = document.createElement("div");
   div.className = "gymfloor-screen";
