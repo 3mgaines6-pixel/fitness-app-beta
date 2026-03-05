@@ -27,7 +27,8 @@ export function CardioStudio() {
   wrapper.appendChild(makeBtn("💪 Core Class", "CoreClass"));
   wrapper.appendChild(makeBtn("🚲 Matrix Cycle", "MatrixCycle"));
   wrapper.appendChild(makeBtn("🏃‍♂️ Matrix Elliptical", "MatrixElliptical"));
-  wrapper.appendChild(makeBtn("🚣 Rowing Machine", "RowingMachine"));
+  wrapper.appendChild(makeBtn("🚣 Rowing Machine", "Rowing"));
+
   wrapper.appendChild(makeBtn("🌤 Outdoor Walk", "OutdoorWalk"));
   wrapper.appendChild(makeBtn("📅 Cardio History", "CardioHistory"));
 
