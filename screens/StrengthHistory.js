@@ -1,3 +1,5 @@
+import { MACHINES } from "../data/machines.js";
+
 export function StrengthHistory() {
   const container = document.createElement("div");
   container.className = "history-screen";
@@ -24,45 +26,43 @@ export function StrengthHistory() {
     wrapper.appendChild(empty);
   }
 
-/* DISPLAY HISTORY FOR EACH MACHINE */
-keys.forEach(key => {
-  const machineId = key.replace("machine-", "").replace("-history", "");
-  const history = JSON.parse(localStorage.getItem(key)) || [];
+  /* DISPLAY HISTORY FOR EACH MACHINE */
+  keys.forEach(key => {
+    const machineId = key.replace("machine-", "").replace("-history", "");
+    const history = JSON.parse(localStorage.getItem(key)) || [];
 
-  if (history.length === 0) return;
+    if (history.length === 0) return;
 
-  // 🔥 NEW: Get machine name from MACHINES database
-  const meta = MACHINES[machineId];
-  const machineName = meta ? meta.name : "Unknown Machine";
+    // Get machine name from MACHINES database
+    const meta = MACHINES[machineId];
+    const machineName = meta ? meta.name : "Unknown Machine";
 
-  const machineLabel = document.createElement("div");
-  machineLabel.className = "history-machine-label";
+    const machineLabel = document.createElement("div");
+    machineLabel.className = "history-machine-label";
+    machineLabel.textContent = `Machine #${machineId} — ${machineName}`;
+    wrapper.appendChild(machineLabel);
 
-  // 🔥 UPDATED: Show number + name
-  machineLabel.textContent = `Machine #${machineId} — ${machineName}`;
-  wrapper.appendChild(machineLabel);
+    history.forEach(entry => {
+      const dateLabel = document.createElement("div");
+      dateLabel.className = "history-date";
+      dateLabel.textContent = entry.date;
+      wrapper.appendChild(dateLabel);
 
-  history.forEach(entry => {
-    const dateLabel = document.createElement("div");
-    dateLabel.className = "history-date";
-    dateLabel.textContent = entry.date;
-    wrapper.appendChild(dateLabel);
-
-    entry.sets.forEach((set, index) => {
-      const row = document.createElement("div");
-      row.className = "history-row";
-      row.textContent = `Set ${index + 1}: ${set.reps} reps @ ${set.weight}`;
-      wrapper.appendChild(row);
+      entry.sets.forEach((set, index) => {
+        const row = document.createElement("div");
+        row.className = "history-row";
+        row.textContent = `Set ${index + 1}: ${set.reps} reps @ ${set.weight}`;
+        wrapper.appendChild(row);
+      });
     });
   });
-}); // ← THIS was the missing brace that caused the white screen
 
-/* RETURN BUTTON */
-const returnBtn = document.createElement("button");
-returnBtn.className = "history-return-btn";
-returnBtn.textContent = "← Back to Strength Studio";
-returnBtn.onclick = () => window.renderScreen("StrengthStudio");
-wrapper.appendChild(returnBtn);
+  /* RETURN BUTTON */
+  const returnBtn = document.createElement("button");
+  returnBtn.className = "history-return-btn";
+  returnBtn.textContent = "← Back to Strength Studio";
+  returnBtn.onclick = () => window.renderScreen("StrengthStudio");
+  wrapper.appendChild(returnBtn);
 
-return container;
+  return container;
 }
