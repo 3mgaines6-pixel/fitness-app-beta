@@ -19,12 +19,12 @@ if (savedMachines) {
 
 
 /* =========================================
-   IMPORT SCREENS FIRST (IMPORTANT)
+   IMPORT SCREENS (Backup removed)
 ========================================= */
 import { Splash } from "./screens/Splash.js";
 import { GymFloor } from "./screens/GymFloor.js";
 import { StrengthStudio } from "./screens/StrengthStudio.js";
-import { Backup } from "./screens/Backup.js";
+// import { Backup } from "./screens/Backup.js";   <-- REMOVED
 
 import { StrengthHistory } from "./screens/StrengthHistory.js";
 import { Machine } from "./screens/Machine.js";
@@ -42,7 +42,7 @@ import { CardioHistory } from "./screens/CardioHistory.js";
 
 
 /* =========================================
-   SCREEN REGISTRY
+   SCREEN REGISTRY (Backup removed)
 ========================================= */
 window.SCREENS = {
   StrengthStudio,
@@ -66,7 +66,7 @@ window.SCREENS = {
   WeeklyOverview,
   NutritionGuide,
 
-  Backup,
+  // Backup,   <-- REMOVED
 
   Rowing: null,
   OutdoorWalk: null
@@ -99,7 +99,7 @@ export function renderScreen(screenName, data) {
     case "Summary": screen = Summary(); break;
     case "WeeklyOverview": screen = WeeklyOverview(); break;
     case "NutritionGuide": screen = NutritionGuide(); break;
-    case "Backup": screen = Backup(); break;
+    // case "Backup": screen = Backup(); break;   <-- REMOVED
     default:
       screen = GymFloor();
   }
