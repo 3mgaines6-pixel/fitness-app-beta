@@ -1,21 +1,23 @@
-/* =========================================
-   ==========  SPLASH SCREEN  ==============
-   ========================================= */
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export function Splash() {
-  const container = document.createElement("div");
-  container.className = "splash-screen";
+export default function Splash() {
+  const navigate = useNavigate();
+  const [fade, setFade] = useState(false);
 
-  const door = document.createElement("div");
-  door.className = "splash-door";
+  useEffect(() => {
+    const timer1 = setTimeout(() => setFade(true), 900);   // start fade
+    const timer2 = setTimeout(() => navigate("/gymfloor"), 1700); // go to Gym Floor
 
-  container.appendChild(door);
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    };
+  }, [navigate]);
 
-  // Auto-transition after 1500ms
-  setTimeout(() => {
-   window.renderScreen("GymFloor");
-
-  }, 1500);
-
-  return container;
+  return (
+    <div className={`splash-container ${fade ? "fade-out" : ""}`}>
+      <div className="splash-door"></div>
+    </div>
+  );
 }
