@@ -90,7 +90,9 @@ export function renderScreen(screenName, data) {
     case "GymFloor": return app.replaceChildren(GymFloor());
     case "StrengthStudio": return app.replaceChildren(StrengthStudio());
     case "StrengthHistory": return app.replaceChildren(StrengthHistory());
-    case "CardioStudio": return app.replaceChildren(CardioStudio());
+    case "MachineHistory": return app.replaceChildren(MachineHistory(data));
+
+     case "CardioStudio": return app.replaceChildren(CardioStudio());
     case "StretchStudio": return app.replaceChildren(StretchStudio());
     case "Machine": return app.replaceChildren(Machine(data));
     case "MatrixTreadmill": return app.replaceChildren(MatrixTreadmill());
