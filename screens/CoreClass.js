@@ -1,95 +1,84 @@
-export function CoreClass() {
+/* =========================================
+   CORE CLASS (DOM VERSION)
+========================================= */
+
+export default function CoreClass() {
   const container = document.createElement("div");
-  container.className = "cardio-machine-screen";
+  container.className = "core-class-screen";
 
-  /* ---------- TITLE ---------- */
-  const title = document.createElement("h1");
-  title.className = "cardio-machine-title";
-  title.textContent = "Core Class";
-  container.appendChild(title);
+  /* HEADER */
+  const header = document.createElement("div");
+  header.className = "header";
+  header.textContent = "Core Class";
+  container.appendChild(header);
 
-  /* ---------- LAST SESSION ---------- */
-  const last = document.createElement("div");
-  last.className = "last-session";
+  /* MINUTES INPUT */
+  const minutesInput = document.createElement("input");
+  minutesInput.type = "number";
+  minutesInput.className = "cardio-input";
+  minutesInput.placeholder = "Minutes";
+  container.appendChild(minutesInput);
 
-  const lastData = JSON.parse(localStorage.getItem("core_last"));
-  if (lastData) {
-    last.textContent = `Last: ${lastData.minutes} min • Intensity ${lastData.intensity}`;
-  } else {
-    last.textContent = "Last: —";
-  }
-  container.appendChild(last);
+  /* INTENSITY INPUT */
+  const intensityInput = document.createElement("input");
+  intensityInput.type = "number";
+  intensityInput.className = "cardio-input";
+  intensityInput.placeholder = "Intensity (1–10)";
+  container.appendChild(intensityInput);
 
-  /* ---------- INPUTS ---------- */
-  function makeInput(label, id, type = "number") {
-    const wrap = document.createElement("div");
-    wrap.className = "input-row";
+  /* HEART RATE INPUT (optional) */
+  const hrInput = document.createElement("input");
+  hrInput.type = "number";
+  hrInput.className = "cardio-input";
+  hrInput.placeholder = "Avg HR (optional)";
+  container.appendChild(hrInput);
 
-    const lbl = document.createElement("label");
-    lbl.textContent = label;
+  /* CALORIES INPUT (optional) */
+  const caloriesInput = document.createElement("input");
+  caloriesInput.type = "number";
+  caloriesInput.className = "cardio-input";
+  caloriesInput.placeholder = "Calories (optional)";
+  container.appendChild(caloriesInput);
 
-    const input = document.createElement("input");
-    input.type = type;
-    input.id = id;
+  /* SAVE BUTTON */
+  const saveBtn = document.createElement("div");
+  saveBtn.className = "save-button";
+  saveBtn.textContent = "Save Core Class";
 
-    wrap.appendChild(lbl);
-    wrap.appendChild(input);
-    return wrap;
-  }
+  saveBtn.onclick = () => {
+    const minutes = Number(minutesInput.value);
+    const intensity = Number(intensityInput.value);
+    const hr = Number(hrInput.value);
+    const calories = Number(caloriesInput.value);
 
-  const minutesInput = makeInput("Minutes", "core_minutes");
-const intensityInput = makeInput("Intensity (1–10)", "core_intensity");
-const hrInput = makeInput("Heart Rate (optional)", "core_hr");
-const calInput = makeInput("Calories (optional)", "core_calories");
+    if (!minutes || !intensity) {
+      alert("Enter minutes and intensity");
+      return;
+    }
 
-container.appendChild(minutesInput);
-container.appendChild(intensityInput);
-container.appendChild(hrInput);
-container.appendChild(calInput);
+    const entry = {
+      type: "core",
+      minutes,
+      intensity,
+      hr: hr || null,
+      calories: calories || null,
+      date: new Date().toISOString()
+    };
 
+    // Save to localStorage
+    const history = JSON.parse(localStorage.getItem("cardioHistory")) || [];
+    history.push(entry);
+    localStorage.setItem("cardioHistory", JSON.stringify(history));
 
-  /* ---------- LOG BUTTON ---------- */
-  const logBtn = document.createElement("button");
-  logBtn.className = "log-btn";
-  logBtn.textContent = "Log Session";
-
-  logBtn.onclick = () => {
-  const minutes = parseFloat(minutesInput.querySelector("input").value);
-  const intensity = parseFloat(intensityInput.querySelector("input").value);
-  const hr = parseFloat(hrInput.querySelector("input").value) || null;
-  const calories = parseFloat(calInput.querySelector("input").value) || null;
-
-  if (!minutes || !intensity) {
-    alert("Please enter minutes and intensity.");
-    return;
-  }
-
-  const entry = {
-    type: "core",
-    minutes,
-    intensity,
-    hr,
-    calories,
-    date: Date.now()
+    alert("Core class saved!");
   };
 
-  localStorage.setItem("core_last", JSON.stringify(entry));
+  container.appendChild(saveBtn);
 
-  const history = JSON.parse(localStorage.getItem("cardio_history")) || [];
-  history.unshift(entry);
-  localStorage.setItem("cardio_history", JSON.stringify(history));
-
-  alert("Session logged!");
-  window.renderScreen("CardioStudio");
-};
-
-  container.appendChild(logBtn);
-
-  /* ---------- RETURN BUTTON ---------- */
-  const backBtn = document.createElement("button");
-  backBtn.className = "log-btn";
-  backBtn.textContent = "← Back to Cardio Studio";
-  backBtn.style.marginTop = "12px";
+  /* BACK BUTTON */
+  const backBtn = document.createElement("div");
+  backBtn.className = "back-button";
+  backBtn.textContent = "← Back";
   backBtn.onclick = () => window.renderScreen("CardioStudio");
   container.appendChild(backBtn);
 
