@@ -2,9 +2,11 @@
    STRENGTH HISTORY (DOM VERSION)
 ========================================= */
 
+import { MACHINES } from "../data/machines.js";
+
 export default function StrengthHistory() {
   const container = document.createElement("div");
-  container.className = "strength-history-screen";
+  container.className = "history-screen";
 
   /* HEADER */
   const header = document.createElement("div");
@@ -12,51 +14,53 @@ export default function StrengthHistory() {
   header.textContent = "Strength History";
   container.appendChild(header);
 
-  /* HISTORY LIST */
+  /* LOAD FULL HISTORY */
+  const history = JSON.parse(localStorage.getItem("history") || "{}");
+
   const list = document.createElement("div");
-  list.className = "strength-history-list";
+  list.className = "scroll-list";
   container.appendChild(list);
 
-  const history = JSON.parse(localStorage.getItem("strengthHistory")) || [];
+  const machineIDs = Object.keys(history);
 
-  if (history.length === 0) {
+  /* EMPTY STATE */
+  if (machineIDs.length === 0) {
     const empty = document.createElement("div");
-    empty.className = "empty-history";
+    empty.className = "card-base";
+    empty.style.textAlign = "center";
+    empty.style.fontSize = "18px";
     empty.textContent = "No strength workouts logged yet";
     list.appendChild(empty);
-  } else {
-    history
-      .slice()
-      .reverse()
-      .forEach((entry) => {
-        const row = document.createElement("div");
-        row.className = "strength-history-row";
-
-        const name = document.createElement("div");
-        name.className = "strength-history-name";
-        name.textContent = entry.machine;
-
-        const stats = document.createElement("div");
-        stats.className = "strength-history-stats";
-        stats.textContent = `${entry.weight} lbs × ${entry.reps} reps`;
-
-        const date = document.createElement("div");
-        date.className = "strength-history-date";
-        date.textContent = new Date(entry.date).toLocaleString();
-
-        row.appendChild(name);
-        row.appendChild(stats);
-        row.appendChild(date);
-
-        list.appendChild(row);
-      });
   }
 
+  /* MACHINE CARDS */
+  machineIDs.forEach((id) => {
+    const machine = MACHINES[id];
+    if (!machine) return;
+
+    const sets = history[id] || [];
+
+    const card = document.createElement("div");
+    card.className = "card-base";
+    card.style.cursor = "pointer";
+
+    card.innerHTML = `
+      <div class="history-title">${id} — ${machine.name}</div>
+      <div class="history-sub">${sets.length} total sets logged</div>
+    `;
+
+    card.onclick = () => {
+      window.renderScreen("MachineHistory", { id });
+    };
+
+    list.appendChild(card);
+  });
+
   /* BACK BUTTON */
-  const backBtn = document.createElement("div");
-  backBtn.className = "back-button";
-  backBtn.textContent = "← Back";
-  backBtn.onclick = () => window.renderScreen("StrengthStudio");
+  const backBtn = document.createElement("button");
+  backBtn.className = "return-btn";
+  backBtn.textContent = "Return to Gym Floor";
+  backBtn.onclick = () => window.renderScreen("GymFloor");
   container.appendChild(backBtn);
 
   return container;
