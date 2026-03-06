@@ -1,29 +1,28 @@
-export function GymFloor() {
-  const div = document.createElement("div");
-  div.className = "gymfloor-screen";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-  div.innerHTML = `
-    <div class="gymfloor-overlay"></div>
+export default function GymFloor() {
+  const navigate = useNavigate();
 
-    <header class="gymfloor-header">
-      <h1>Welcome to Matt's Gym Floor</h1>
-    </header>
+  return (
+    <div className="gym-floor">
+      <div className="header">Welcome to Matt's Gym Floor</div>
 
-    <div class="gymfloor-buttons">
-      <button class="gymfloor-btn" data-screen="StrengthStudio">Strength Studio</button>
-      <button class="gymfloor-btn" data-screen="CardioStudio">Cardio Studio</button>
-      <button class="gymfloor-btn" data-screen="StretchStudio">Stretch Studio</button>
-      <button class="gymfloor-btn" data-screen="NutritionGuide">Nutrition Guide</button>
+      <div className="gym-button" onClick={() => navigate("/strengthstudio")}>
+        Strength Studio
+      </div>
+
+      <div className="gym-button" onClick={() => navigate("/cardiostudio")}>
+        Cardio Studio
+      </div>
+
+      <div className="gym-button" onClick={() => navigate("/stretchstudio")}>
+        Stretch Studio
+      </div>
+
+      <div className="gym-button" onClick={() => navigate("/nutrition")}>
+        Nutrition Guide
+      </div>
     </div>
-  `;
-
-  // Attach navigation
-  div.querySelectorAll(".gymfloor-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const target = btn.getAttribute("data-screen");
-      window.renderScreen(target);
-    });
-  });
-
-  return div;
+  );
 }
