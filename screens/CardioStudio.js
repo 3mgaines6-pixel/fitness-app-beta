@@ -1,43 +1,39 @@
-export function CardioStudio() {
+/* =========================================
+   CARDIO STUDIO (DOM VERSION)
+========================================= */
+
+export default function CardioStudio() {
   const container = document.createElement("div");
-  container.className = "cardio-screen";
+  container.className = "cardio-studio";
 
-  const wrapper = document.createElement("div");
-  wrapper.className = "cardio-wrapper";
-  container.appendChild(wrapper);
-
-  /* HEADER */
   const header = document.createElement("div");
-  header.className = "cardio-header";
+  header.className = "header";
   header.textContent = "Cardio Studio";
-  wrapper.appendChild(header);
+  container.appendChild(header);
 
-  /* BUTTON CREATOR */
-  function makeBtn(label, screen) {
-    const btn = document.createElement("button");
-    btn.className = "cardio-btn";
+  /* BUTTON FACTORY */
+  function makeButton(label, screenName) {
+    const btn = document.createElement("div");
+    btn.className = "gym-button";
     btn.textContent = label;
-    btn.onclick = () => window.renderScreen(screen);
+    btn.onclick = () => window.renderScreen(screenName);
     return btn;
   }
 
   /* CARDIO OPTIONS */
-  wrapper.appendChild(makeBtn("🏃‍♂️ Matrix Treadmill", "MatrixTreadmill"));
-  wrapper.appendChild(makeBtn("🚴 Spin Class", "SpinClass"));
-  wrapper.appendChild(makeBtn("💪 Core Class", "CoreClass"));
-  wrapper.appendChild(makeBtn("🚲 Matrix Cycle", "MatrixCycle"));
-  wrapper.appendChild(makeBtn("🏃‍♂️ Matrix Elliptical", "MatrixElliptical"));
-  wrapper.appendChild(makeBtn("🚣 Rowing Machine", "Rowing"));
+  container.appendChild(makeButton("Matrix Treadmill", "MatrixTreadmill"));
+  container.appendChild(makeButton("Matrix Cycle", "MatrixCycle"));
+  container.appendChild(makeButton("Matrix Elliptical", "MatrixElliptical"));
+  container.appendChild(makeButton("Spin Class", "SpinClass"));
+  container.appendChild(makeButton("Outdoor Walk", "OutdoorWalk")); // placeholder
+  container.appendChild(makeButton("Rowing", "Rowing")); // placeholder
 
-  wrapper.appendChild(makeBtn("🌤 Outdoor Walk", "OutdoorWalk"));
-  wrapper.appendChild(makeBtn("📅 Cardio History", "CardioHistory"));
-
-  /* RETURN BUTTON */
-  const returnBtn = document.createElement("button");
-  returnBtn.className = "cardio-return-btn";
-  returnBtn.textContent = "← Return to Gym Floor";
-  returnBtn.onclick = () => window.renderScreen("GymFloor");
-  wrapper.appendChild(returnBtn);
+  /* BACK BUTTON */
+  const backBtn = document.createElement("div");
+  backBtn.className = "back-button";
+  backBtn.textContent = "← Back";
+  backBtn.onclick = () => window.renderScreen("GymFloor");
+  container.appendChild(backBtn);
 
   return container;
 }
