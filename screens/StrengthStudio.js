@@ -1,6 +1,7 @@
 /* =========================================
    STRENGTH STUDIO (DOM VERSION)
 ========================================= */
+import { MACHINES } from "../data/machines.js";
 
 export default function StrengthStudio() {
   const container = document.createElement("div");
