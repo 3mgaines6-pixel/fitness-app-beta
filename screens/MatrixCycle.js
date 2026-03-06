@@ -1,20 +1,68 @@
-export function MatrixCycle() {
+/* =========================================
+   MATRIX CYCLE (DOM VERSION)
+========================================= */
+
+export default function MatrixCycle() {
   const container = document.createElement("div");
   container.className = "cardio-machine-screen";
 
-  const title = document.createElement("h1");
-  title.textContent = "Matrix Cycle";
-  container.appendChild(title);
+  /* HEADER */
+  const header = document.createElement("div");
+  header.className = "header";
+  header.textContent = "Matrix Cycle";
+  container.appendChild(header);
 
-  const msg = document.createElement("div");
-  msg.textContent = "Cardio tracking coming soon.";
-  container.appendChild(msg);
+  /* TIME INPUT */
+  const timeInput = document.createElement("input");
+  timeInput.type = "number";
+  timeInput.className = "cardio-input";
+  timeInput.placeholder = "Minutes";
+  container.appendChild(timeInput);
 
-  const back = document.createElement("button");
-  back.textContent = "Back";
-  back.onclick = () => window.renderScreen("CardioStudio");
-  container.appendChild(back);
+  /* DISTANCE INPUT */
+  const distanceInput = document.createElement("input");
+  distanceInput.type = "number";
+  distanceInput.className = "cardio-input";
+  distanceInput.placeholder = "Miles";
+  container.appendChild(distanceInput);
+
+  /* SAVE BUTTON */
+  const saveBtn = document.createElement("div");
+  saveBtn.className = "save-button";
+  saveBtn.textContent = "Save Cardio";
+
+  saveBtn.onclick = () => {
+    const minutes = Number(timeInput.value);
+    const miles = Number(distanceInput.value);
+
+    if (!minutes && !miles) {
+      alert("Enter minutes or miles");
+      return;
+    }
+
+    const entry = {
+      type: "cycle",
+      minutes,
+      miles,
+      date: new Date().toISOString()
+    };
+
+    // Save to localStorage
+    const history = JSON.parse(localStorage.getItem("cardioHistory")) || [];
+    history.push(entry);
+    localStorage.setItem("cardioHistory", JSON.stringify(history));
+
+    alert("Cardio saved!");
+  };
+
+  container.appendChild(saveBtn);
+
+  /* BACK BUTTON */
+  const backBtn = document.createElement("div");
+  backBtn.className = "back-button";
+  backBtn.textContent = "← Back";
+  backBtn.onclick = () => window.renderScreen("CardioStudio");
+  container.appendChild(backBtn);
 
   return container;
 }
-
