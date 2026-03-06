@@ -27,6 +27,7 @@ import StrengthStudio from "./screens/StrengthStudio.js";
 // import Backup from "./screens/Backup.js";   <-- REMOVED
 
 import StrengthHistory from "./screens/StrengthHistory.js";
+import MachineHistory from "./screens/MachineHistory.js";
 import Machine from "./screens/Machine.js";
 import CardioStudio from "./screens/CardioStudio.js";
 import StretchStudio from "./screens/StretchStudio.js";
@@ -50,6 +51,7 @@ window.SCREENS = {
   Machine,
 
   StrengthHistory,
+   MachineHistory,
   CardioStudio,
   CardioHistory,
   StretchStudio,
