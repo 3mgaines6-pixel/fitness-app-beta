@@ -2,7 +2,8 @@
    SPLASH SCREEN (DOM VERSION)
 ========================================= */
 
-export function Splash() {
+export default function Splash() {
+
   const container = document.createElement("div");
   container.className = "splash-container";
 
