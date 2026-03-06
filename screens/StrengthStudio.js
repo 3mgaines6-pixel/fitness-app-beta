@@ -18,6 +18,11 @@ export default function StrengthStudio() {
   list.className = "machine-list";
   container.appendChild(list);
 
+console.log("MACHINES:", MACHINES);
+console.log("Keys:", Object.keys(MACHINES));
+
+
+   
   // Load machines from global MACHINES object
   Object.keys(MACHINES).forEach((machineName) => {
     const btn = document.createElement("div");
