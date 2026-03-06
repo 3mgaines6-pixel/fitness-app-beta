@@ -266,3 +266,98 @@ body {
   background: rgba(255,255,255,1);
 }
 
+/* =========================================
+   BLUE THEME — HISTORY + WEEKLY
+========================================= */
+
+.history-screen,
+.weekly-screen {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  color: #fff;
+}
+
+/* Header */
+.history-screen .header,
+.weekly-screen .header {
+  background: linear-gradient(180deg, #0a4cff, #003bb8);
+  padding: 16px;
+  border-radius: 14px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+/* White cards */
+.history-card,
+.weekly-card {
+  background: rgba(255,255,255,0.9);
+  color: #111;
+  padding: 16px;
+  border-radius: 14px;
+  width: 90%;
+  max-width: 420px;
+  margin: 0 auto;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.history-card:hover,
+.weekly-card:hover {
+  transform: scale(1.03);
+}
+
+/* Titles inside cards */
+.history-title,
+.weekly-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.history-sub,
+.weekly-sub {
+  font-size: 15px;
+  margin-top: 4px;
+  opacity: 0.8;
+}
+
+/* Summary box */
+.weekly-summary {
+  background: rgba(255,255,255,0.9);
+  color: #111;
+  padding: 16px;
+  border-radius: 14px;
+  width: 90%;
+  max-width: 420px;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Return button */
+.return-btn {
+  width: 90%;
+  max-width: 420px;
+  margin: 20px auto 10px auto;
+  padding: 14px;
+  background: rgba(255,255,255,0.9);
+  color: #111;
+  border-radius: 14px;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: transform 0.15s ease;
+}
+
+.return-btn:hover {
+  transform: scale(1.03);
+}
