@@ -20,9 +20,14 @@ export default function GymFloor() {
   }
 
   container.appendChild(makeButton("Strength Studio", "StrengthStudio"));
+
+  // ⭐ ADD THIS LINE ⭐
+  container.appendChild(makeButton("Daily Schedule", "DailySchedule"));
+
   container.appendChild(makeButton("Cardio Studio", "CardioStudio"));
   container.appendChild(makeButton("Stretch Studio", "StretchStudio"));
   container.appendChild(makeButton("Nutrition Guide", "NutritionGuide"));
 
   return container;
 }
+
