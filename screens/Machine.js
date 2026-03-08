@@ -2,15 +2,17 @@
    MACHINE SCREEN (DOM VERSION)
 ========================================= */
 import { MACHINES } from "../data/machines.js";
+import { WEEKLY_SCHEDULE } from "../data/weekly.js";
 
 export default function Machine(data) {
   const machineID = data?.name;
+  const returnTo = data?.returnTo || "StrengthStudio";
   const machine = MACHINES[machineID];
 
   const container = document.createElement("div");
   container.className = "machine-screen";
 
-  /* HEADER */
+  /* BLUE MACHINE IDENTITY BAR */
   const header = document.createElement("div");
   header.className = "header";
   header.textContent = `${machineID} — ${machine.name}`;
@@ -25,10 +27,7 @@ export default function Machine(data) {
   last.className = "last-session";
 
   if (sets.length > 0) {
-    // Most recent date
     const lastDate = sets[sets.length - 1].date;
-
-    // All sets from that session
     const lastSessionSets = sets.filter(s => s.date === lastDate);
 
     let text = "Last Session:\n";
@@ -43,14 +42,13 @@ export default function Machine(data) {
 
   container.appendChild(last);
 
-  /* WEIGHT INPUT */
+  /* INPUTS */
   const weightInput = document.createElement("input");
   weightInput.type = "number";
   weightInput.className = "machine-input";
   weightInput.placeholder = "Weight (lbs)";
   container.appendChild(weightInput);
 
-  /* REPS INPUT */
   const repsInput = document.createElement("input");
   repsInput.type = "number";
   repsInput.className = "machine-input";
@@ -71,12 +69,10 @@ export default function Machine(data) {
       return;
     }
 
-    // Ensure machine history exists
     if (!history[machineID]) {
       history[machineID] = [];
     }
 
-    // Add new set
     const now = new Date().toISOString();
     history[machineID].push({
       weight: w,
@@ -84,17 +80,14 @@ export default function Machine(data) {
       date: now
     });
 
-    // Save back to localStorage
     localStorage.setItem("history", JSON.stringify(history));
 
     // Update last session display
     const lastSessionSets = history[machineID].filter(s => s.date === now);
-
     let text = "Last Session:\n";
     lastSessionSets.forEach(s => {
       text += `${s.weight} lbs × ${s.reps} reps\n`;
     });
-
     last.textContent = text.trim();
 
     alert("Set saved!");
@@ -102,11 +95,30 @@ export default function Machine(data) {
 
   container.appendChild(saveBtn);
 
+  /* NEXT MACHINE BUTTON (Daily Schedule only) */
+  if (returnTo === "DailySchedule") {
+    const nextBtn = document.createElement("div");
+    nextBtn.className = "button";
+
+    const today = ["Sun","Mon","Tue","Wed","Thur","Fri","Sat"][new Date().getDay()];
+    const todayList = WEEKLY_SCHEDULE[today] || [];
+    const index = todayList.indexOf(machineID);
+
+    if (index !== -1 && index < todayList.length - 1) {
+      const nextID = todayList[index + 1];
+      nextBtn.textContent = `Next: ${nextID} — ${MACHINES[nextID].name}`;
+      nextBtn.onclick = () => {
+        window.renderScreen("Machine", { name: nextID, returnTo: "DailySchedule" });
+      };
+      container.appendChild(nextBtn);
+    }
+  }
+
   /* BACK BUTTON */
   const backBtn = document.createElement("div");
   backBtn.className = "return-btn";
   backBtn.textContent = "← Back";
-  backBtn.onclick = () => window.renderScreen("StrengthStudio");
+  backBtn.onclick = () => window.renderScreen(returnTo);
   container.appendChild(backBtn);
 
   return container;
