@@ -25,6 +25,7 @@ import Splash from "./screens/Splash.js";
 import GymFloor from "./screens/GymFloor.js";
 import StrengthStudio from "./screens/StrengthStudio.js";
 // import Backup from "./screens/Backup.js";   <-- REMOVED
+import DailySchedule from "./screens/DailySchedule.js";
 
 import StrengthHistory from "./screens/StrengthHistory.js";
 import MachineHistory from "./screens/MachineHistory.js";
@@ -49,7 +50,7 @@ import CardioHistory from "./screens/CardioHistory.js";
 window.SCREENS = {
   StrengthStudio,
   Machine,
-
+DailySchedule,
   StrengthHistory,
    MachineHistory,
   CardioStudio,
@@ -91,6 +92,7 @@ export function renderScreen(screenName, data) {
     case "StrengthStudio": return app.replaceChildren(StrengthStudio());
     case "StrengthHistory": return app.replaceChildren(StrengthHistory());
     case "MachineHistory": return app.replaceChildren(MachineHistory(data));
+     case "DailySchedule": return app.replaceChildren(DailySchedule());
 
      case "CardioStudio": return app.replaceChildren(CardioStudio());
     case "StretchStudio": return app.replaceChildren(StretchStudio());
