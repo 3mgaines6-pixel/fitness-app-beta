@@ -1,39 +1,39 @@
 /* =========================================
-   CARDIO STUDIO (DOM VERSION)
+   CARDIO STUDIO — WHITE BUTTONS
 ========================================= */
 
 export default function CardioStudio() {
   const container = document.createElement("div");
-  container.className = "cardio-studio";
+  container.className = "screen";
 
+  /* HEADER */
   const header = document.createElement("div");
   header.className = "header";
   header.textContent = "Cardio Studio";
   container.appendChild(header);
 
-  /* BUTTON FACTORY */
-  function makeButton(label, screenName) {
+  /* WHITE BUTTON HELPER */
+  function makeCardio(label, screen) {
     const btn = document.createElement("div");
-    btn.className = "gym-button";
+    btn.className = "gym-button"; // WHITE BUTTON
     btn.textContent = label;
-    btn.onclick = () => window.renderScreen(screenName);
+    btn.onclick = () => window.renderScreen(screen);
     return btn;
   }
 
-  /* CARDIO OPTIONS */
-  container.appendChild(makeButton("Matrix Treadmill", "MatrixTreadmill"));
-  container.appendChild(makeButton("Matrix Cycle", "MatrixCycle"));
-  container.appendChild(makeButton("Matrix Elliptical", "MatrixElliptical"));
-  container.appendChild(makeButton("Spin Class", "SpinClass"));
-  container.appendChild(makeButton("Outdoor Walk", "OutdoorWalk")); // placeholder
-  container.appendChild(makeButton("Rowing", "Rowing")); // placeholder
+  container.appendChild(makeCardio("🏃‍♂️ Matrix Treadmill", "MatrixTreadmill"));
+  container.appendChild(makeCardio("🚴‍♂️ Matrix Cycle", "MatrixCycle"));
+  container.appendChild(makeCardio("🏋️‍♂️ Matrix Elliptical", "MatrixElliptical"));
+  container.appendChild(makeCardio("🚴 Spin Class", "SpinClass"));
+  container.appendChild(makeCardio("🌤 Outdoor Walk", "OutdoorWalk"));
+  container.appendChild(makeCardio("🚣 Rowing", "Rowing"));
 
   /* BACK BUTTON */
-  const backBtn = document.createElement("div");
-  backBtn.className = "back-button";
-  backBtn.textContent = "← Back";
-  backBtn.onclick = () => window.renderScreen("GymFloor");
-  container.appendChild(backBtn);
+  const back = document.createElement("div");
+  back.className = "gym-button";
+  back.textContent = "← Back";
+  back.onclick = () => window.renderScreen("GymFloor");
+  container.appendChild(back);
 
   return container;
 }
