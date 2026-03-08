@@ -1,141 +1,102 @@
 /* =========================================
-   MACHINE SCREEN (DOM VERSION)
+   MACHINE SCREEN — BLUE HEADER + CUE BAR
 ========================================= */
+
 import { MACHINES } from "../data/machines.js";
 import { WEEKLY_SCHEDULE } from "../data/weekly.js";
 
-export default function Machine(data) {
-  const machineID = data?.name;
-  const returnTo = data?.returnTo || "StrengthStudio";
-  const machine = MACHINES[machineID];
+export default function Machine(params) {
+  const id = params.name;
+  const machine = MACHINES[id];
 
   const container = document.createElement("div");
-  container.className = "machine-screen";
+  container.className = "screen";
 
-  /* BLUE MACHINE IDENTITY BAR */
+  /* HEADER */
   const header = document.createElement("div");
   header.className = "header";
-  header.textContent = `${machineID} — ${machine.name}`;
+  header.textContent = `${id} — ${machine.emoji} ${machine.name}`;
   container.appendChild(header);
 
   /* COACHING CUE BAR */
   const cue = document.createElement("div");
-  cue.className = "coaching-cue";
-
-  // Pull cues from machine metadata if available
-  const cues = machine.cues || [
-    "Control the negative",
-    "Stay tight and smooth",
-    "Drive through the full range"
-  ];
-
-  // Pick one cue at random
-  cue.textContent = cues[Math.floor(Math.random() * cues.length)];
-
+  cue.className = "cue-bar";
+  cue.textContent = machine.cue || "Focus on controlled reps and full ROM.";
   container.appendChild(cue);
 
-  /* LOAD FULL HISTORY */
+  /* LAST SESSION CARD */
   const history = JSON.parse(localStorage.getItem("history") || "{}");
-  const sets = history[machineID] || [];
+  const sets = history[id] || [];
+  const last = sets[sets.length - 1];
 
-  /* LAST SESSION (ALL SETS FROM MOST RECENT WORKOUT) */
-  const last = document.createElement("div");
-  last.className = "last-session";
+  const lastCard = document.createElement("div");
+  lastCard.className = "card-base";
 
-  if (sets.length > 0) {
-    const lastDate = sets[sets.length - 1].date;
-    const lastSessionSets = sets.filter(s => s.date === lastDate);
+  lastCard.innerHTML = last
+    ? `<div class="weekly-title">Last Session</div>
+       <div class="weekly-sub">${last.weight} lbs × ${last.reps} reps</div>`
+    : `<div class="weekly-title">No previous sets</div>`;
 
-    let text = "Last Session:\n";
-    lastSessionSets.forEach(s => {
-      text += `${s.weight} lbs × ${s.reps} reps\n`;
-    });
-
-    last.textContent = text.trim();
-  } else {
-    last.textContent = "No history yet";
-  }
-
-  container.appendChild(last);
+  container.appendChild(lastCard);
 
   /* INPUTS */
-  const weightInput = document.createElement("input");
-  weightInput.type = "number";
-  weightInput.className = "machine-input";
-  weightInput.placeholder = "Weight (lbs)";
-  container.appendChild(weightInput);
+  const weight = document.createElement("input");
+  weight.className = "input-box";
+  weight.placeholder = "Weight (lbs)";
 
-  const repsInput = document.createElement("input");
-  repsInput.type = "number";
-  repsInput.className = "machine-input";
-  repsInput.placeholder = "Reps";
-  container.appendChild(repsInput);
+  const reps = document.createElement("input");
+  reps.className = "input-box";
+  reps.placeholder = "Reps";
 
-  /* SAVE BUTTON */
-  const saveBtn = document.createElement("div");
-  saveBtn.className = "button";
-  saveBtn.textContent = "Save Set";
+  container.appendChild(weight);
+  container.appendChild(reps);
 
-  saveBtn.onclick = () => {
-    const w = Number(weightInput.value);
-    const r = Number(repsInput.value);
+  /* SAVE SET BUTTON */
+  const save = document.createElement("div");
+  save.className = "button";
+  save.textContent = "Save Set";
+  save.onclick = () => {
+    const w = Number(weight.value);
+    const r = Number(reps.value);
+    if (!w || !r) return;
 
-    if (!w || !r) {
-      alert("Enter weight and reps");
-      return;
+    const entry = { weight: w, reps: r, date: new Date().toISOString() };
+    const h = JSON.parse(localStorage.getItem("history") || "{}");
+    h[id] = h[id] || [];
+    h[id].push(entry);
+    localStorage.setItem("history", JSON.stringify(h));
+
+    window.renderScreen("Machine", params);
+  };
+  container.appendChild(save);
+
+  /* NEXT MACHINE BUTTON */
+  const next = document.createElement("div");
+  next.className = "button";
+  next.textContent = "Next Machine →";
+
+  next.onclick = () => {
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const today = days[new Date().getDay()];
+    const list = WEEKLY_SCHEDULE[today] || [];
+    const index = list.indexOf(id);
+    const nextID = list[index + 1];
+
+    if (nextID) {
+      window.renderScreen("Machine", { name: nextID, returnTo: params.returnTo });
+    } else {
+      window.renderScreen(params.returnTo || "DailySchedule");
     }
-
-    if (!history[machineID]) {
-      history[machineID] = [];
-    }
-
-    const now = new Date().toISOString();
-    history[machineID].push({
-      weight: w,
-      reps: r,
-      date: now
-    });
-
-    localStorage.setItem("history", JSON.stringify(history));
-
-    // Update last session display
-    const lastSessionSets = history[machineID].filter(s => s.date === now);
-    let text = "Last Session:\n";
-    lastSessionSets.forEach(s => {
-      text += `${s.weight} lbs × ${s.reps} reps\n`;
-    });
-    last.textContent = text.trim();
-
-    alert("Set saved!");
   };
 
-  container.appendChild(saveBtn);
-
-  /* NEXT MACHINE BUTTON (Daily Schedule only) */
-  if (returnTo === "DailySchedule") {
-    const nextBtn = document.createElement("div");
-    nextBtn.className = "button";
-
-    const today = ["Sun","Mon","Tue","Wed","Thur","Fri","Sat"][new Date().getDay()];
-    const todayList = WEEKLY_SCHEDULE[today] || [];
-    const index = todayList.indexOf(machineID);
-
-    if (index !== -1 && index < todayList.length - 1) {
-      const nextID = todayList[index + 1];
-      nextBtn.textContent = `Next: ${nextID} — ${MACHINES[nextID].name}`;
-      nextBtn.onclick = () => {
-        window.renderScreen("Machine", { name: nextID, returnTo: "DailySchedule" });
-      };
-      container.appendChild(nextBtn);
-    }
-  }
+  container.appendChild(next);
 
   /* BACK BUTTON */
-  const backBtn = document.createElement("div");
-  backBtn.className = "return-btn";
-  backBtn.textContent = "← Back";
-  backBtn.onclick = () => window.renderScreen(returnTo);
-  container.appendChild(backBtn);
+  const back = document.createElement("div");
+  back.className = "gym-button";
+  back.textContent = "← Back";
+  back.onclick = () => window.renderScreen(params.returnTo || "StrengthStudio");
+  container.appendChild(back);
 
   return container;
 }
