@@ -1,5 +1,5 @@
 /* =========================================
-   DAILY SCHEDULE (DOM VERSION)
+   DAILY SCHEDULE — TODAY'S MACHINES ONLY
 ========================================= */
 
 import { MACHINES } from "../data/machines.js";
@@ -19,7 +19,6 @@ export default function DailySchedule() {
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const today = days[new Date().getDay()];
 
-  /* LOAD TODAY'S MACHINES */
   const todayList = WEEKLY_SCHEDULE[today] || [];
 
   const list = document.createElement("div");
@@ -34,7 +33,7 @@ export default function DailySchedule() {
     list.appendChild(empty);
   }
 
-  /* LOAD HISTORY TO MARK COMPLETION */
+  /* LOAD HISTORY */
   const history = JSON.parse(localStorage.getItem("history") || "{}");
 
   todayList.forEach((id) => {
@@ -42,9 +41,7 @@ export default function DailySchedule() {
 
     const card = document.createElement("div");
     card.className = "card-base";
-    card.style.cursor = "pointer";
 
-    /* Determine if machine has sets today */
     const sets = history[id] || [];
     const last = sets[sets.length - 1];
     const completed =
@@ -52,27 +49,22 @@ export default function DailySchedule() {
       new Date(last.date).toDateString() === new Date().toDateString();
 
     card.innerHTML = `
-      <div class="weekly-title">
-        ${id} — ${machine.name}
-      </div>
-      <div class="weekly-sub">
-        ${completed ? "Completed ✔" : "Not started"}
-      </div>
+      <div class="weekly-title">${id} — ${machine.name}</div>
+      <div class="weekly-sub">${completed ? "Completed ✔" : "Not started"}</div>
     `;
 
-    card.onclick = () => {
+    card.onclick = () =>
       window.renderScreen("Machine", { name: id, returnTo: "DailySchedule" });
-    };
 
     list.appendChild(card);
   });
 
-  /* RETURN BUTTON */
-  const backBtn = document.createElement("button");
-  backBtn.className = "return-btn";
-  backBtn.textContent = "Return to Gym Floor";
-  backBtn.onclick = () => window.renderScreen("GymFloor");
-  container.appendChild(backBtn);
+  /* BACK BUTTON */
+  const back = document.createElement("div");
+  back.className = "gym-button";
+  back.textContent = "← Back to Gym Floor";
+  back.onclick = () => window.renderScreen("GymFloor");
+  container.appendChild(back);
 
   return container;
 }
