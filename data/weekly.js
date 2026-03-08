@@ -1,5 +1,3 @@
-
-
 export const WEEKLY_SCHEDULE = {
   Mon: [
     15,   // Leg Press (Heavy)
@@ -25,7 +23,7 @@ export const WEEKLY_SCHEDULE = {
     3     // Ab Crunch (Core)
   ],
 
-  Thur: [
+  Thu: [   // ✔ FIXED — must be "Thu"
     115,  // Leg Press (Light)
     12,   // Seated Leg Curl (Light)
     13,   // Hip Adductor (Light)
@@ -41,3 +39,5 @@ export const WEEKLY_SCHEDULE = {
     1     // Dependent Curl (Light)
   ]
 };
+
+
