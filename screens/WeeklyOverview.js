@@ -3,7 +3,7 @@
 ========================================================== */
 
 import { MACHINES } from "../data/machines.js";
-import { WEEKLY_SCHEDULE } from "../data/weekly.js";
+import { WEEKLY } from "../data/weekly.js";
 
 export default function WeeklyOverview() {
   const container = document.createElement("div");
@@ -17,7 +17,7 @@ export default function WeeklyOverview() {
   header.textContent = "Weekly Overview";
   container.appendChild(header);
 
-  /* -------------------------------
+  /* ------------------------------
      WEEK + BLOCK BADGE
   --------------------------------*/
   const week = parseInt(localStorage.getItem("week") || "1");
@@ -34,7 +34,8 @@ export default function WeeklyOverview() {
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri"];
 
   days.forEach((day) => {
-    const list = WEEKLY_SCHEDULE[day] || [];
+    const list = WEEKLY[day] || [];
+
 
     const card = document.createElement("div");
     card.className = "card-base";
