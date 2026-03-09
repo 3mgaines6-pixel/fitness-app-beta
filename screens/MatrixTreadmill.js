@@ -1,68 +1,112 @@
-/* =========================================
-   MATRIX TREADMILL (DOM VERSION)
-========================================= */
+/* ================================================
+   MATRIX TREADMILL — MIN, MPH, INCLINE, MILES
+================================================ */
 
 export default function MatrixTreadmill() {
   const container = document.createElement("div");
-  container.className = "cardio-machine-screen";
+  container.className = "screen cardio-bg-dark";
 
-  /* HEADER */
+  /* -------------------------------
+     HEADER
+  --------------------------------*/
   const header = document.createElement("div");
   header.className = "header";
   header.textContent = "Matrix Treadmill";
   container.appendChild(header);
 
-  /* TIME INPUT */
-  const timeInput = document.createElement("input");
-  timeInput.type = "number";
-  timeInput.className = "cardio-input";
-  timeInput.placeholder = "Minutes";
-  container.appendChild(timeInput);
+  /* -------------------------------
+     INPUTS
+  --------------------------------*/
+  const minutes = document.createElement("input");
+  minutes.className = "input-box";
+  minutes.placeholder = "Minutes";
 
-  /* DISTANCE INPUT */
-  const distanceInput = document.createElement("input");
-  distanceInput.type = "number";
-  distanceInput.className = "cardio-input";
-  distanceInput.placeholder = "Miles";
-  container.appendChild(distanceInput);
+  const miles = document.createElement("input");
+  miles.className = "input-box";
+  miles.placeholder = "Miles";
 
-  /* SAVE BUTTON */
-  const saveBtn = document.createElement("div");
-  saveBtn.className = "save-button";
-  saveBtn.textContent = "Save Cardio";
+  const mph = document.createElement("input");
+  mph.className = "input-box";
+  mph.placeholder = "Speed (MPH)";
 
-  saveBtn.onclick = () => {
-    const minutes = Number(timeInput.value);
-    const miles = Number(distanceInput.value);
+  const incline = document.createElement("input");
+  incline.className = "input-box";
+  incline.placeholder = "Incline (%)";
 
-    if (!minutes && !miles) {
-      alert("Enter minutes or miles");
-      return;
-    }
+  container.appendChild(minutes);
+  container.appendChild(miles);
+  container.appendChild(mph);
+  container.appendChild(incline);
+
+  /* -------------------------------
+     SAVE BUTTON
+  --------------------------------*/
+  const save = document.createElement("div");
+  save.className = "button";
+  save.textContent = "Save Treadmill Session";
+
+  save.onclick = () => {
+    const minVal = Number(minutes.value);
+    const mileVal = Number(miles.value);
+    const mphVal = Number(mph.value);
+    const incVal = Number(incline.value);
+
+    if (!minVal && !mileVal && !mphVal) return;
 
     const entry = {
-      type: "treadmill",
-      minutes,
-      miles,
-      date: new Date().toISOString()
+      minutes: minVal,
+      miles: mileVal,
+      mph: mphVal,
+      incline: incVal,
+      date: new Date().toISOString(),
     };
 
-    // Save to localStorage
-    const history = JSON.parse(localStorage.getItem("cardioHistory")) || [];
+    const history = JSON.parse(localStorage.getItem("treadmill") || "[]");
     history.push(entry);
-    localStorage.setItem("cardioHistory", JSON.stringify(history));
+    localStorage.setItem("treadmill", JSON.stringify(history));
 
-    alert("Cardio saved!");
+    window.renderScreen("CardioStudio");
   };
 
-  container.appendChild(saveBtn);
+  container.appendChild(save);
 
-  /* BACK BUTTON */
-  const backBtn = document.createElement("div");
-  backBtn.className = "back-button";
-  backBtn.textContent = "← Back";
-  backBtn.onclick = () => window.renderScreen("CardioStudio");
-  container.appendChild(backBtn);
+  /* -------------------------------
+     LAST SESSION CARD
+  --------------------------------*/
+  const history = JSON.parse(localStorage.getItem("treadmill") || "[]");
+  const last = history[history.length - 1];
+
+  const lastCard = document.createElement("div");
+  lastCard.className = "card-base";
+
+  if (last) {
+    const date = new Date(last.date).toLocaleDateString();
+    lastCard.innerHTML = `
+      <div class="weekly-title">Last Treadmill Session</div>
+      <div class="weekly-sub">
+        ${last.minutes || 0} min • 
+        ${last.miles || 0} miles • 
+        ${last.mph || 0} mph • 
+        Incline ${last.incline || 0}%<br>
+        ${date}
+      </div>
+    `;
+  } else {
+    lastCard.innerHTML = `
+      <div class="weekly-title">No previous treadmill sessions</div>
+    `;
+  }
+
+  container.appendChild(lastCard);
+
+  /* -------------------------------
+     BACK BUTTON
+  --------------------------------*/
+  const back = document.createElement("div");
+  back.className = "gym-button";
+  back.textContent = "← Back";
+  back.onclick = () => window.renderScreen("CardioStudio");
+  container.appendChild(back);
 
   return container;
 }
