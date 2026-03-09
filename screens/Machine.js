@@ -3,7 +3,7 @@
 ================================================ */
 
 import { MACHINES } from "../data/machines.js";
-import { WEEKLY_SCHEDULE } from "../data/weekly.js";
+import { WEEKLY } from "../data/weekly.js";
 
 export default function Machine(id) {
   const machine = MACHINES[id];
@@ -215,7 +215,8 @@ export default function Machine(id) {
   next.onclick = () => {
     const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const today = days[new Date().getDay()];
-    const list = WEEKLY_SCHEDULE[today] || [];
+    const list = WEEKLY[today] || [];
+
     const index = list.indexOf(id);
     const nextID = list[index + 1];
 
