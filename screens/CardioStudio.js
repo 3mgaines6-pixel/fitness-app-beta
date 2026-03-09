@@ -2,14 +2,20 @@ export default function CardioStudio() {
   const container = document.createElement("div");
   container.className = "screen cardio-bg-dark";
 
+  /* -------------------------------
+     HEADER
+  --------------------------------*/
   const header = document.createElement("div");
   header.className = "header";
   header.textContent = "Cardio Studio";
   container.appendChild(header);
 
+  /* -------------------------------
+     CARDIO OPTIONS
+  --------------------------------*/
   function makeCardio(label, screen) {
     const btn = document.createElement("div");
-    btn.className = "gym-button";
+    btn.className = "gym-button"; // white buttons for cardio
     btn.textContent = label;
     btn.onclick = () => window.renderScreen(screen);
     return btn;
@@ -22,6 +28,9 @@ export default function CardioStudio() {
   container.appendChild(makeCardio("🌤 Outdoor Walk", "OutdoorWalk"));
   container.appendChild(makeCardio("🚣 Rowing", "Rowing"));
 
+  /* -------------------------------
+     BACK BUTTON
+  --------------------------------*/
   const back = document.createElement("div");
   back.className = "gym-button";
   back.textContent = "← Back";
