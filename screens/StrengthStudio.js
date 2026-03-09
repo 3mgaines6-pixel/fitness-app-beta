@@ -1,57 +1,51 @@
-/* =========================================
-   STRENGTH STUDIO — FULL MACHINE LIST
-   Blue buttons • ID + Emoji + Name
-========================================= */
-
 import { MACHINES } from "../data/machines.js";
 
 export default function StrengthStudio() {
   const container = document.createElement("div");
-  container.className = "screen";
+  container.className = "screen strength-bg";
 
-  /* HEADER */
+  /* -------------------------------
+     HEADER
+  --------------------------------*/
   const header = document.createElement("div");
   header.className = "header";
   header.textContent = "Strength Studio";
   container.appendChild(header);
 
-  /* BUTTON HELPER (BLUE BUTTONS) */
-  function makeButton(label, screenName, params = {}) {
-    const btn = document.createElement("div");
-    btn.className = "button"; // BLUE BUTTON
-    btn.textContent = label;
-    btn.onclick = () => window.renderScreen(screenName, params);
-    return btn;
-  }
+  /* -------------------------------
+     WEEK + BLOCK BADGE (W2 + BP1)
+  --------------------------------*/
+  const week = parseInt(localStorage.getItem("week") || "1");
+  const block = week <= 2 ? "PRIMARY" : "SWAP";
 
-  /* HISTORY + WEEKLY OVERVIEW */
-  container.appendChild(makeButton("📘 Strength History", "StrengthHistory"));
-  container.appendChild(makeButton("📅 Weekly Overview", "WeeklyOverview"));
+  const badge = document.createElement("div");
+  badge.className = "badge";
+  badge.textContent = `Week ${week} of 4 • ${block}`;
+  container.appendChild(badge);
 
-  /* MACHINE LIST (NUMERIC ORDER) */
-  const list = document.createElement("div");
-  list.className = "scroll-list";
-  container.appendChild(list);
-
-  const sortedIDs = Object.keys(MACHINES)
-    .map(Number)
-    .sort((a, b) => a - b);
-
-  sortedIDs.forEach((id) => {
-    const m = MACHINES[id];
+  /* -------------------------------
+     MACHINE LIST
+  --------------------------------*/
+  Object.keys(MACHINES).forEach((id) => {
+    const machine = MACHINES[id];
 
     const btn = document.createElement("div");
-    btn.className = "button"; // BLUE BUTTON
-    btn.textContent = `${id} — ${m.emoji} ${m.name}`;
-    btn.onclick = () => window.renderScreen("Machine", { name: id, returnTo: "StrengthStudio" });
+    btn.className = "button";
+    btn.textContent = `${machine.emoji} ${machine.name}`;
+    btn.onclick = () => {
+      localStorage.setItem("currentMachine", id);
+      window.renderScreen("Machine");
+    };
 
-    list.appendChild(btn);
+    container.appendChild(btn);
   });
 
-  /* BACK BUTTON (WHITE) */
+  /* -------------------------------
+     BACK BUTTON
+  --------------------------------*/
   const back = document.createElement("div");
-  back.className = "gym-button"; // WHITE BUTTON
-  back.textContent = "← Back to Gym Floor";
+  back.className = "gym-button";
+  back.textContent = "← Back";
   back.onclick = () => window.renderScreen("GymFloor");
   container.appendChild(back);
 
