@@ -3,7 +3,8 @@
 ========================================= */
 
 import { MACHINES } from "../data/machines.js";
-import { WEEKLY_SCHEDULE } from "../data/weekly.js";
+import { WEEKLY } from "../data/weekly.js";
+
 
 export default function DailySchedule() {
   const container = document.createElement("div");
@@ -19,7 +20,8 @@ export default function DailySchedule() {
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const today = days[new Date().getDay()];
 
-  const todayList = WEEKLY_SCHEDULE[today] || [];
+  const todayList = WEEKLY[today] || [];
+
 
   const list = document.createElement("div");
   list.className = "scroll-list";
