@@ -1,189 +1,121 @@
+/* ==========================================================
+   MACHINE DEFINITIONS — EMOJI + NAME + CUE + SUGGESTED
+========================================================== */
+
 export const MACHINES = {
-  /* ===========================
-     LOWER BODY — HEAVY (MON)
-     =========================== */
-  15: {
-    id: 15,
-    name: "Leg Press (Heavy)",
-    muscles: "Quads / Glutes",
-    type: "HEAVY",
-    reps: "6-8",
-    tempo: "3-1-2",
-    base: 90
-  },
-
-  /* ===========================
-     LOWER BODY — LIGHT (THU)
-     =========================== */
-  115: {
-    id: 115,
-    name: "Leg Press (Light)",
-    muscles: "Quads / Glutes",
-    type: "LIGHT",
-    reps: "10-12",
-    tempo: "2-1-2",
-    base: 90
-  },
-
-  12: {
-    id: 12,
-    name: "Seated Leg Curl",
-    muscles: "Hamstrings",
-    type: "LIGHT",
-    reps: "10-12",
-    tempo: "2-1-2",
-    base: 30
-  },
-
-  10: {
-    id: 10,
-    name: "Prone Leg Curl",
-    muscles: "Hamstrings",
-    type: "LIGHT",
-    reps: "10-12",
-    tempo: "2-1-2",
-    base: 30
-  },
-
-  11: {
-    id: 11,
-    name: "Leg Extension",
-    muscles: "Quads",
-    type: "LIGHT",
-    reps: "10-12",
-    tempo: "2-1-2",
-    base: 25
-  },
-
-  13: {
-    id: 13,
-    name: "Hip Adductor",
-    muscles: "Inner Thighs",
-    type: "LIGHT",
-    reps: "10-12",
-    tempo: "2-1-2",
-    base: 30
-  },
-
-  14: {
-    id: 14,
-    name: "Hip Abductor",
-    muscles: "Outer Thighs",
-    type: "LIGHT",
-    reps: "10-12",
-    tempo: "2-1-2",
-    base: 30
-  },
-
-  /* ===========================
-     UPPER BODY — HEAVY (TUE)
-     =========================== */
-  7: {
-    id: 7,
-    name: "Chest Press (Heavy)",
-    muscles: "Chest",
-    type: "HEAVY",
-    reps: "6-8",
-    tempo: "3-1-2",
-    base: 40
-  },
-
-  6: {
-    id: 6,
-    name: "Shoulder Press",
-    muscles: "Shoulders",
-    type: "Light",
-    reps: "10-12",
-    tempo: "2-1-2",
-    base: 20
-  },
-
-  /* ===========================
-     UPPER BODY — LIGHT (WED)
-     =========================== */
-  107: {
-    id: 107,
-    name: "Chest Press (Light)",
-    muscles: "Chest",
-    type: "LIGHT",
-    reps: "10-12",
-    tempo: "2-1-2",
-    base: 40
-  },
-
-  2: {
-    id: 2,
-    name: "Triceps Press",
-    muscles: "Arms",
-    type: "LIGHT",
-    reps: "10-12",
-    tempo: "2-1-2",
-    base: 10
-  },
-
-  9: {
-    id: 9,
-    name: "Pec Fly / Rear Delt",
-    muscles: "Chest / Shoulders",
-    type: "LIGHT",
-    reps: "10-12",
-    tempo: "2-1-2",
-    base: 25
-  },
-
-  /* ===========================
-     UPPER BODY — PULL (WED)
-     =========================== */
-  8: {
-    id: 8,
-    name: "Lat Pulldown",
-    muscles: "Back",
-    type: "LIGHT",
-    reps: "10-12",
-    tempo: "2-1-2",
-    base: 40
-  },
-
-  5: {
-    id: 5,
-    name: "Seated Row",
-    muscles: "Back",
-    type: "LIGHT",
-    reps: "10-12",
-    tempo: "2-1-2",
-    base: 40
-  },
-
-  4: {
-    id: 4,
-    name: "Back Extension",
-    muscles: "Lower Back",
-    type: "LIGHT",
-    reps: "10-12",
-    tempo: "2-1-2",
-    base: 25
-  },
-
-  /* ===========================
-     ARMS & CORE (WED)
-     =========================== */
-  1: {
-    id: 1,
+  /* -------------------------------
+     MONDAY — UPPER (PRIMARY)
+  --------------------------------*/
+  "1": {
+    emoji: "💪",
     name: "Dependent Curl",
-    muscles: "Arms",
-    type: "LIGHT",
-    reps: "10-12",
-    tempo: "2-1-2",
-    base: 10
+    cue: "Control the eccentric and keep elbows pinned.",
+    suggestedLight: 40
+  },
+  "2": {
+    emoji: "🏋️‍♂️",
+    name: "Seated Row",
+    cue: "Lead with elbows and squeeze shoulder blades.",
+    suggestedHeavy: 90
+  },
+  "3": {
+    emoji: "🛡️",
+    name: "Shoulder Press",
+    cue: "Drive straight up and avoid arching your back.",
+    suggestedLight: 55
+  },
+  "4": {
+    emoji: "🔥",
+    name: "Chest Press (Heavy)",
+    cue: "Brace core and control the lowering phase.",
+    suggestedHeavy: 120
   },
 
-  3: {
-    id: 3,
-    name: "Ab Crunch",
-    muscles: "Core",
-    type: "CORE",
-    reps: "12-15",
-    tempo: "2-1-2",
-    base: 10
+  /* -------------------------------
+     TUESDAY — LOWER
+  --------------------------------*/
+  "5": {
+    emoji: "🦵",
+    name: "Leg Press",
+    cue: "Push through heels and avoid locking knees.",
+    suggestedHeavy: 270
+  },
+  "6": {
+    emoji: "🍑",
+    name: "Glute Bridge",
+    cue: "Squeeze glutes hard at the top.",
+    suggestedLight: 95
+  },
+  "7": {
+    emoji: "🦿",
+    name: "Hamstring Curl",
+    cue: "Slow return, full stretch each rep.",
+    suggestedLight: 45
+  },
+  "8": {
+    emoji: "📏",
+    name: "Leg Extension",
+    cue: "Pause at the top for quad activation.",
+    suggestedLight: 55
+  },
+
+  /* -------------------------------
+     WEDNESDAY — PUSH
+  --------------------------------*/
+  "9": {
+    emoji: "🏋️",
+    name: "Incline Chest Press",
+    cue: "Keep wrists stacked over elbows.",
+    suggestedHeavy: 105
+  },
+  "10": {
+    emoji: "💥",
+    name: "Tricep Pressdown",
+    cue: "Lock elbows at your sides and extend fully.",
+    suggestedLight: 35
+  },
+  "11": {
+    emoji: "🧱",
+    name: "Machine Dips",
+    cue: "Lean slightly forward for chest emphasis.",
+    suggestedHeavy: 140
+  },
+
+  /* -------------------------------
+     THURSDAY — PULL
+  --------------------------------*/
+  "12": {
+    emoji: "🦅",
+    name: "Lat Pulldown",
+    cue: "Pull to collarbone and avoid leaning back.",
+    suggestedHeavy: 110
+  },
+  "13": {
+    emoji: "🔗",
+    name: "Cable Row",
+    cue: "Keep torso still and drive elbows back.",
+    suggestedHeavy: 95
+  },
+  "14": {
+    emoji: "🧲",
+    name: "Face Pull",
+    cue: "Lead with elbows high and squeeze rear delts.",
+    suggestedLight: 25
+  },
+
+  /* -------------------------------
+     FRIDAY — ACCESSORIES
+  --------------------------------*/
+  "15": {
+    emoji: "🦾",
+    name: "Bicep Curl Machine",
+    cue: "Keep shoulders down and curl smoothly.",
+    suggestedLight: 45
+  },
+  "16": {
+    emoji: "🧘",
+    name: "Back Extension",
+    cue: "Hinge at hips and avoid hyperextension.",
+    suggestedLight: 25
   }
 };
