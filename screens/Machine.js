@@ -1,6 +1,6 @@
-/* ================================================
-   MACHINE SCREEN — BLUE HEADER + CUE BAR + SAFETY
-================================================ */
+/* ============================================================
+   FULL MACHINE SCREEN — 3 SETS + TEMPO + AUTO TIMER + COACHING
+============================================================ */
 
 import { MACHINES } from "../data/machines.js";
 import { WEEKLY } from "../data/weekly.js";
@@ -8,7 +8,7 @@ import { WEEKLY } from "../data/weekly.js";
 export default function Machine(id) {
   const machine = MACHINES[id];
 
-  /* SAFETY: If machine is missing, prevent crash */
+  /* SAFETY: Missing machine */
   if (!machine) {
     const error = document.createElement("div");
     error.className = "screen";
@@ -26,14 +26,42 @@ export default function Machine(id) {
   /* HEADER */
   const header = document.createElement("div");
   header.className = "header";
-  header.textContent = `${id} — ${machine.emoji} ${machine.name}`;
+  header.textContent = `${machine.emoji} ${machine.name}`;
   container.appendChild(header);
 
-  /* COACHING CUE BAR */
+  /* CUE BAR */
   const cue = document.createElement("div");
   cue.className = "cue-bar";
-  cue.textContent = machine.cue || "Focus on controlled reps and full ROM.";
+  cue.textContent = machine.cue || "Control the movement and use full ROM.";
   container.appendChild(cue);
+
+  /* TEMPO SECTION (Layout A) */
+  const tempoCard = document.createElement("div");
+  tempoCard.className = "card-base";
+
+  const tempoTitle = document.createElement("div");
+  tempoTitle.className = "weekly-title";
+  tempoTitle.textContent = "Tempo";
+
+  const tempoToggle = document.createElement("div");
+  tempoToggle.className = "button small-btn";
+  let tempo = "3-1-2";
+  tempoToggle.textContent = tempo;
+
+  tempoToggle.onclick = () => {
+    tempo = tempo === "3-1-2" ? "2-1-2" : tempo === "2-1-2" ? "3-0-3" : "3-1-2";
+    tempoToggle.textContent = tempo;
+    cue.textContent = `Tempo ${tempo} — control the eccentric.`;
+  };
+
+  const tempoExplain = document.createElement("div");
+  tempoExplain.className = "weekly-sub";
+  tempoExplain.textContent = "Eccentric — Pause — Concentric";
+
+  tempoCard.appendChild(tempoTitle);
+  tempoCard.appendChild(tempoToggle);
+  tempoCard.appendChild(tempoExplain);
+  container.appendChild(tempoCard);
 
   /* LOAD HISTORY */
   const history = JSON.parse(localStorage.getItem("history") || "{}");
@@ -77,7 +105,7 @@ export default function Machine(id) {
     container.appendChild(suggestCard);
   }
 
-  /* HEAVY WEIGHT WARNING */
+  /* HEAVY JUMP WARNING */
   function checkWarning(w) {
     if (!suggested) return null;
     if (w > suggested + 20) {
@@ -86,57 +114,128 @@ export default function Machine(id) {
     return null;
   }
 
-  /* INPUTS */
-  const weight = document.createElement("input");
-  weight.className = "input-box";
-  weight.placeholder = "Weight (lbs)";
+  /* THREE-SET BLOCK (Option B) */
+  const setInputs = [];
 
-  const reps = document.createElement("input");
-  reps.className = "input-box";
-  reps.placeholder = "Reps";
+  function createSetCard(num) {
+    const card = document.createElement("div");
+    card.className = "card-base";
 
-  container.appendChild(weight);
-  container.appendChild(reps);
+    const title = document.createElement("div");
+    title.className = "weekly-title";
+    title.textContent = `Set ${num}`;
+
+    const w = document.createElement("input");
+    w.className = "input-box";
+    w.placeholder = "Weight (lbs)";
+
+    const r = document.createElement("input");
+    r.className = "input-box";
+    r.placeholder = "Reps";
+
+    card.appendChild(title);
+    card.appendChild(w);
+    card.appendChild(r);
+
+    setInputs.push({ w, r });
+    return card;
+  }
+
+  container.appendChild(createSetCard(1));
+  container.appendChild(createSetCard(2));
+  container.appendChild(createSetCard(3));
 
   /* WARNING BAR */
   const warningBar = document.createElement("div");
 
-  weight.oninput = () => {
-    const w = Number(weight.value);
-    const msg = checkWarning(w);
+  setInputs.forEach(({ w }) => {
+    w.oninput = () => {
+      const msg = checkWarning(Number(w.value));
+      if (msg) {
+        warningBar.className = "warning-bar";
+        warningBar.textContent = msg;
+        if (!container.contains(warningBar)) container.insertBefore(warningBar, tempoCard);
+      } else {
+        if (container.contains(warningBar)) container.removeChild(warningBar);
+      }
+    };
+  });
 
-    if (msg) {
-      warningBar.className = "warning-bar";
-      warningBar.textContent = msg;
-      if (!container.contains(warningBar)) container.insertBefore(warningBar, weight);
-    } else {
-      if (container.contains(warningBar)) container.removeChild(warningBar);
-    }
-  };
+  /* SAVE ALL SETS */
+  const saveAll = document.createElement("div");
+  saveAll.className = "button";
+  saveAll.textContent = "Save All Sets";
 
-  /* SAVE SET BUTTON */
-  const save = document.createElement("div");
-  save.className = "button";
-  save.textContent = "Save Set";
-
-  save.onclick = () => {
-    const w = Number(weight.value);
-    const r = Number(reps.value);
-    if (!w || !r) return;
-
-    const entry = { weight: w, reps: r, date: new Date().toISOString() };
-
+  saveAll.onclick = () => {
     const h = JSON.parse(localStorage.getItem("history") || "{}");
     h[id] = h[id] || [];
-    h[id].push(entry);
+
+    let anySaved = false;
+
+    setInputs.forEach(({ w, r }) => {
+      const weight = Number(w.value);
+      const reps = Number(r.value);
+      if (weight && reps) {
+        h[id].push({ weight, reps, date: new Date().toISOString() });
+        anySaved = true;
+      }
+    });
+
+    if (!anySaved) return;
+
     localStorage.setItem("history", JSON.stringify(h));
 
-    window.renderScreen("Machine", id);
+    showCoachCard();
+    startRestTimer();
   };
 
-  container.appendChild(save);
+  container.appendChild(saveAll);
 
-  /* SET HISTORY LIST */
+  /* COACHING CARD */
+  const coachCard = document.createElement("div");
+  coachCard.className = "card-base coach-card";
+  coachCard.style.display = "none";
+
+  function showCoachCard() {
+    const messages = [
+      "Great control — keep that tempo steady.",
+      "Nice work. Stay tight and drive through the full ROM.",
+      "Strong set. Keep breathing and stay locked in.",
+      "Excellent tempo. Stay consistent on Set 2.",
+      "Good effort — protect your joints and stay smooth."
+    ];
+    coachCard.textContent = messages[Math.floor(Math.random() * messages.length)];
+    coachCard.style.display = "block";
+  }
+
+  container.appendChild(coachCard);
+
+  /* REST TIMER (AUTO: 60s Light/Core, 90s Heavy) */
+  const timer = document.createElement("div");
+  timer.className = "timer-display";
+  timer.style.display = "none";
+  container.appendChild(timer);
+
+  function startRestTimer() {
+    const isHeavy = machine.type === "Heavy";
+    let time = isHeavy ? 90 : 60;
+
+    timer.style.display = "block";
+    timer.textContent = `${time}s`;
+
+    const interval = setInterval(() => {
+      time--;
+      timer.textContent = `${time}s`;
+
+      if (time <= 0) {
+        clearInterval(interval);
+        timer.textContent = "Ready when you are.";
+        navigator.vibrate?.(200);
+      }
+    }, 1000);
+  }
+
+  /* HISTORY LIST + DELETE */
   if (sets.length > 0) {
     const list = document.createElement("div");
     list.className = "set-history";
@@ -146,12 +245,12 @@ export default function Machine(id) {
       item.className = "set-item";
 
       const date = new Date(s.date).toLocaleDateString();
-
       item.innerHTML = `<div>${s.weight} lbs × ${s.reps} reps — ${date}</div>`;
 
+      /* Trash icon delete */
       const del = document.createElement("div");
       del.className = "delete-set";
-      del.textContent = "Delete";
+      del.textContent = "🗑";
       del.onclick = () => {
         sets.splice(index, 1);
         history[id] = sets;
@@ -159,13 +258,19 @@ export default function Machine(id) {
         window.renderScreen("Machine", id);
       };
 
+      /* Long-press delete */
+      item.onmousedown = () => {
+        item._pressTimer = setTimeout(() => del.onclick(), 600);
+      };
+      item.onmouseup = () => clearTimeout(item._pressTimer);
+
       item.appendChild(del);
       list.appendChild(item);
     });
 
     container.appendChild(list);
 
-    /* DELETE ALL BUTTON */
+    /* DELETE ALL */
     const delAll = document.createElement("div");
     delAll.className = "delete-all";
     delAll.textContent = "Delete All Sets";
@@ -181,7 +286,7 @@ export default function Machine(id) {
     container.appendChild(delAll);
   }
 
-  /* NEXT MACHINE BUTTON */
+  /* NEXT MACHINE */
   const next = document.createElement("div");
   next.className = "button";
   next.textContent = "Next Machine →";
