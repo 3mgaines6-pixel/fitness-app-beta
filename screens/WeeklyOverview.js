@@ -1,79 +1,71 @@
-import { M } from "../data/machines.js";
 import { WEEKLY } from "../data/weekly.js";
-
-// ------------------------------------------------------------
-// Helpers
-// ------------------------------------------------------------
-
-function getWeekType() {
-  const weekNumber = Math.ceil(new Date().getDate() / 7);
-  return weekNumber === 3 || weekNumber === 4 ? "swap" : "primary";
-}
-
-function findMachineByNumber(num) {
-  return Object.values(M).find(m => m.number === num);
-}
-
-function applySwap(machine) {
-  switch (machine.number) {
-    case 12: return M.PLC;
-    case 7:  return M.CHEST_L;
-    case 15: return M.PRESS_L;
-    default: return machine;
-  }
-}
-
-// ------------------------------------------------------------
-// MAIN SCREEN (DEFAULT EXPORT)
-// ------------------------------------------------------------
+import { MACHINES } from "../data/machines.js";
 
 export default function WeeklyOverview() {
   const root = document.createElement("div");
-  root.className = "weekly-screen";
+  root.className = "strength-screen";
 
-  const weekType = getWeekType();
+  // ------------------------------------------------------------
+  // BACK BUTTON
+  // ------------------------------------------------------------
+  const backBtn = document.createElement("div");
+  backBtn.className = "gym-button";
+  backBtn.textContent = "← Back";
+  backBtn.onclick = () => window.renderScreen("StrengthStudio");
+  root.appendChild(backBtn);
 
+  // ------------------------------------------------------------
+  // TITLE
+  // ------------------------------------------------------------
   const title = document.createElement("h1");
-  title.className = "weekly-title";
+  title.className = "strength-title";
   title.textContent = "Weekly Overview";
   root.appendChild(title);
 
-  // Loop through all days in WEEKLY.js
-  Object.entries(WEEKLY).forEach(([day, machineNumbers]) => {
+  // ------------------------------------------------------------
+  // HISTORY LOAD
+  // ------------------------------------------------------------
+  const history = JSON.parse(localStorage.getItem("history") || "{}");
+
+  // ------------------------------------------------------------
+  // BUILD EACH DAY
+  // ------------------------------------------------------------
+  Object.keys(WEEKLY).forEach(day => {
     const dayCard = document.createElement("div");
-    dayCard.className = "weekly-day-card";
+    dayCard.className = "machine-card";
 
-    const dayName = document.createElement("h2");
-    dayName.className = "day-name";
-    dayName.textContent = day;
-    dayCard.appendChild(dayName);
+    const dayTitle = document.createElement("div");
+    dayTitle.className = "machine-name";
+    dayTitle.textContent = day;
+    dayCard.appendChild(dayTitle);
 
-    const list = document.createElement("ul");
-    list.className = "machine-list";
+    const machineNumbers = WEEKLY[day];
 
     machineNumbers.forEach(num => {
-      let machine = findMachineByNumber(num);
-      if (!machine) return;
+      const m = Object.values(MACHINES).find(x => x.number === num);
+      if (!m) return;
 
-      if (weekType === "swap") machine = applySwap(machine);
+      const item = document.createElement("div");
+      item.className = "weekly-item";
 
-      const item = document.createElement("li");
-      item.className = "machine-item";
+      // Last workout
+      const sets = history[m.id] || [];
+      const last = sets[sets.length - 1];
 
-      const name = document.createElement("span");
-      name.className = "machine-name";
-      name.textContent = machine.name;
+      const lastText = last
+        ? `${last.weight} lbs × ${last.reps} reps`
+        : "—";
 
-      const muscle = document.createElement("span");
-      muscle.className = "machine-muscle";
-      muscle.textContent = machine.muscle;
+      item.innerHTML = `
+        <div class="weekly-machine">
+          ${m.number} • ${m.emoji} ${m.name}
+        </div>
+        <div class="weekly-last">${lastText}</div>
+      `;
 
-      item.appendChild(name);
-      item.appendChild(muscle);
-      list.appendChild(item);
+      dayCard.appendChild(item);
     });
 
-    dayCard.appendChild(list);
     root.appendChild(dayCard);
   });
 
