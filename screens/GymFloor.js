@@ -18,11 +18,12 @@ export default function GymFloor() {
      MAIN NAV BUTTONS
   --------------------------------*/
   function makeButton(label, screen) {
-    const btn = document.createElement("div");
-    btn.className = "button";
-    btn.textContent = label;
-    btn.onclick = () => window.renderScreen(screen);
-    return btn;
+   const btn = document.createElement("div");
+btn.className = "gymfloor-button";
+btn.textContent = "🏋️ Strength Studio";
+btn.onclick = () => window.renderScreen("StrengthStudio");
+root.appendChild(btn);
+
   }
 
   container.appendChild(makeButton("🏋️ Strength Studio", "StrengthStudio"));
