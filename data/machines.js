@@ -2,8 +2,7 @@
    MACHINE DATA — NUMBER-INDEXED WITH EMOJIS + CUES
 ============================================================ */
 
-export const M = {
-
+export const MACHINES = {
   1: {
     id: "CURL",
     number: 1,
@@ -208,3 +207,9 @@ export const M = {
     cue: "Smooth reps — full control, no bouncing."
   }
 };
+
+/* ============================================================
+   COMPATIBILITY EXPORT
+   (Allows both M and MACHINES to work across all screens)
+============================================================ */
+export const M = MACHINES;
