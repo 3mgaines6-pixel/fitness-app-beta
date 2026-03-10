@@ -220,3 +220,68 @@ body {
   margin-top: 20px;
   cursor: pointer;
 }
+/* Background */
+.strength-screen {
+  background: #f2f6ff;
+  padding: 20px;
+}
+
+/* Cards */
+.machine-card {
+  background: white;
+  border-radius: 22px;
+  padding: 18px;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 12px rgba(100, 140, 255, 0.25);
+}
+
+/* Typography */
+.machine-name {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a3fa3;
+  margin-bottom: 6px;
+}
+
+.machine-muscle {
+  font-size: 14px;
+  color: #4a4a4a;
+  margin-bottom: 4px;
+}
+
+.machine-baseline {
+  font-size: 14px;
+  color: #6a6a6a;
+}
+
+/* Back button */
+.back-btn, .gym-button {
+  background: #1a3fa3;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 14px;
+  border: none;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+.weekly-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #e5e9ff;
+}
+
+.weekly-item:last-child {
+  border-bottom: none;
+}
+
+.weekly-machine {
+  font-size: 15px;
+  color: #1a3fa3;
+  font-weight: 600;
+}
+
+.weekly-last {
+  font-size: 14px;
+  color: #555;
+}
