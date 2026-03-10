@@ -67,30 +67,31 @@ export default function StrengthStudio() {
   list.className = "machine-list";
 
   machines.forEach(m => {
-    const card = document.createElement("div");
-    card.className = "machine-card";
+  const card = document.createElement("div");
+  card.className = "machine-card";
 
-    // ⭐ NEW: Make the card open the Machine screen
-    card.onclick = () => window.renderScreen("Machine", m);
+  // Make the card open the Machine screen
+  card.onclick = () => window.renderScreen("Machine", m);
 
-    const name = document.createElement("div");
-    name.className = "machine-name";
-    name.textContent = m.name;
+  const name = document.createElement("div");
+  name.className = "machine-name";
+  name.textContent = `${m.number} • ${m.name}`;
 
-    const muscle = document.createElement("div");
-    muscle.className = "machine-muscle";
-    muscle.textContent = m.muscle;
+  const muscle = document.createElement("div");
+  muscle.className = "machine-muscle";
+  muscle.textContent = m.muscle;
 
-    const baseline = document.createElement("div");
-    baseline.className = "machine-baseline";
-    baseline.textContent =
-      m.baseline !== null ? `Baseline: ${m.baseline} lbs` : "Baseline: —";
+  const baseline = document.createElement("div");
+  baseline.className = "machine-baseline";
+  baseline.textContent =
+    m.baseline !== null ? `Baseline: ${m.baseline} lbs` : "Baseline: —";
 
-    card.appendChild(name);
-    card.appendChild(muscle);
-    card.appendChild(baseline);
-    list.appendChild(card);
-  });
+  card.appendChild(name);
+  card.appendChild(muscle);
+  card.appendChild(baseline);
+  list.appendChild(card);
+});
+
 
   root.appendChild(list);
 
