@@ -1,72 +1,85 @@
-/* =========================================
-   DAILY SCHEDULE — TODAY'S MACHINES ONLY
-========================================= */
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { M } from "../data/MACHINES.js";
+import { WEEKLY } from "../data/WEEKLY.js";
+import "./DailySchedule.css";
 
-import { MACHINES } from "../data/machines.js";
-import { WEEKLY } from "../data/weekly.js";
+// ------------------------------------------------------------
+// Helpers
+// ------------------------------------------------------------
 
+// Get today's weekday key ("Mon", "Tue", etc.)
+function getTodayName() {
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  return days[new Date().getDay()];
+}
+
+// Determine if this is a primary or swap week
+function getWeekType() {
+  const weekNumber = Math.ceil(new Date().getDate() / 7);
+  return weekNumber === 3 || weekNumber === 4 ? "swap" : "primary";
+}
+
+// Convert machine number → machine object
+function findMachineByNumber(num) {
+  return Object.values(M).find(m => m.number === num);
+}
+
+// Apply swap logic for Weeks 3–4
+function applySwap(machine) {
+  switch (machine.number) {
+    case 12: return M.PLC;      // Seated Leg Curl → Prone Leg Curl
+    case 7:  return M.CHEST_L;  // Heavy Chest → Light Chest
+    case 15: return M.PRESS_L;  // Heavy Leg Press → Light Leg Press
+    default: return machine;
+  }
+}
+
+// ------------------------------------------------------------
+// Component
+// ------------------------------------------------------------
 
 export default function DailySchedule() {
-  const container = document.createElement("div");
-  container.className = "weekly-screen";
+  const navigate = useNavigate();
 
-  /* HEADER */
-  const header = document.createElement("div");
-  header.className = "header";
-  header.textContent = "Today's Workout";
-  container.appendChild(header);
+  const today = getTodayName();
+  const weekType = getWeekType();
 
-  /* CORRECT DAY MAPPING */
-  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const today = days[new Date().getDay()];
+  // Machine numbers for today from WEEKLY.js
+  const machineNumbers = WEEKLY[today] || [];
 
-  const todayList = WEEKLY[today] || [];
+  // Convert numbers → machine objects (with swap logic)
+  const machines = machineNumbers.map(num => {
+    let machine = findMachineByNumber(num);
+    if (!machine) return null;
+    if (weekType === "swap") machine = applySwap(machine);
+    return machine;
+  }).filter(Boolean);
 
+  return (
+    <div className="daily-screen">
 
-  const list = document.createElement("div");
-  list.className = "scroll-list";
-  container.appendChild(list);
+      {/* Back Button */}
+      <button className="back-btn" onClick={() => navigate("/")}>
+        ⬅ Back
+      </button>
 
-  if (todayList.length === 0) {
-    const empty = document.createElement("div");
-    empty.className = "card-base";
-    empty.style.textAlign = "center";
-    empty.textContent = "No workout scheduled for today";
-    list.appendChild(empty);
-  }
+      <h1 className="daily-title">Today's Workout</h1>
+      <h2 className="daily-subtitle">{today}</h2>
 
-  /* LOAD HISTORY */
-  const history = JSON.parse(localStorage.getItem("history") || "{}");
+      <div className="machine-list">
+        {machines.map(m => (
+          <div key={m.id} className="machine-card">
+            <div className="machine-name">{m.name}</div>
+            <div className="machine-muscle">{m.muscle}</div>
+            <div className="machine-baseline">
+              Baseline: {m.baseline !== null ? `${m.baseline} lbs` : "—"}
+            </div>
+          </div>
+        ))}
+      </div>
 
-  todayList.forEach((id) => {
-    const machine = MACHINES[id];
-
-    const card = document.createElement("div");
-    card.className = "card-base";
-
-    const sets = history[id] || [];
-    const last = sets[sets.length - 1];
-    const completed =
-      last &&
-      new Date(last.date).toDateString() === new Date().toDateString();
-
-    card.innerHTML = `
-      <div class="weekly-title">${id} — ${machine.name}</div>
-      <div class="weekly-sub">${completed ? "Completed ✔" : "Not started"}</div>
-    `;
-
-    card.onclick = () =>
-      window.renderScreen("Machine", { name: id, returnTo: "DailySchedule" });
-
-    list.appendChild(card);
-  });
-
-  /* BACK BUTTON */
-  const back = document.createElement("div");
-  back.className = "gym-button";
-  back.textContent = "← Back to Gym Floor";
-  back.onclick = () => window.renderScreen("GymFloor");
-  container.appendChild(back);
-
-  return container;
+    </div>
+  );
 }
+``
