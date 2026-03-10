@@ -223,3 +223,29 @@
 .cue-bar {
   animation: fadeIn 0.6s ease-out;
 }
+.gymfloor-bg {
+  background-image: url("images/gym-entrance.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gymfloor-button {
+  background: rgba(255, 255, 255, 0.92);
+  width: 90%;
+  max-width: 380px;
+  padding: 18px;
+  margin: 12px 0;
+  border-radius: 22px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a3fa3;
+  box-shadow: 0 4px 12px rgba(100, 140, 255, 0.25);
+  backdrop-filter: blur(4px);
+}
