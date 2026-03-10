@@ -70,6 +70,9 @@ export default function StrengthStudio() {
     const card = document.createElement("div");
     card.className = "machine-card";
 
+    // ⭐ NEW: Make the card open the Machine screen
+    card.onclick = () => window.renderScreen("Machine", m);
+
     const name = document.createElement("div");
     name.className = "machine-name";
     name.textContent = m.name;
