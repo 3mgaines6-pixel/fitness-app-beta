@@ -9,12 +9,13 @@ window.onerror = function (msg, url, line, col, error) {
 /* =========================================
    IMPORT DATA FIRST
 ========================================= */
-import { MACHINES } from "./data/machines.js";
+import { MACHINES, M } from "./data/machines.js";
 
 // LOAD SAVED MACHINE DATA
 const savedMachines = JSON.parse(localStorage.getItem("machines"));
 if (savedMachines) {
   Object.assign(MACHINES, savedMachines);
+  Object.assign(M, savedMachines); // <-- FIXED
 }
 
 
