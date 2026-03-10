@@ -1,5 +1,5 @@
-import { M } from "../data/MACHINES.js";
-import { WEEKLY } from "../data/WEEKLY.js";
+import { M } from "../data/machines.js";
+import { WEEKLY } from "../data/weekly.js";
 
 // ------------------------------------------------------------
 // Helpers
