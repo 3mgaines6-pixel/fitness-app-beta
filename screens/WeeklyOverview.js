@@ -1,24 +1,19 @@
-import React from "react";
 import { M } from "../data/MACHINES.js";
 import { WEEKLY } from "../data/WEEKLY.js";
-import "./WeeklyOverview.css";
 
 // ------------------------------------------------------------
 // Helpers
 // ------------------------------------------------------------
 
-// Convert machine number → machine object
-function findMachineByNumber(num) {
-  return Object.values(M).find(m => m.number === num);
-}
-
-// Determine if this is a primary or swap week
 function getWeekType() {
   const weekNumber = Math.ceil(new Date().getDate() / 7);
   return weekNumber === 3 || weekNumber === 4 ? "swap" : "primary";
 }
 
-// Apply swap logic for Weeks 3–4
+function findMachineByNumber(num) {
+  return Object.values(M).find(m => m.number === num);
+}
+
 function applySwap(machine) {
   switch (machine.number) {
     case 12: return M.PLC;      // Seated Leg Curl → Prone Leg Curl
@@ -29,40 +24,60 @@ function applySwap(machine) {
 }
 
 // ------------------------------------------------------------
-// Component
+// MAIN RENDER FUNCTION
 // ------------------------------------------------------------
 
-export default function WeeklyOverview() {
+export function renderWeeklyOverview(root) {
+  root.innerHTML = "";
+
   const weekType = getWeekType();
 
-  return (
-    <div className="weekly-screen">
-      <h1 className="weekly-title">Weekly Overview</h1>
+  const screen = document.createElement("div");
+  screen.className = "weekly-screen";
 
-      {Object.entries(WEEKLY).map(([day, machineNumbers]) => {
-        // Convert numbers → machine objects
-        const machines = machineNumbers.map(num => {
-          let machine = findMachineByNumber(num);
-          if (!machine) return null;
-          if (weekType === "swap") machine = applySwap(machine);
-          return machine;
-        }).filter(Boolean);
+  const title = document.createElement("h1");
+  title.className = "weekly-title";
+  title.textContent = "Weekly Overview";
+  screen.appendChild(title);
 
-        return (
-          <div key={day} className="weekly-day-card">
-            <h2 className="day-name">{day}</h2>
+  // Loop through all days in WEEKLY.js
+  Object.entries(WEEKLY).forEach(([day, machineNumbers]) => {
+    const dayCard = document.createElement("div");
+    dayCard.className = "weekly-day-card";
 
-            <ul className="machine-list">
-              {machines.map(m => (
-                <li key={m.id} className="machine-item">
-                  <span className="machine-name">{m.name}</span>
-                  <span className="machine-muscle">{m.muscle}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        );
-      })}
-    </div>
-  );
+    const dayName = document.createElement("h2");
+    dayName.className = "day-name";
+    dayName.textContent = day;
+    dayCard.appendChild(dayName);
+
+    const list = document.createElement("ul");
+    list.className = "machine-list";
+
+    machineNumbers.forEach(num => {
+      let machine = findMachineByNumber(num);
+      if (!machine) return;
+
+      if (weekType === "swap") machine = applySwap(machine);
+
+      const item = document.createElement("li");
+      item.className = "machine-item";
+
+      const name = document.createElement("span");
+      name.className = "machine-name";
+      name.textContent = machine.name;
+
+      const muscle = document.createElement("span");
+      muscle.className = "machine-muscle";
+      muscle.textContent = machine.muscle;
+
+      item.appendChild(name);
+      item.appendChild(muscle);
+      list.appendChild(item);
+    });
+
+    dayCard.appendChild(list);
+    screen.appendChild(dayCard);
+  });
+
+  root.appendChild(screen);
 }
