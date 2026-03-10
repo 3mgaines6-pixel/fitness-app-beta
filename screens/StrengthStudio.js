@@ -1,4 +1,4 @@
-import { M } from "../data/machines.js";
+import { MACHINES } from "../data/machines.js";
 import { WEEKLY } from "../data/weekly.js";
 
 // ------------------------------------------------------------
@@ -16,14 +16,14 @@ function getWeekType() {
 }
 
 function findMachineByNumber(num) {
-  return Object.values(M).find(m => m.number === num);
+  return Object.values(MACHINES).find(m => m.number === num);
 }
 
 function applySwap(machine) {
   switch (machine.number) {
-    case 12: return M.PLC;
-    case 7:  return M.CHEST_L;
-    case 15: return M.PRESS_L;
+    case 12: return MACHINES.PLC;      // Seated Leg Curl → Prone Leg Curl
+    case 7:  return MACHINES.CHEST_L;  // Chest Press Heavy → Light
+    case 15: return MACHINES.PRESS_L;  // Leg Press Heavy → Light
     default: return machine;
   }
 }
@@ -40,6 +40,7 @@ export default function StrengthStudio() {
   const weekType = getWeekType();
   const machineNumbers = WEEKLY[today] || [];
 
+  // Build today's machine list
   const machines = machineNumbers
     .map(num => {
       let machine = findMachineByNumber(num);
@@ -62,36 +63,36 @@ export default function StrengthStudio() {
   title.textContent = "Strength Studio";
   root.appendChild(title);
 
-  // Machine list
+  // Machine list container
   const list = document.createElement("div");
   list.className = "machine-list";
 
+  // Build machine cards
   machines.forEach(m => {
-  const card = document.createElement("div");
-  card.className = "machine-card";
+    const card = document.createElement("div");
+    card.className = "machine-card";
 
-  // Make the card open the Machine screen
-  card.onclick = () => window.renderScreen("Machine", m);
+    // Open Machine screen with full machine object
+    card.onclick = () => window.renderScreen("Machine", m);
 
-  const name = document.createElement("div");
-  name.className = "machine-name";
-  name.textContent = `${m.number} • ${m.name}`;
+    const name = document.createElement("div");
+    name.className = "machine-name";
+    name.textContent = `${m.number} • ${m.name}`;
 
-  const muscle = document.createElement("div");
-  muscle.className = "machine-muscle";
-  muscle.textContent = m.muscle;
+    const muscle = document.createElement("div");
+    muscle.className = "machine-muscle";
+    muscle.textContent = m.muscle;
 
-  const baseline = document.createElement("div");
-  baseline.className = "machine-baseline";
-  baseline.textContent =
-    m.baseline !== null ? `Baseline: ${m.baseline} lbs` : "Baseline: —";
+    const baseline = document.createElement("div");
+    baseline.className = "machine-baseline";
+    baseline.textContent =
+      m.baseline !== null ? `Baseline: ${m.baseline} lbs` : "Baseline: —";
 
-  card.appendChild(name);
-  card.appendChild(muscle);
-  card.appendChild(baseline);
-  list.appendChild(card);
-});
-
+    card.appendChild(name);
+    card.appendChild(muscle);
+    card.appendChild(baseline);
+    list.appendChild(card);
+  });
 
   root.appendChild(list);
 
