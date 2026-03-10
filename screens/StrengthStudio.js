@@ -21,9 +21,9 @@ function findMachineByNumber(num) {
 
 function applySwap(machine) {
   switch (machine.number) {
-    case 12: return MACHINES.PLC;
-    case 7:  return MACHINES.CHEST_L;
-    case 15: return MACHINES.PRESS_L;
+    case 12: return MACHINES.PLC;      // Seated Leg Curl → Prone Leg Curl
+    case 7:  return MACHINES.CHEST_L;  // Chest Press Heavy → Light
+    case 15: return MACHINES.PRESS_L;  // Leg Press Heavy → Light
     default: return machine;
   }
 }
@@ -40,6 +40,7 @@ export default function StrengthStudio() {
   const weekType = getWeekType();
   const machineNumbers = WEEKLY[today] || [];
 
+  // Build today's machine list
   const machines = machineNumbers
     .map(num => {
       let machine = findMachineByNumber(num);
@@ -49,20 +50,26 @@ export default function StrengthStudio() {
     })
     .filter(Boolean);
 
-  // Back button
+  // ------------------------------------------------------------
+  // BACK BUTTON
+  // ------------------------------------------------------------
   const backBtn = document.createElement("button");
   backBtn.className = "back-btn";
   backBtn.textContent = "← Back";
   backBtn.onclick = () => window.renderScreen("GymFloor");
   root.appendChild(backBtn);
 
-  // Title
+  // ------------------------------------------------------------
+  // TITLE
+  // ------------------------------------------------------------
   const title = document.createElement("h1");
   title.className = "strength-title";
   title.textContent = "Strength Studio";
   root.appendChild(title);
 
-  // Machine list
+  // ------------------------------------------------------------
+  // MACHINE LIST
+  // ------------------------------------------------------------
   const list = document.createElement("div");
   list.className = "machine-list";
 
@@ -70,6 +77,7 @@ export default function StrengthStudio() {
     const card = document.createElement("div");
     card.className = "machine-card";
 
+    // Open Machine.js with full machine object
     card.onclick = () => window.renderScreen("Machine", m);
 
     const name = document.createElement("div");
