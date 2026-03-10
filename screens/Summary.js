@@ -2,7 +2,8 @@
    SUMMARY SCREEN (DOM VERSION)
 ========================================= */
 
-import { M } from "../data/machines.js";
+import { MACHINES } from "../data/machines.js";
+
 
 export default function Summary() {
   const container = document.createElement("div");
