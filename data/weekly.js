@@ -6,7 +6,7 @@ export const WEEKLY = {
 
   Mon: [
     15,   // Leg Press (Heavy)
-    12,   // Seated Leg Curl (Light)
+    12,   // Seated Leg Curl (Primary)
     13,   // Hip Adductor
     14,   // Hip Abductor
     3     // Ab Crunch
@@ -14,10 +14,10 @@ export const WEEKLY = {
 
   Tue: [
     7,    // Chest Press (Heavy)
-    8,    // Lat Pulldown (Heavy)
-    5,    // Seated Row (Heavy/Light mix)
-    6,    // Shoulder Press (Light)
-    2     // Triceps Press (Light)
+    8,    // Lat Pulldown
+    5,    // Seated Row
+    6,    // Shoulder Press
+    2     // Triceps Press
   ],
 
   Wed: [
@@ -30,7 +30,7 @@ export const WEEKLY = {
 
   Thu: [
     115,  // Leg Press (Light)
-    12,   // Seated Leg Curl (Light)
+    12,   // Seated Leg Curl (Primary)
     13,   // Hip Adductor
     14,   // Hip Abductor
     4     // Back Extension
