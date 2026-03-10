@@ -183,6 +183,18 @@ export const MACHINES = {
     cue: "Drive through heels — don’t lock knees."
   },
 
+  107: {
+    id: "CHEST_L",
+    number: 107,
+    emoji: "🏋️",
+    name: "Chest Press (Light)",
+    muscle: "Chest",
+    type: "Light",
+    baseline: 50,
+    grips: true,
+    cue: "Shoulders down — smooth, controlled reps."
+  },
+
   115: {
     id: "PRESS_L",
     number: 115,
