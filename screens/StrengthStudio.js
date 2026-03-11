@@ -1,3 +1,6 @@
+import WEEKLY from "../data/weekly.js";
+import MACHINES from "../data/machines.js";
+
 export default function StrengthStudio() {
   const container = document.createElement("div");
   container.className = "strength-screen";
