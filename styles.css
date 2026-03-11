@@ -285,3 +285,91 @@
   position: relative;
   z-index: 5; /* ABOVE overlay */
 }
+/* ============================================================
+   REMOVE ALL GLASS / BLUR / OVERLAYS
+============================================================ */
+
+/* Remove dark overlay entirely */
+.strength-screen::before,
+.cardio-screen::before,
+.gymfloor-bg::before {
+  display: none !important;
+}
+
+/* Remove blur from backgrounds */
+.strength-screen,
+.cardio-screen,
+.gymfloor-bg {
+  backdrop-filter: none !important;
+}
+
+/* ============================================================
+   TITLES — SOLID, READABLE
+============================================================ */
+
+.strength-title,
+.header {
+  background: white !important;
+  color: #1e4fff !important;
+  font-weight: 800;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-shadow: none !important;
+  z-index: 10;
+}
+
+/* ============================================================
+   MACHINE CARDS — SOLID WHITE
+============================================================ */
+
+.machine-card {
+  background: white !important;
+  border-radius: 16px !important;
+  padding: 16px !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
+  color: #1a3fa3 !important;
+  position: relative;
+  z-index: 10;
+}
+
+/* Ensure machine list is visible */
+.machine-list {
+  position: relative;
+  z-index: 10;
+}
+
+/* ============================================================
+   WEEKLY OVERVIEW — SOLID TEXT
+============================================================ */
+
+.weekly-item,
+.weekly-machine,
+.weekly-last {
+  background: none !important;
+  color: #1a3fa3 !important;
+  z-index: 10;
+}
+
+/* ============================================================
+   BUTTONS — SOLID BLUE
+============================================================ */
+
+.gym-button,
+.back-btn {
+  background: #1a3fa3 !important;
+  color: white !important;
+  border-radius: 14px !important;
+  z-index: 10;
+}
+
+/* ============================================================
+   GENERAL TEXT RESET
+============================================================ */
+
+.machine-name,
+.machine-baseline,
+.machine-muscle {
+  color: #1a3fa3 !important;
+  text-shadow: none !important;
+}
+
