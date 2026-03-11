@@ -1,12 +1,14 @@
 export default function CardioStudio() {
   const container = document.createElement("div");
-  container.className = "screen cardio-bg-dark";
+
+  // IMPORTANT: this activates the treadmill background
+  container.className = "cardio-screen";
 
   /* -------------------------------
      HEADER
   --------------------------------*/
   const header = document.createElement("div");
-  header.className = "header";
+  header.className = "strength-title";   // unified blue title style
   header.textContent = "Cardio Studio";
   container.appendChild(header);
 
