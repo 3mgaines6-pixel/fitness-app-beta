@@ -12,6 +12,7 @@
   padding: 20px;
   position: relative;
   animation: fadeIn 0.45s ease-out;
+  z-index: 0;
 }
 
 /* Gym Entrance */
@@ -26,7 +27,6 @@
 .strength-screen {
   background-image: url("images/weight-plate.jpg");
   backdrop-filter: blur(2px);
-  z-index: 0;
 }
 
 /* Cardio Studio */
@@ -35,7 +35,7 @@
   backdrop-filter: blur(2px);
 }
 
-/* Readability overlay */
+/* Readability overlay — FIXED z-index */
 .gymfloor-bg::before,
 .strength-screen::before,
 .cardio-screen::before {
@@ -44,7 +44,7 @@
   inset: 0;
   background: rgba(10, 20, 60, 0.35);
   pointer-events: none;
-  z-index: 1;
+  z-index: 1; /* BELOW content */
 }
 
 /* ============================================================
@@ -64,7 +64,7 @@
   display: inline-block;
   margin-bottom: 12px;
   position: relative;
-  z-index: 20;
+  z-index: 5;
 }
 
 /* ============================================================
@@ -81,7 +81,7 @@
   color: #1e4fff;
   box-shadow: 0 0 10px rgba(0,0,0,0.25);
   position: relative;
-  z-index: 25;
+  z-index: 5;
   animation: cardSlideUp 0.5s ease-out;
 }
 
@@ -95,7 +95,7 @@
   box-shadow: 0 4px 12px rgba(100, 140, 255, 0.25);
   backdrop-filter: blur(4px);
   position: relative;
-  z-index: 10;
+  z-index: 5;
 }
 
 /* ============================================================
@@ -108,7 +108,7 @@
   gap: 14px;
   padding: 10px;
   position: relative;
-  z-index: 20; /* ABOVE overlay */
+  z-index: 5; /* ABOVE overlay */
 }
 
 /* ============================================================
@@ -151,7 +151,7 @@
   text-align: center;
   cursor: pointer;
   position: relative;
-  z-index: 20;
+  z-index: 5;
   transition: background 0.25s ease, transform 0.15s ease;
 }
 
@@ -187,6 +187,8 @@
   justify-content: space-between;
   padding: 6px 0;
   border-bottom: 1px solid #e5e9ff;
+  position: relative;
+  z-index: 5;
 }
 
 .weekly-item:last-child {
@@ -230,6 +232,8 @@
   text-align: center;
   min-height: 28px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  position: relative;
+  z-index: 5;
 }
 
 /* ============================================================
