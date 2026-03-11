@@ -255,3 +255,33 @@
 .machine-card:nth-child(3) { animation-delay: 0.15s; }
 .machine-card:nth-child(4) { animation-delay: 0.20s; }
 .machine-card:nth-child(5) { animation-delay: 0.25s; }
+/* Overlay must be BELOW content */
+.strength-screen::before,
+.cardio-screen::before,
+.gymfloor-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 20, 60, 0.35);
+  pointer-events: none;
+  z-index: 1; /* FIXED */
+}
+
+/* Content must be ABOVE overlay */
+.strength-screen,
+.cardio-screen,
+.gymfloor-bg {
+  position: relative;
+  z-index: 0;
+}
+
+.machine-list,
+.machine-card,
+.weekly-item,
+.weekly-machine,
+.weekly-last,
+.strength-title,
+.gymfloor-button {
+  position: relative;
+  z-index: 5; /* ABOVE overlay */
+}
