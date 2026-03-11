@@ -283,3 +283,17 @@
   font-weight: 700;
   text-shadow: 0 0 8px rgba(255,255,255,0.85);
 }
+.strength-title {
+  color: #1e4fff !important;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 14px;
+
+  /* The magic */
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  /* Optional glow for extra clarity */
+  text-shadow: 0 0 8px rgba(255,255,255,0.85);
+}
