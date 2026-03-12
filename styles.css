@@ -403,3 +403,165 @@
   color: white !important;
   box-shadow: 0 0 10px rgba(77, 163, 255, 0.6) !important;
 }
+/* -----------------------------------------
+   STRENGTH STUDIO LAYOUT
+----------------------------------------- */
+#strength-root {
+  padding: 20px;
+  color: white;
+  font-family: system-ui, sans-serif;
+}
+
+/* -----------------------------------------
+   TITLE
+----------------------------------------- */
+.studio-title {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* -----------------------------------------
+   MACHINE LIST
+----------------------------------------- */
+.machine-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* -----------------------------------------
+   MACHINE CARD
+----------------------------------------- */
+.machine-card {
+  background: #1a1d22;
+  padding: 16px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #2a2f36;
+  transition: 0.2s ease;
+}
+
+.machine-card:hover {
+  background: #22262c;
+}
+
+/* -----------------------------------------
+   MACHINE STATUS DOT
+----------------------------------------- */
+.machine-status {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.machine-status.incomplete {
+  background: #555;
+}
+
+.machine-status.complete {
+  background: #2ecc71; /* green */
+}
+
+/* -----------------------------------------
+   MACHINE NAME + TYPE
+----------------------------------------- */
+.machine-name {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.machine-type {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-top: 4px;
+}
+
+/* -----------------------------------------
+   MACHINE GO BUTTON
+----------------------------------------- */
+.machine-go-btn {
+  background: #007bff;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.machine-go-btn:hover {
+  background: #0a84ff;
+}
+
+/* -----------------------------------------
+   DAY COMPLETE BANNER
+----------------------------------------- */
+.day-complete-banner {
+  margin-top: 20px;
+  padding: 14px;
+  background: #1a1d22;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 18px;
+  border: 1px solid #2a2f36;
+  opacity: 0.6;
+  transition: 0.3s ease;
+}
+
+.day-complete-banner.visible {
+  opacity: 1;
+  background: #2ecc71;
+  border-color: #27ae60;
+  color: black;
+  font-weight: 700;
+}
+
+/* -----------------------------------------
+   COMPLETE DAY BUTTON
+----------------------------------------- */
+.studio-complete-btn {
+  margin-top: 25px;
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.studio-complete-btn.enabled {
+  background: #007bff;
+  color: white;
+}
+
+.studio-complete-btn.enabled:hover {
+  background: #0a84ff;
+}
+
+.studio-complete-btn.disabled {
+  background: #333;
+  color: #777;
+  cursor: not-allowed;
+}
+
+/* -----------------------------------------
+   BACK BUTTON
+----------------------------------------- */
+.studio-back-btn {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 16px;
+  opacity: 0.7;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.studio-back-btn:hover {
+  opacity: 1;
+}
