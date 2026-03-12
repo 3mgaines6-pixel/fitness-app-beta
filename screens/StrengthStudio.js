@@ -25,7 +25,7 @@ export default function StrengthStudio() {
   // Determine today's day key
   let jsDay = new Date().getDay(); // Sun=0, Mon=1, ..., Sat=6
   if (jsDay === 0 || jsDay === 6) jsDay = 1; // Weekend → Monday
-  const selectedDayKey = days[jsDay - 1]; // Convert number → "Mon"
+  const selectedDayKey = days[jsDay - 1];
 
   days.forEach((d) => {
     const btn = document.createElement("div");
