@@ -1,56 +1,85 @@
 /* =========================================
-   SUMMARY SCREEN (DOM VERSION)
+   SUMMARY SCREEN — FULL FEATURE VERSION
 ========================================= */
 
 import { MACHINES } from "../data/machines.js";
 
-
 export default function Summary() {
-  const container = document.createElement("div");
-  container.className = "summary-screen";
+  const root = document.createElement("div");
+  root.className = "summary-screen";
 
   /* HEADER */
-  const header = document.createElement("div");
-  header.className = "header";
+  const header = document.createElement("h1");
+  header.className = "summary-title";
   header.textContent = "Workout Summary";
-  container.appendChild(header);
+  root.appendChild(header);
 
-  /* SUMMARY LIST */
+  /* COLLECT TODAY'S SETS */
+  const todayKeys = Object.keys(localStorage).filter(k =>
+    k.startsWith("history_") && k.endsWith("_today")
+  );
+
+  let totalSets = 0;
+  let totalVolume = 0;
+
+  /* SUMMARY TOTALS */
+  const totals = document.createElement("div");
+  totals.className = "summary-totals";
+
+  todayKeys.forEach(key => {
+    const sets = JSON.parse(localStorage.getItem(key) || "[]");
+
+    sets.forEach(s => {
+      if (!s) return;
+      totalSets++;
+      totalVolume += parseInt(s.weight) * parseInt(s.reps);
+    });
+  });
+
+  totals.innerHTML = `
+    <div><strong>Total Sets:</strong> ${totalSets}</div>
+    <div><strong>Total Volume:</strong> ${totalVolume} lbs</div>
+  `;
+  root.appendChild(totals);
+
+  /* PER-MACHINE BREAKDOWN */
   const list = document.createElement("div");
   list.className = "summary-list";
-  container.appendChild(list);
+  root.appendChild(list);
 
-  // Loop through all machines and show last logged set
-  Object.keys(MACHINES).forEach((machineName) => {
-    const m = MACHINES[machineName];
+  todayKeys.forEach(key => {
+    const id = key.replace("history_", "").replace("_today", "");
+    const m = MACHINES[id];
+    if (!m) return;
 
-    const row = document.createElement("div");
-    row.className = "summary-row";
+    const sets = JSON.parse(localStorage.getItem(key) || "[]");
 
-    const name = document.createElement("div");
-    name.className = "summary-name";
-    name.textContent = machineName;
+    const card = document.createElement("div");
+    card.className = "summary-card";
 
-    const stats = document.createElement("div");
-    stats.className = "summary-stats";
+    const title = document.createElement("div");
+    title.className = "summary-machine";
+    title.textContent = `${m.emoji} ${m.name}`;
+    card.appendChild(title);
 
-    if (m.lastWeight && m.lastReps) {
-      stats.textContent = `${m.lastWeight} lbs × ${m.lastReps} reps`;
-    } else {
-      stats.textContent = "No data";
-    }
+    sets.forEach((s, i) => {
+      if (!s) return;
 
-    row.appendChild(name);
-    row.appendChild(stats);
-    list.appendChild(row);
+      const row = document.createElement("div");
+      row.className = "summary-set";
+      row.textContent = `Set ${i + 1}: ${s.weight} lbs × ${s.reps}`;
+      card.appendChild(row);
+    });
+
+    list.appendChild(card);
   });
 
   /* BACK BUTTON */
   const backBtn = document.createElement("div");
   backBtn.className = "back-button";
-  backBtn.textContent = "← Back";
-  backBtn.onclick = () => window.renderScreen("GymFloor");
-  container.appendChild(backBtn);
+  backBtn.textContent = "Return to Strength Studio";
+  backBtn.onclick = () => window.renderScreen("StrengthStudio");
+  root.appendChild(backBtn);
 
-  return container;
+  return root;
 }
