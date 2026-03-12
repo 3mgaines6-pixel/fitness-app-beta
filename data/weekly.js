@@ -4,43 +4,58 @@
 
 export const WEEKLY = {
 
-  Mon: [
-    15,   // Leg Press (Heavy)
-    12,   // Seated Leg Curl (Primary)
-    13,   // Hip Adductor
-    14,   // Hip Abductor
-    3     // Ab Crunch
-  ],
+  mon: {
+    name: "Monday",
+    machines: [
+      15,   // Leg Press (Heavy)
+      12,   // Seated Leg Curl (Primary)
+      13,   // Hip Adductor
+      14,   // Hip Abductor
+      3     // Ab Crunch
+    ]
+  },
 
-  Tue: [
-    7,    // Chest Press (Heavy)
-    8,    // Lat Pulldown
-    5,    // Seated Row
-    6,    // Shoulder Press
-    2     // Triceps Press
-  ],
+  tue: {
+    name: "Tuesday",
+    machines: [
+      7,    // Chest Press (Heavy)
+      8,    // Lat Pulldown
+      5,    // Seated Row
+      6,    // Shoulder Press
+      2     // Triceps Press
+    ]
+  },
 
-  Wed: [
-    15,   // Leg Press (Heavy)
-    7,    // Chest Press (Heavy)
-    5,    // Seated Row
-    14,   // Hip Abductor
-    3     // Ab Crunch
-  ],
+  wed: {
+    name: "Wednesday",
+    machines: [
+      15,   // Leg Press (Heavy)
+      7,    // Chest Press (Heavy)
+      5,    // Seated Row
+      14,   // Hip Abductor
+      3     // Ab Crunch
+    ]
+  },
 
-  Thu: [
-    115,  // Leg Press (Light)
-    12,   // Seated Leg Curl (Primary)
-    13,   // Hip Adductor
-    14,   // Hip Abductor
-    4     // Back Extension
-  ],
+  thu: {
+    name: "Thursday",
+    machines: [
+      115,  // Leg Press (Light)
+      12,   // Seated Leg Curl (Primary)
+      13,   // Hip Adductor
+      14,   // Hip Abductor
+      4     // Back Extension
+    ]
+  },
 
-  Fri: [
-    5,    // Seated Row
-    6,    // Shoulder Press
-    9,    // Pec Fly / Rear Delt
-    2,    // Triceps Press
-    1     // Dependent Curl
-  ]
+  fri: {
+    name: "Friday",
+    machines: [
+      5,    // Seated Row
+      6,    // Shoulder Press
+      9,    // Pec Fly / Rear Delt
+      2,    // Triceps Press
+      1     // Dependent Curl
+    ]
+  }
 };
