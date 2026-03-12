@@ -1,4 +1,7 @@
 console.log("StrengthStudio version:", "PATCH-3");
+console.log("Days array:", days);
+console.log("jsDay:", jsDay);
+console.log("selectedDayKey:", selectedDayKey);
 
 import { MACHINES } from "../data/machines.js";
 import { WEEKLY } from "../data/weekly.js";
