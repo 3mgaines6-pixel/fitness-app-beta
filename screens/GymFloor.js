@@ -1,25 +1,32 @@
 export default function GymFloor() {
-  const root = document.createElement("div");
-  root.className = "gymfloor-bg";
+  const container = document.createElement("div");
+  container.className = "gymfloor-screen";
 
   const title = document.createElement("h1");
-  title.className = "strength-title";
+  title.className = "gymfloor-title";
   title.textContent = "Gym Floor";
-  root.appendChild(title);
+  container.appendChild(title);
 
-  function makeButton(label, screen) {
-    const btn = document.createElement("div");
-    btn.className = "gymfloor-button";
-    btn.textContent = label;
-    btn.onclick = () => window.renderScreen(screen);
-    return btn;
-  }
+  const menu = document.createElement("div");
+  menu.className = "gymfloor-menu";
 
-  root.appendChild(makeButton("🏋️ Strength Studio", "StrengthStudio"));
-  root.appendChild(makeButton("🏃 Cardio Studio", "CardioStudio"));
-  root.appendChild(makeButton("🥗 Nutrition Guide", "NutritionGuide"));
-  root.appendChild(makeButton("📅 Weekly Overview", "WeeklyOverview"));
-  root.appendChild(makeButton("📈 Strength History", "StrengthHistory"));
+  const buttons = [
+    { label: "🏆 Strength Studio", screen: "StrengthStudio" },
+    { label: "🏃‍♂️ Cardio Studio", screen: "CardioStudio" },
+    { label: "🥗 Nutrition Guide", screen: "NutritionGuide" },
+    { label: "📅 Weekly Overview", screen: "WeeklyOverview" },
+    { label: "📈 Strength History", screen: "StrengthHistory" }
+  ];
 
-  return root;
+  buttons.forEach(btn => {
+    const b = document.createElement("div");
+    b.className = "gymfloor-button";
+    b.textContent = btn.label;
+    b.onclick = () => window.renderScreen(btn.screen);
+    menu.appendChild(b);
+  });
+
+  container.appendChild(menu);
+
+  return container;
 }
