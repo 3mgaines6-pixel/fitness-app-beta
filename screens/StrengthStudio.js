@@ -2,9 +2,8 @@ import { MACHINES } from "../data/machines.js";
 import { WEEKLY } from "../data/weekly.js";
 
 export default function StrengthStudio() {
-  // Read the selected day from localStorage (or default to "mon")
-  const selectedDay = localStorage.getItem("selectedDay") || "mon";
-  const day = selectedDay;
+  // Your app never passes { day }, so we read it from localStorage
+  const day = localStorage.getItem("selectedDay") || "mon";
 
   const root = document.getElementById("strength-root");
   if (!root) return;
@@ -19,6 +18,7 @@ export default function StrengthStudio() {
 
   const dayConfig = WEEKLY[day];
   const machineIds = (dayConfig?.machines || []).slice(0, 5);
+
 
   /* -----------------------------------------
      HELPERS
