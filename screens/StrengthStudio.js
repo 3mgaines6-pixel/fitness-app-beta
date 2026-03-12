@@ -1,8 +1,3 @@
-console.log("StrengthStudio version:", "PATCH-3");
-console.log("Days array:", days);
-console.log("jsDay:", jsDay);
-console.log("selectedDayKey:", selectedDayKey);
-
 import { MACHINES } from "../data/machines.js";
 import { WEEKLY } from "../data/weekly.js";
 
@@ -19,19 +14,20 @@ export default function StrengthStudio() {
   container.appendChild(title);
 
   /* -------------------------------
-     DAY SELECTOR BUTTONS
+     DAY SELECTOR
   --------------------------------*/
   const dayRow = document.createElement("div");
   dayRow.className = "day-selector-row";
 
+  // Your WEEKLY keys
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri"];
 
-  // Convert JS day (0–6) to our string keys
+  // Determine today's day key
   let jsDay = new Date().getDay(); // Sun=0, Mon=1, ..., Sat=6
-  if (jsDay === 0 || jsDay === 6) jsDay = 1; // Weekend → default to Monday
+  if (jsDay === 0 || jsDay === 6) jsDay = 1; // Weekend → Monday
   const selectedDayKey = days[jsDay - 1]; // Convert number → "Mon"
 
-  days.forEach((d, index) => {
+  days.forEach((d) => {
     const btn = document.createElement("div");
     btn.className = "day-button";
     btn.textContent = d;
@@ -43,7 +39,7 @@ export default function StrengthStudio() {
     btn.onclick = () => {
       document.querySelectorAll(".day-button").forEach(b => b.classList.remove("day-selected"));
       btn.classList.add("day-selected");
-      loadDay(d); // <-- USE STRING KEY
+      loadDay(d);
     };
 
     dayRow.appendChild(btn);
@@ -52,14 +48,14 @@ export default function StrengthStudio() {
   container.appendChild(dayRow);
 
   /* -------------------------------
-     MACHINE LIST CONTAINER
+     MACHINE LIST
   --------------------------------*/
   const list = document.createElement("div");
   list.className = "machine-list";
   container.appendChild(list);
 
   /* -------------------------------
-     LOAD MACHINES FOR SELECTED DAY
+     LOAD MACHINES FOR A DAY
   --------------------------------*/
   function loadDay(dayKey) {
     list.innerHTML = "";
