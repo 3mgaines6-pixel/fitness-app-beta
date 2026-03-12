@@ -1,270 +1,254 @@
 import { MACHINES } from "../data/machines.js";
+import { WEEKLY } from "../data/weekly.js";
 
-export default function Machine(props) {
-  const { id, number, day } = props || {};
-  const machine = MACHINES[id];
+export default function Machine({ id, number, day }) {
+  const m = MACHINES[id];
 
-  const root = document.createElement("div");
-  root.className = "strength-screen";
-
-  /* -------------------------------
-     SAFETY CHECK
-  --------------------------------*/
-  if (!machine) {
-    const title = document.createElement("h1");
-    title.className = "strength-title";
-    title.textContent = "Machine not found";
-    root.appendChild(title);
-
-    const back = document.createElement("div");
-    back.className = "gym-button";
-    back.textContent = "← Back to Strength";
-    back.onclick = () => window.renderScreen("StrengthStudio");
-    root.appendChild(back);
-
-    return root;
-  }
+  const container = document.createElement("div");
+  container.className = "machine-screen";
 
   /* -------------------------------
      HEADER
   --------------------------------*/
   const title = document.createElement("h1");
-  title.className = "strength-title";
-  title.textContent = `${number}. ${machine.emoji} ${machine.name}`;
-  root.appendChild(title);
+  title.className = "machine-title";
+  title.textContent = `${number}. ${m.emoji} ${m.name}`;
+  container.appendChild(title);
+
+  const sub = document.createElement("div");
+  sub.className = "machine-subtitle";
+  sub.textContent = `Today: ${day}`;
+  container.appendChild(sub);
 
   /* -------------------------------
-     DAY LABEL
+     BADGES (Week / Block / Swap)
   --------------------------------*/
-  const dayLabel = document.createElement("div");
-  dayLabel.className = "machine-baseline";
-  dayLabel.textContent = `Today: ${day}`;
-  root.appendChild(dayLabel);
+  const badgeRow = document.createElement("div");
+  badgeRow.className = "badge-row";
+  container.appendChild(badgeRow);
 
-  /* -------------------------------
-     MUSCLE + TYPE
-  --------------------------------*/
-  const subtitle = document.createElement("div");
-  subtitle.className = "machine-baseline";
-  subtitle.textContent = `${machine.muscle} • ${machine.type}`;
-  root.appendChild(subtitle);
-
-  /* -------------------------------
-     CUE BAR
-  --------------------------------*/
-  const cue = document.createElement("div");
-  cue.className = "cue-bar";
-  cue.textContent = machine.cue || "";
-  root.appendChild(cue);
-
-  /* -------------------------------
-     TEMPO (LOCKED)
-  --------------------------------*/
-  const tempo = document.createElement("div");
-  tempo.className = "gym-button";
-  tempo.textContent = machine.tempo || getTempo(machine.type);
-  tempo.style.opacity = "0.5";
-  tempo.style.pointerEvents = "none";
-  root.appendChild(tempo);
-
-  /* -------------------------------
-     SET INPUT CARDS (3 SETS)
-  --------------------------------*/
-  const setsContainer = document.createElement("div");
-  setsContainer.className = "sets-container";
-
-  const setInputs = [];
-
-  for (let i = 1; i <= 3; i++) {
-    const card = document.createElement("div");
-    card.className = "machine-card";
-
-    const label = document.createElement("div");
-    label.className = "machine-name";
-    label.textContent = `Set ${i}`;
-    card.appendChild(label);
-
-    const weight = document.createElement("input");
-    weight.className = "input-box";
-    weight.placeholder = "Weight (lbs)";
-    weight.value = machine.baseline || "";
-    card.appendChild(weight);
-
-    const reps = document.createElement("input");
-    reps.className = "input-box";
-    reps.placeholder = "Reps";
-    card.appendChild(reps);
-
-    setInputs.push({ weight, reps });
-    setsContainer.appendChild(card);
+  function getWeek() {
+    return parseInt(localStorage.getItem("training_week") || "1");
   }
 
-  root.appendChild(setsContainer);
-
-  /* -------------------------------
-     SAVE SET BUTTON
-  --------------------------------*/
-  const saveBtn = document.createElement("div");
-  saveBtn.className = "gym-button";
-  saveBtn.textContent = "Save Sets";
-  root.appendChild(saveBtn);
-
-  /* -------------------------------
-     HISTORY SECTION
-  --------------------------------*/
-  const historyCard = document.createElement("div");
-  historyCard.className = "machine-card";
-  historyCard.innerHTML = `
-    <div class="machine-name">Today's Sets</div>
-    <div class="machine-baseline" id="today-sets">No sets logged yet.</div>
-    <br>
-    <div class="machine-name">Last Workout</div>
-    <div class="machine-baseline" id="last-sets">No previous workout logged.</div>
-  `;
-  root.appendChild(historyCard);
-
-  /* -------------------------------
-     GRIP TOGGLE
-  --------------------------------*/
-  if (machine.grips) {
-    const gripBtn = document.createElement("div");
-    gripBtn.className = "gym-button";
-    let gripIndex = 0;
-    const gripOptions = ["Inner", "Outer"];
-
-    gripBtn.textContent = `Grip: ${gripOptions[gripIndex]}`;
-
-    gripBtn.onclick = () => {
-      gripIndex = (gripIndex + 1) % gripOptions.length;
-      gripBtn.textContent = `Grip: ${gripOptions[gripIndex]}`;
-    };
-
-    root.appendChild(gripBtn);
+  function getBlock(week) {
+    return week === 1 || week === 3 ? "Heavy" : "Light";
   }
 
-  /* -------------------------------
-     REST TIMER
-  --------------------------------*/
-  const timerBtn = newElement("div", "gym-button", "Start Rest Timer");
-  root.appendChild(timerBtn);
+  function isSwapWeek() {
+    return localStorage.getItem("swap_week") === "true";
+  }
 
-  const timerLabel = newElement("div", "machine-baseline", "");
-  root.appendChild(timerLabel);
+  function renderBadges() {
+    badgeRow.innerHTML = "";
 
-  let timerInterval = null;
-  let remaining = 0;
+    const week = getWeek();
+    const block = getBlock(week);
 
-  timerBtn.onclick = () => {
-    if (timerInterval) {
-      clearInterval(timerInterval);
-      timerInterval = null;
-      timerBtn.textContent = "Start Rest Timer";
-      timerLabel.textContent = "";
-      return;
+    const weekBadge = document.createElement("div");
+    weekBadge.className = "badge";
+    weekBadge.textContent = `Week ${week} of 4`;
+    badgeRow.appendChild(weekBadge);
+
+    const blockBadge = document.createElement("div");
+    blockBadge.className = "badge";
+    blockBadge.textContent = `${block} Week`;
+    badgeRow.appendChild(blockBadge);
+
+    if (isSwapWeek()) {
+      const swapBadge = document.createElement("div");
+      swapBadge.className = "badge swap";
+      swapBadge.textContent = "Swap Week Active";
+      badgeRow.appendChild(swapBadge);
     }
+  }
 
-    remaining = 60;
-    timerBtn.textContent = "Stop Rest Timer";
-    timerLabel.textContent = `Rest: ${remaining}s`;
-
-    timerInterval = setInterval(() => {
-      remaining -= 1;
-      if (remaining <= 0) {
-        clearInterval(timerInterval);
-        timerInterval = null;
-        timerBtn.textContent = "Start Rest Timer";
-        timerLabel.textContent = "Rest complete";
-      } else {
-        timerLabel.textContent = `Rest: ${remaining}s`;
-      }
-    }, 1000);
-  };
+  renderBadges();
 
   /* -------------------------------
-     SUGGESTED WEIGHT
+     MUSCLE + CUE + TEMPO
   --------------------------------*/
-  const suggested = document.createElement("div");
-  suggested.className = "machine-baseline";
-  suggested.textContent = `Suggested Weight: ${
-    machine.baseline ? machine.baseline + " lbs" : "—"
-  }`;
-  root.appendChild(suggested);
+  const info = document.createElement("div");
+  info.className = "machine-info";
+  info.innerHTML = `
+    <div class="machine-muscle">${m.muscle} • ${m.type}</div>
+    <div class="machine-cue">${m.cue}</div>
+    <div class="machine-tempo">${m.tempo}</div>
+  `;
+  container.appendChild(info);
 
   /* -------------------------------
-     SAVE LOGIC
+     REP TARGETS (W1)
   --------------------------------*/
-  saveBtn.onclick = () => {
-    const todayKey = `history_${id}_today`;
-    const lastKey = `history_${id}_last`;
+  const repTarget = document.createElement("div");
+  repTarget.className = "rep-target";
 
-    const todaySets = [];
+  const block = getBlock(getWeek());
 
-    setInputs.forEach(({ weight, reps }) => {
-      if (weight.value && reps.value) {
-        todaySets.push(`${weight.value} × ${reps.value}`);
+  let targetText = "";
+  if (m.type === "Heavy") targetText = "Target: 6–8 reps (Heavy Day)";
+  else if (m.type === "Light") targetText = "Target: 10–12 reps (Light Day)";
+  else targetText = "Target: 12–15 reps (Core)";
+
+  repTarget.textContent = targetText;
+  container.appendChild(repTarget);
+
+  /* -------------------------------
+     SET INPUTS
+  --------------------------------*/
+  const setContainer = document.createElement("div");
+  setContainer.className = "set-container";
+
+  const todayKey = `history_${id}_today`;
+  let todaySets = JSON.parse(localStorage.getItem(todayKey) || "[]");
+
+  function renderSets() {
+    setContainer.innerHTML = "";
+
+    for (let i = 0; i < 3; i++) {
+      const row = document.createElement("div");
+      row.className = "set-row";
+
+      const weight = document.createElement("input");
+      weight.type = "number";
+      weight.placeholder = "Weight";
+      weight.value = todaySets[i]?.weight || "";
+
+      const reps = document.createElement("input");
+      reps.type = "number";
+      reps.placeholder = "Reps";
+      reps.value = todaySets[i]?.reps || "";
+
+      const del = document.createElement("div");
+      del.className = "delete-set";
+      del.textContent = "🗑";
+      del.onclick = () => deleteSingleSet(i);
+
+      row.appendChild(weight);
+      row.appendChild(reps);
+      row.appendChild(del);
+
+      setContainer.appendChild(row);
+    }
+  }
+
+  renderSets();
+  container.appendChild(setContainer);
+
+  /* -------------------------------
+     SAVE SETS
+  --------------------------------*/
+  function saveSets() {
+    const rows = setContainer.querySelectorAll(".set-row");
+    const newSets = [];
+
+    rows.forEach((row) => {
+      const weight = row.children[0].value;
+      const reps = row.children[1].value;
+
+      if (weight && reps) {
+        newSets.push({ weight, reps });
       }
     });
 
-    if (todaySets.length === 0) return;
-
-    const prevToday = localStorage.getItem(todayKey);
-    if (prevToday) {
-      localStorage.setItem(lastKey, prevToday);
-    }
-
+    todaySets = newSets;
     localStorage.setItem(todayKey, JSON.stringify(todaySets));
-    renderHistory();
-  };
-
-  /* -------------------------------
-     HISTORY RENDERING
-  --------------------------------*/
-  function renderHistory() {
-    const todayKey = `history_${id}_today`;
-    const lastKey = `history_${id}_last`;
-
-    const todayEl = historyCard.querySelector("#today-sets");
-    const lastEl = historyCard.querySelector("#last-sets");
-
-    const todayData = JSON.parse(localStorage.getItem(todayKey) || "[]");
-    const lastData = JSON.parse(localStorage.getItem(lastKey) || "[]");
-
-    todayEl.textContent =
-      todayData.length > 0 ? todayData.join("\n") : "No sets logged yet.";
-
-    lastEl.textContent =
-      lastData.length > 0 ? lastData.join("\n") : "No previous workout logged.";
   }
 
-  renderHistory();
+  /* -------------------------------
+     DELETE SYSTEM
+  --------------------------------*/
+  function deleteSingleSet(i) {
+    todaySets.splice(i, 1);
+    localStorage.setItem(todayKey, JSON.stringify(todaySets));
+    renderSets();
+  }
+
+  function deleteAllSets() {
+    todaySets = [];
+    localStorage.setItem(todayKey, "[]");
+    renderSets();
+  }
+
+  const deleteAllBtn = document.createElement("div");
+  deleteAllBtn.className = "delete-all";
+  deleteAllBtn.textContent = "Delete All Sets";
+  deleteAllBtn.onclick = deleteAllSets;
+  container.appendChild(deleteAllBtn);
+
+  /* -------------------------------
+     NEXT MACHINE / COMPLETE DAY
+  --------------------------------*/
+  const navBtn = document.createElement("div");
+  navBtn.className = "next-machine-btn";
+
+  const todayMachines = WEEKLY[day];
+  const isLast = number === todayMachines.length;
+
+  navBtn.textContent = isLast
+    ? "Complete Day"
+    : `→ Next Machine (${number + 1} of 5)`;
+
+  navBtn.onclick = () => {
+    saveSets();
+
+    if (!isLast) {
+      const nextId = todayMachines[number];
+      window.renderScreen("Machine", {
+        id: nextId,
+        number: number + 1,
+        day
+      });
+      return;
+    }
+
+    showWorkoutComplete();
+  };
+
+  container.appendChild(navBtn);
+
+  /* -------------------------------
+     WORKOUT COMPLETE SCREEN (C‑B)
+  --------------------------------*/
+  function showWorkoutComplete() {
+    const screen = document.createElement("div");
+    screen.className = "workout-complete";
+
+    screen.innerHTML = `
+      <h2>🎉 Workout Complete!</h2>
+      <p>You finished all 5 machines.</p>
+
+      <div class="rep-summary">
+        <strong>Today's Rep Targets</strong><br>
+        Heavy: 6–8 reps<br>
+        Light: 10–12 reps<br>
+        Core: 12–15 reps
+      </div>
+
+      <div class="return-btn">Return to Strength Studio</div>
+    `;
+
+    screen.querySelector(".return-btn").onclick = () => {
+      window.renderScreen("StrengthStudio");
+      if (window.onStrengthReturn) window.onStrengthReturn();
+    };
+
+    document.body.innerHTML = "";
+    document.body.appendChild(screen);
+  }
 
   /* -------------------------------
      BACK BUTTON
   --------------------------------*/
   const back = document.createElement("div");
   back.className = "gym-button";
-  back.textContent = "← Back to Strength";
-  back.onclick = () => window.renderScreen("StrengthStudio");
-  root.appendChild(back);
+  back.textContent = "← Back";
+  back.onclick = () => {
+    saveSets();
+    window.renderScreen("StrengthStudio");
+    if (window.onStrengthReturn) window.onStrengthReturn();
+  };
+  container.appendChild(back);
 
-  return root;
-}
-
-/* -------------------------------
-   TEMPO DEFAULTS
---------------------------------*/
-function getTempo(type) {
-  if (type === "Heavy") return "3-1-2";
-  if (type === "Core") return "2-2-2";
-  return "2-1-2";
-}
-
-/* -------------------------------
-   SMALL HELPER
---------------------------------*/
-function newElement(tag, className, text) {
-  const el = document.createElement(tag);
-  if (className) el.className = className;
-  if (text) el.textContent = text;
-  return el;
+  return container;
 }
