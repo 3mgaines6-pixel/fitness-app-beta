@@ -179,21 +179,28 @@ export default function Machine(data) {
   root.appendChild(delAll);
 
   /* -----------------------------------------
-     NEXT MACHINE
-  ----------------------------------------- */
-  const nextBtn = document.createElement("div");
-  nextBtn.className = "next-machine-btn";
-  nextBtn.textContent = "Next Machine";
+   NEXT MACHINE (DS1 CORRECT VERSION)
+----------------------------------------- */
+const nextBtn = document.createElement("div");
+nextBtn.className = "next-machine-btn";
+nextBtn.textContent = "Next Machine";
 
-  nextBtn.onclick = () => {
-    window.renderScreen("Machine", {
-      id: MACHINES[number + 1]?.id,
-      number: number + 1,
-      day
-    });
-  };
+nextBtn.onclick = () => {
+  const dayConfig = WEEKLY[day];
+  const machineIds = dayConfig.machines;
 
-  root.appendChild(nextBtn);
+  const nextId = machineIds[number]; // number is 1-based
+  if (!nextId) return;
+
+  window.renderScreen("Machine", {
+    id: nextId,
+    number: number + 1,
+    day
+  });
+};
+
+root.appendChild(nextBtn);
+
 
   /* -----------------------------------------
      COMPLETE DAY
