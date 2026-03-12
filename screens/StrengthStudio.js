@@ -77,8 +77,9 @@ export default function StrengthStudio() {
     goBtn.className = "machine-go-btn";
     goBtn.textContent = complete ? "Edit" : "Start";
 
+    // ⭐ FIXED: GitHub Pages compatible routing
     goBtn.onclick = () => {
-      window.location.href = `/strength/${index + 1}`;
+      window.location.href = `./strength/${index + 1}`;
     };
 
     card.appendChild(status);
@@ -111,8 +112,10 @@ export default function StrengthStudio() {
   if (allMachinesComplete()) {
     completeBtn.textContent = "Complete Day";
     completeBtn.classList.add("enabled");
+
+    // ⭐ FIXED: GitHub Pages compatible routing
     completeBtn.onclick = () => {
-      window.location.href = "/strength/complete";
+      window.location.href = "./strength/complete";
     };
   } else {
     completeBtn.textContent = "Complete Day (Locked)";
@@ -127,10 +130,14 @@ export default function StrengthStudio() {
   const backBtn = document.createElement("div");
   backBtn.className = "studio-back-btn";
   backBtn.textContent = "← Back";
+
+  // ⭐ FIXED: GitHub Pages compatible routing
   backBtn.onclick = () => {
-    window.location.href = "/";
+    window.location.href = "./";
   };
+
   root.appendChild(backBtn);
 
   return root;
 }
+
