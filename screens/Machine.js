@@ -182,7 +182,8 @@ export default function Machine({ id, number, day }) {
   const navBtn = document.createElement("div");
   navBtn.className = "next-machine-btn";
 
-  const todayMachines = WEEKLY[day];
+  const todayMachines = WEEKLY[day.slice(0,3)];
+
   const isLast = number === todayMachines.length;
 
   navBtn.textContent = isLast
