@@ -1,7 +1,11 @@
 import { MACHINES } from "../data/machines.js";
 import { WEEKLY } from "../data/weekly.js";
 
-export default function StrengthStudio({ day }) {
+export default function StrengthStudio() {
+  // Read the selected day from localStorage (or default to "mon")
+  const selectedDay = localStorage.getItem("selectedDay") || "mon";
+  const day = selectedDay;
+
   const root = document.getElementById("strength-root");
   if (!root) return;
   root.innerHTML = "";
