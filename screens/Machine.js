@@ -1,7 +1,19 @@
 import { MACHINES } from "../data/machines.js";
 import { WEEKLY } from "../data/weekly.js";
 
-export default function Machine({ id, number, day }) {
+export default function Machine(data) {
+  // Fix destructuring so router works again
+  const id = data?.id;
+  const number = data?.number;
+  const day = data?.day;
+
+  // Prevent crash if router passes bad data
+  if (!id || !MACHINES[id]) {
+    const fallback = document.createElement("div");
+    fallback.textContent = "Machine not found.";
+    return fallback;
+  }
+
   const m = MACHINES[id];
 
   /* -----------------------------------------
@@ -109,7 +121,7 @@ export default function Machine({ id, number, day }) {
   }
 
   /* -----------------------------------------
-     LOG SET (L1, W1, B2)
+     LOG SET
   ----------------------------------------- */
   drawer.querySelector(".drawer-log-btn").onclick = () => {
     const i = parseInt(drawer.dataset.index);
@@ -133,7 +145,7 @@ export default function Machine({ id, number, day }) {
   };
 
   /* -----------------------------------------
-     INNER / OUTER SELECTOR
+     VARIATION SELECTOR
   ----------------------------------------- */
   function renderVariation(container) {
     if (m.variation !== "inner-outer") return;
@@ -169,11 +181,12 @@ export default function Machine({ id, number, day }) {
     };
     container.appendChild(nt);
   }
+
   /* -----------------------------------------
-     REST TIMER BUTTON (REAL TIMER)
+     REST TIMER
   ----------------------------------------- */
   let timerInterval = null;
-  let timerSeconds = 120; // 2:00 default
+  let timerSeconds = 120;
 
   function formatTime(sec) {
     const m = Math.floor(sec / 60);
@@ -270,8 +283,8 @@ export default function Machine({ id, number, day }) {
   /* -----------------------------------------
      MAIN RENDER
   ----------------------------------------- */
-  const root = document.getElementById("machine-root");
-  root.innerHTML = "";
+  const root = document.createElement("div");
+  root.id = "machine-root";
 
   /* TITLE */
   const title = document.createElement("div");
@@ -295,7 +308,7 @@ export default function Machine({ id, number, day }) {
   timerBtn.onclick = () => startTimer(timerBtn);
   root.appendChild(timerBtn);
 
-  /* HEAVY JUMP WARNING */
+  /* HEAVY WARNING */
   const warn = document.createElement("div");
   warn.className = "heavy-warning";
   warn.textContent = checkHeavyJump();
@@ -315,7 +328,7 @@ export default function Machine({ id, number, day }) {
   nextBtn.className = "next-machine-btn";
   nextBtn.textContent = "Next Machine";
   nextBtn.onclick = () => {
-    window.location.href = `/strength/${parseInt(number) + 1}`;
+    window.location.href = `./strength/${parseInt(number) + 1}`;
   };
   root.appendChild(nextBtn);
 
@@ -326,7 +339,6 @@ export default function Machine({ id, number, day }) {
   completeBtn.className = "complete-day-btn";
   completeBtn.textContent = "Complete Day";
   completeBtn.onclick = () => {
-    // Save today's sets into full history if all 3 sets are logged
     if (todaySets.filter(s => s).length === 3) {
       allHistory.push({
         date: new Date().toISOString(),
@@ -335,15 +347,13 @@ export default function Machine({ id, number, day }) {
       localStorage.setItem(allKey, JSON.stringify(allHistory));
     }
 
-    // S3: Clear ALL today's sets for ALL machines
     Object.keys(localStorage).forEach(k => {
       if (k.endsWith("_today")) {
         localStorage.removeItem(k);
       }
     });
 
-    // Navigate to workout complete screen
-    window.location.href = "/strength/complete";
+    window.location.href = "./strength/complete";
   };
   root.appendChild(completeBtn);
 
@@ -354,7 +364,9 @@ export default function Machine({ id, number, day }) {
   backBtn.className = "back-btn";
   backBtn.textContent = "← Back";
   backBtn.onclick = () => {
-    window.location.href = "/strength";
+    window.location.href = "./strength";
   };
   root.appendChild(backBtn);
+
+  return root;
 }
