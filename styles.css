@@ -565,3 +565,26 @@
 .studio-back-btn:hover {
   opacity: 1;
 }
+.machine-header {
+  margin-bottom: 22px;
+}
+
+.machine-last-box {
+  margin-bottom: 16px;
+}
+
+.machine-cue-box {
+  margin-bottom: 20px;
+}
+
+.set-row {
+  margin-bottom: 14px;
+}
+
+.add-set-btn,
+.delete-all-btn,
+.next-machine-btn,
+.complete-day-btn,
+.back-btn {
+  margin-top: 18px;
+}
