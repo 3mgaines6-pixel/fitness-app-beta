@@ -1,38 +1,87 @@
 import { MACHINES } from "../data/machines.js";
 import { WEEKLY } from "../data/weekly.js";
+import { getSelectedDay, setSelectedDay } from "../utils.js";
 
 export default function StrengthStudio() {
-  const day = localStorage.getItem("selectedDay") || "mon";
+  /* ============================
+     DAY SELECTION (AUTO)
+  ============================= */
+  const day = getSelectedDay().toLowerCase();
 
   const root = document.createElement("div");
   root.className = "strength-screen";
 
-
+  /* ============================
+     BLOCK / SWAP LOGIC
+  ============================= */
   const week = parseInt(localStorage.getItem("training_week") || "1");
   const block = week === 1 || week === 3 ? "Heavy" : "Light";
   const isSwap = localStorage.getItem("swap_week") === "true";
 
+  /* ============================
+     DAY CONFIG
+  ============================= */
   const dayConfig = WEEKLY[day];
   const machineIds = (dayConfig?.machines || []).slice(0, 5);
 
+  /* ============================
+     TODAY SETS HELPERS
+  ============================= */
   function getTodaySets(id) {
-    return JSON.parse(localStorage.getItem(`history_${id}_today`) || "[]");
+    return JSON.parse(localStorage.getItem(`history_today_${id}`) || "[]");
   }
 
   function isMachineComplete(id) {
     const sets = getTodaySets(id);
-    return sets.filter(s => s && s.weight && s.reps).length === 3;
+    return sets.filter(s => s && s.weight && s.reps).length >= 3;
   }
 
   function allMachinesComplete() {
     return machineIds.every(id => isMachineComplete(id));
   }
 
+  /* ============================
+     TITLE
+  ============================= */
   const title = document.createElement("div");
   title.className = "studio-title";
   title.textContent = `${dayConfig?.name} — ${block}${isSwap ? " (Swap)" : ""}`;
   root.appendChild(title);
 
+  /* ============================
+     MANUAL DAY SELECTOR (OLD APP POSITION)
+  ============================= */
+  const daySelector = document.createElement("div");
+  daySelector.className = "day-selector";
+
+  const DAYS = [
+    { key: "mon", label: "Mon" },
+    { key: "tue", label: "Tue" },
+    { key: "wed", label: "Wed" },
+    { key: "thu", label: "Thu" },
+    { key: "fri", label: "Fri" }
+  ];
+
+  DAYS.forEach(d => {
+    const btn = document.createElement("div");
+    btn.className = "day-btn";
+    btn.textContent = d.label;
+
+    if (d.key === day) btn.classList.add("selected");
+
+    btn.onclick = () => {
+      setSelectedDay(d.key);
+      window.renderScreen("StrengthStudio");
+    };
+
+    daySelector.appendChild(btn);
+  });
+
+  root.appendChild(daySelector);
+
+  /* ============================
+     MACHINE LIST
+  ============================= */
   const list = document.createElement("div");
   list.className = "machine-list";
   root.appendChild(list);
@@ -57,7 +106,7 @@ export default function StrengthStudio() {
     type.textContent = m.type || "Core";
 
     const goBtn = document.createElement("div");
-    goBtn.className = "machine-go-btn";
+    goBtn.className = "machine-go-btn ds1-button";
     goBtn.textContent = isMachineComplete(id) ? "Edit" : "Start";
 
     goBtn.onclick = () => {
@@ -76,6 +125,9 @@ export default function StrengthStudio() {
     list.appendChild(card);
   });
 
+  /* ============================
+     DAY COMPLETE BANNER
+  ============================= */
   const banner = document.createElement("div");
   banner.className = "day-complete-banner";
   banner.textContent = allMachinesComplete()
@@ -84,8 +136,11 @@ export default function StrengthStudio() {
   if (allMachinesComplete()) banner.classList.add("visible");
   root.appendChild(banner);
 
+  /* ============================
+     COMPLETE DAY BUTTON
+  ============================= */
   const completeBtn = document.createElement("div");
-  completeBtn.className = "studio-complete-btn";
+  completeBtn.className = "studio-complete-btn ds1-button";
   completeBtn.textContent = allMachinesComplete()
     ? "Complete Day"
     : "Complete Day (Locked)";
@@ -99,8 +154,11 @@ export default function StrengthStudio() {
 
   root.appendChild(completeBtn);
 
+  /* ============================
+     BACK BUTTON
+  ============================= */
   const backBtn = document.createElement("div");
-  backBtn.className = "studio-back-btn";
+  backBtn.className = "studio-back-btn ds1-button";
   backBtn.textContent = "← Back";
   backBtn.onclick = () => window.renderScreen("GymFloor");
   root.appendChild(backBtn);
