@@ -20,7 +20,8 @@ export default function Machine(data) {
   /* -----------------------------------------
      TODAY'S SET STORAGE
   ----------------------------------------- */
-  const todayKey = `history_${id}_today`;
+  const todayKey = `history_today_${id}`;
+
   let todaySets = JSON.parse(localStorage.getItem(todayKey) || "[]");
 
   function saveToday() {
