@@ -1,167 +1,138 @@
 import { MACHINES } from "../data/machines.js";
 import { WEEKLY } from "../data/weekly.js";
-import { getSelectedDay, setSelectedDay } from "../utils.js";
+import { loadHistory } from "../utils/history.js";
 
 export default function StrengthStudio() {
-  /* ============================
-     DAY SELECTION (AUTO)
-  ============================= */
-  const day = getSelectedDay().toLowerCase();
-
   const root = document.createElement("div");
-  root.className = "strength-screen";
+  root.id = "strength-root";
 
-  /* ============================
-     BLOCK / SWAP LOGIC
-  ============================= */
-  const week = parseInt(localStorage.getItem("training_week") || "1");
-  const block = week === 1 || week === 3 ? "Heavy" : "Light";
-  const isSwap = localStorage.getItem("swap_week") === "true";
+  /* -----------------------------------------
+     HEADER
+  ----------------------------------------- */
+  const header = document.createElement("div");
+  header.className = "studio-header";
+  header.textContent = "Strength Studio";
+  root.appendChild(header);
 
-  /* ============================
-     DAY CONFIG
-  ============================= */
-  const dayConfig = WEEKLY[day];
-  const machineIds = (dayConfig?.machines || []).slice(0, 5);
-
-  /* ============================
-     TODAY SETS HELPERS
-  ============================= */
-  function getTodaySets(id) {
-    return JSON.parse(localStorage.getItem(`history_today_${id}`) || "[]");
-  }
-
-  function isMachineComplete(id) {
-    const sets = getTodaySets(id);
-    return sets.filter(s => s && s.weight && s.reps).length >= 3;
-  }
-
-  function allMachinesComplete() {
-    return machineIds.every(id => isMachineComplete(id));
-  }
-
-  /* ============================
-     TITLE
-  ============================= */
-  const title = document.createElement("div");
-  title.className = "studio-title";
-  title.textContent = `${dayConfig?.name} — ${block}${isSwap ? " (Swap)" : ""}`;
-  root.appendChild(title);
-
-  /* ============================
-     MANUAL DAY SELECTOR (OLD APP POSITION)
-  ============================= */
+  /* -----------------------------------------
+     DAY SELECTOR
+  ----------------------------------------- */
   const daySelector = document.createElement("div");
   daySelector.className = "day-selector";
 
-  const DAYS = [
-    { key: "mon", label: "Mon" },
-    { key: "tue", label: "Tue" },
-    { key: "wed", label: "Wed" },
-    { key: "thu", label: "Thu" },
-    { key: "fri", label: "Fri" }
-  ];
+  const days = Object.keys(WEEKLY);
 
-  DAYS.forEach(d => {
-    const btn = document.createElement("div");
-    btn.className = "day-btn";
-    btn.textContent = d.label;
+  let selectedDay = localStorage.getItem("selectedDay") || days[0];
 
-    if (d.key === day) btn.classList.add("selected");
+  function renderDayButtons() {
+    daySelector.innerHTML = "";
 
-    btn.onclick = () => {
-      setSelectedDay(d.key);
-      window.renderScreen("StrengthStudio");
-    };
+    days.forEach(day => {
+      const btn = document.createElement("div");
+      btn.className = "day-button";
+      if (day === selectedDay) btn.classList.add("active");
+      btn.textContent = day;
 
-    daySelector.appendChild(btn);
-  });
+      btn.onclick = () => {
+        selectedDay = day;
+        localStorage.setItem("selectedDay", selectedDay);
+        renderMachineList();
+        renderDayButtons();
+      };
+
+      daySelector.appendChild(btn);
+    });
+  }
 
   root.appendChild(daySelector);
 
-  /* ============================
+  /* -----------------------------------------
      MACHINE LIST
-  ============================= */
+  ----------------------------------------- */
   const list = document.createElement("div");
   list.className = "machine-list";
   root.appendChild(list);
 
-  machineIds.forEach((id, index) => {
-    const m = MACHINES[id];
-    if (!m) return;
-
-    const card = document.createElement("div");
-    card.className = "machine-card";
-
-    const status = document.createElement("div");
-    status.className = "machine-status";
-    status.classList.add(isMachineComplete(id) ? "complete" : "incomplete");
-
-    const name = document.createElement("div");
-    name.className = "machine-name";
-    name.textContent = m.name;
-
-    const type = document.createElement("div");
-    type.className = "machine-type";
-    type.textContent = m.type || "Core";
-
-    const goBtn = document.createElement("div");
-    goBtn.className = "machine-go-btn ds1-button";
-    goBtn.textContent = isMachineComplete(id) ? "Edit" : "Start";
-
-    goBtn.onclick = () => {
-      window.renderScreen("Machine", {
-        id,
-        number: index + 1,
-        day
-      });
-    };
-
-    card.appendChild(status);
-    card.appendChild(name);
-    card.appendChild(type);
-    card.appendChild(goBtn);
-
-    list.appendChild(card);
-  });
-
-  /* ============================
-     DAY COMPLETE BANNER
-  ============================= */
-  const banner = document.createElement("div");
-  banner.className = "day-complete-banner";
-  banner.textContent = allMachinesComplete()
-    ? "Day Complete!"
-    : "Complete all 5 machines to finish the day.";
-  if (allMachinesComplete()) banner.classList.add("visible");
-  root.appendChild(banner);
-
-  /* ============================
-     COMPLETE DAY BUTTON
-  ============================= */
-  const completeBtn = document.createElement("div");
-  completeBtn.className = "studio-complete-btn ds1-button";
-  completeBtn.textContent = allMachinesComplete()
-    ? "Complete Day"
-    : "Complete Day (Locked)";
-
-  if (allMachinesComplete()) {
-    completeBtn.classList.add("enabled");
-    completeBtn.onclick = () => window.renderScreen("Summary");
-  } else {
-    completeBtn.classList.add("disabled");
+  function isMachineComplete(machineId) {
+    const type = MACHINES[machineId].type;
+    const h = loadHistory(machineId, type);
+    return h.length > 0;
   }
 
-  root.appendChild(completeBtn);
+  function renderMachineList() {
+    list.innerHTML = "";
 
-  /* ============================
-     BACK BUTTON
-  ============================= */
-  const backBtn = document.createElement("div");
-  backBtn.className = "studio-back-btn ds1-button";
-  backBtn.textContent = "← Back";
-  backBtn.onclick = () => window.renderScreen("GymFloor");
-  root.appendChild(backBtn);
+    const config = WEEKLY[selectedDay];
+    const machineIds = config.machines;
+
+    machineIds.forEach((machineId, index) => {
+      const m = MACHINES[machineId];
+      const complete = isMachineComplete(machineId);
+
+      const card = document.createElement("div");
+      card.className = "machine-card";
+      if (complete) card.classList.add("complete");
+
+      card.innerHTML = `
+        <div class="machine-card__left">
+          <div class="machine-card__number">#${m.number}</div>
+          <div class="machine-card__name">${m.name}</div>
+          <div class="machine-card__meta">${m.muscle} • ${m.type}</div>
+        </div>
+
+        <div class="machine-card__right">
+          <div class="machine-card__status">
+            ${complete ? "Edit" : "Start"}
+          </div>
+          <div class="machine-card__dot ${complete ? "dot-complete" : "dot-empty"}"></div>
+        </div>
+      `;
+
+      card.onclick = () => {
+        window.renderScreen("Machine", {
+          id: machineId,
+          number: index + 1,
+          day: selectedDay
+        });
+      };
+
+      list.appendChild(card);
+    });
+
+    renderCompleteDayButton();
+  }
+
+  /* -----------------------------------------
+     COMPLETE DAY BUTTON
+  ----------------------------------------- */
+  const completeDayBtn = document.createElement("div");
+  completeDayBtn.className = "complete-day-btn";
+
+  function renderCompleteDayButton() {
+    const config = WEEKLY[selectedDay];
+    const machineIds = config.machines;
+
+    const allDone = machineIds.every(id => isMachineComplete(id));
+
+    completeDayBtn.textContent = allDone
+      ? "Day Complete ✓"
+      : "Complete Day";
+
+    completeDayBtn.classList.toggle("ready", allDone);
+
+    completeDayBtn.onclick = () => {
+      if (!allDone) return;
+      window.renderScreen("Summary");
+    };
+  }
+
+  root.appendChild(completeDayBtn);
+
+  /* -----------------------------------------
+     INITIAL RENDER
+  ----------------------------------------- */
+  renderDayButtons();
+  renderMachineList();
 
   return root;
 }
