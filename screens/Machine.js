@@ -18,10 +18,9 @@ export default function Machine(data) {
   root.id = "machine-root";
 
   /* -----------------------------------------
-     TODAY'S SET STORAGE
+     TODAY'S SET STORAGE (FIXED KEY)
   ----------------------------------------- */
-  const todayKey = `history_today_${id}`;
-
+  const todayKey = `history_today_${id}`;   // <— FIXED
   let todaySets = JSON.parse(localStorage.getItem(todayKey) || "[]");
 
   function saveToday() {
@@ -136,7 +135,7 @@ export default function Machine(data) {
   renderSets();
 
   /* -----------------------------------------
-     ADD SET BUTTON (OPENS DRAWER)
+     ADD SET BUTTON
   ----------------------------------------- */
   const addBtn = document.createElement("div");
   addBtn.className = "add-set-btn";
@@ -150,7 +149,7 @@ export default function Machine(data) {
   root.appendChild(addBtn);
 
   /* -----------------------------------------
-     LOG SET (INSIDE DRAWER)
+     LOG SET
   ----------------------------------------- */
   logBtn.onclick = () => {
     const w = weightInput.value.trim();
@@ -180,28 +179,27 @@ export default function Machine(data) {
   root.appendChild(delAll);
 
   /* -----------------------------------------
-   NEXT MACHINE (DS1 CORRECT VERSION)
------------------------------------------ */
-const nextBtn = document.createElement("div");
-nextBtn.className = "next-machine-btn";
-nextBtn.textContent = "Next Machine";
+     NEXT MACHINE
+  ----------------------------------------- */
+  const nextBtn = document.createElement("div");
+  nextBtn.className = "next-machine-btn";
+  nextBtn.textContent = "Next Machine";
 
-nextBtn.onclick = () => {
-  const dayConfig = WEEKLY[day];
-  const machineIds = dayConfig.machines;
+  nextBtn.onclick = () => {
+    const dayConfig = WEEKLY[day];
+    const machineIds = dayConfig.machines;
 
-  const nextId = machineIds[number]; // number is 1-based
-  if (!nextId) return;
+    const nextId = machineIds[number];
+    if (!nextId) return;
 
-  window.renderScreen("Machine", {
-    id: nextId,
-    number: number + 1,
-    day
-  });
-};
+    window.renderScreen("Machine", {
+      id: nextId,
+      number: number + 1,
+      day
+    });
+  };
 
-root.appendChild(nextBtn);
-
+  root.appendChild(nextBtn);
 
   /* -----------------------------------------
      COMPLETE DAY
