@@ -1,6 +1,7 @@
 export default function GymFloor() {
   const container = document.createElement("div");
-  container.className = "gymfloor-screen";
+  container.className = "gymfloor-bg";
+
 
   const title = document.createElement("h1");
   title.className = "gymfloor-title";
