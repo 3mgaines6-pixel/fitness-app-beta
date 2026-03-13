@@ -713,3 +713,30 @@
 .ds1-button:active {
   transform: scale(0.97);
 }
+/* FIX DAY SELECTOR VISIBILITY + SPACING */
+.day-selector {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: 20px auto 20px auto;   /* pushes it DOWN away from the title */
+  padding: 8px 0;
+  background: rgba(0,0,0,0.35);  /* gives it a visible bar */
+  border-radius: 10px;
+}
+
+.day-btn {
+  flex: 1;
+  text-align: center;
+  padding: 10px 0;
+  margin: 0 4px;
+  background: rgba(255,255,255,0.18);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;                  /* ensures readability */
+}
+
+.day-btn.selected {
+  background: #1e6bff;
+  color: white;
+}
