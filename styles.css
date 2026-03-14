@@ -740,3 +740,77 @@
   background: #1e6bff;
   color: white;
 }
+#strength-root {
+  padding: 20px;
+}
+
+.strength-header {
+  font-size: 24px;
+  font-weight: bold;
+  color: #0a3d91;
+  margin-bottom: 20px;
+}
+
+.back-btn {
+  margin-bottom: 15px;
+  color: #0a3d91;
+  font-weight: bold;
+}
+
+.day-selector {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.day-btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: white;
+  color: #0a3d91;
+  border: 1px solid #0a3d91;
+}
+
+.day-btn.active {
+  background: #0a3d91;
+  color: white;
+}
+
+.machine-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.machine-row {
+  padding: 15px;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.machine-row-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #0a3d91;
+}
+
+.machine-row-sub {
+  color: #555;
+  margin-top: 4px;
+}
+
+.machine-row-last {
+  margin-top: 6px;
+  color: #0a3d91;
+  font-weight: bold;
+}
+
+.weekly-btn {
+  margin-top: 25px;
+  padding: 12px;
+  background: #0a3d91;
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+}
