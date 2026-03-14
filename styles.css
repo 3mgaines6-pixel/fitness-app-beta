@@ -907,3 +907,30 @@
 .gym-button:hover {
   background: #0c4db8;
 }
+/* ================================
+   GYM FLOOR — DS1 SPACING + STYLE
+================================ */
+
+.gymfloor-screen {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.gym-button {
+  width: 100%;
+  padding: 18px;
+  background: #0a3d91;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+.gym-button:active {
+  transform: scale(0.98);
+}
