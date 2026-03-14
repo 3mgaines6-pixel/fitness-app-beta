@@ -1,11 +1,10 @@
 /* ==========================================================
-   FINAL WEEKLY PLAN — ORIGINAL NUMBERING RESTORED
+   FINAL WEEKLY PLAN — DS1 FORMAT (Capitalized Days)
 ========================================================== */
 
 export const WEEKLY = {
 
-  mon: {
-    name: "Monday",
+  Monday: {
     machines: [
       15,   // Leg Press (Heavy)
       12,   // Seated Leg Curl (Primary)
@@ -15,8 +14,7 @@ export const WEEKLY = {
     ]
   },
 
-  tue: {
-    name: "Tuesday",
+  Tuesday: {
     machines: [
       7,    // Chest Press (Heavy)
       8,    // Lat Pulldown
@@ -26,8 +24,7 @@ export const WEEKLY = {
     ]
   },
 
-  wed: {
-    name: "Wednesday",
+  Wednesday: {
     machines: [
       15,   // Leg Press (Heavy)
       7,    // Chest Press (Heavy)
@@ -37,8 +34,7 @@ export const WEEKLY = {
     ]
   },
 
-  thu: {
-    name: "Thursday",
+  Thursday: {
     machines: [
       115,  // Leg Press (Light)
       12,   // Seated Leg Curl (Primary)
@@ -48,8 +44,7 @@ export const WEEKLY = {
     ]
   },
 
-  fri: {
-    name: "Friday",
+  Friday: {
     machines: [
       5,    // Seated Row
       6,    // Shoulder Press
