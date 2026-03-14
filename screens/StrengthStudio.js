@@ -7,24 +7,24 @@ export default function StrengthStudio() {
   const root = document.createElement("div");
   root.id = "strength-root";
 
-  /* -----------------------------------------
-     HEADER
-  ----------------------------------------- */
+  /* HEADER */
   const header = document.createElement("div");
   header.className = "strength-header";
-  header.innerHTML = `
-    <div class="strength-title">Strength Studio</div>
-  `;
+  header.innerHTML = `<div class="strength-title">Strength Studio</div>`;
   root.appendChild(header);
 
-  /* -----------------------------------------
-     DAY SELECTOR
-  ----------------------------------------- */
+  /* BACK BUTTON */
+  const backBtn = document.createElement("div");
+  backBtn.className = "back-btn";
+  backBtn.textContent = "← Back";
+  backBtn.onclick = () => window.renderScreen("GymFloor");
+  root.appendChild(backBtn);
+
+  /* DAY SELECTOR */
   const daySelector = document.createElement("div");
   daySelector.className = "day-selector";
 
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-
   const selected = getSelectedDay();
 
   days.forEach(d => {
@@ -43,28 +43,20 @@ export default function StrengthStudio() {
 
   root.appendChild(daySelector);
 
-  /* -----------------------------------------
-     MACHINE LIST FOR SELECTED DAY
-  ----------------------------------------- */
+  /* MACHINE LIST */
   const machineList = document.createElement("div");
   machineList.className = "machine-list";
   root.appendChild(machineList);
 
   const today = WEEKLY[selected];
 
-  if (!today || !today.machines) {
-    machineList.textContent = "No machines scheduled.";
-    return root;
-  }
-
   today.machines.forEach((id, index) => {
     const m = MACHINES[id];
-    if (!m) return;
+    const last = getLastSession(m.number, m.type);
 
     const row = document.createElement("div");
     row.className = "machine-row";
 
-    const last = getLastSession(m.number, m.type);
     const lastText = last
       ? last.sets.map(s => `${s.reps}@${s.weight}`).join(", ")
       : "—";
@@ -76,28 +68,4 @@ export default function StrengthStudio() {
     `;
 
     row.onclick = () => {
-      window.renderScreen("Machine", {
-        id,
-        number: index + 1,
-        day: selected
-      });
-    };
-
-    machineList.appendChild(row);
-  });
-
-  /* -----------------------------------------
-     WEEKLY OVERVIEW BUTTON
-  ----------------------------------------- */
-  const weeklyBtn = document.createElement("div");
-  weeklyBtn.className = "weekly-btn";
-  weeklyBtn.textContent = "Weekly Overview";
-
-  weeklyBtn.onclick = () => {
-    window.renderScreen("WeeklyOverview");
-  };
-
-  root.appendChild(weeklyBtn);
-
-  return root;
-}
+      window
