@@ -1,4 +1,5 @@
 import { MACHINES } from "../data/machines.js";
+import { loadHistory, formatSession } from "../utils/history.js";
 
 export default function StrengthHistory() {
   const root = document.createElement("div");
@@ -17,29 +18,26 @@ export default function StrengthHistory() {
   backBtn.onclick = () => window.renderScreen("GymFloor");
   root.appendChild(backBtn);
 
-  // Load history
-  const history = JSON.parse(localStorage.getItem("history") || "{}");
-
-  // Loop through machines with history
+  // Loop through machines
   Object.values(MACHINES).forEach(machine => {
-    const sets = history[machine.id];
-    if (!sets || sets.length === 0) return;
-
-    const last = sets[sets.length - 1];
-    const date = new Date(last.date).toLocaleDateString();
+    const history = loadHistory(machine.number, machine.type);
+    if (!history.length) return;
 
     const card = document.createElement("div");
     card.className = "machine-card";
 
     card.innerHTML = `
-      <div class="machine-name">${machine.emoji} ${machine.name}</div>
+      <div class="machine-name">#${machine.number} ${machine.name}</div>
       <div class="machine-baseline">
-        Last: ${last.weight} lbs × ${last.reps} reps — ${date}
+        ${history.map(formatSession).join("<br>")}
       </div>
     `;
 
-    // FIX: Pass full machine object, not ID
-    card.onclick = () => window.renderScreen("Machine", machine);
+    card.onclick = () => window.renderScreen("Machine", {
+      id: machine.id,
+      number: machine.number,
+      day: null
+    });
 
     root.appendChild(card);
   });
