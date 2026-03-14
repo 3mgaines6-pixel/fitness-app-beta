@@ -68,4 +68,15 @@ export default function StrengthStudio() {
     `;
 
     row.onclick = () => {
-      window
+      window.renderScreen("Machine", {
+        id,
+        number: index + 1,
+        day: selected
+      });
+    };
+
+    machineList.appendChild(row);
+  });
+
+  return root;
+}
